@@ -9,7 +9,8 @@ config.General.transferLogs = True
 config.section_('JobType')
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'runForestAOD_PbPb_MIX_75X.py'
-# https://github.com/CmsHI/cmssw/tree/c86ad0ac822ec2a8ffbe0ba4660a4c7627712985
+config.JobType.maxMemoryMB = 3500
+# https://github.com/CmsHI/cmssw/tree/4a2ae079f7108bbec72bf36014f136a35bb5be66
 
 config.section_('Data')
 config.Data.inputDataset = '/Pythia8_Z30eeJet_Hydjet_MB/HINPbPbWinter16DR-75X_mcRun2_HeavyIon_v13-v1/AODSIM'

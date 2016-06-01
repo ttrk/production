@@ -26,8 +26,7 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-				# run test job on one of the files we want to process
-                                "/store/himc/HINPbPbWinter16DR/Pythia8_Ze10e10_Hydjet_MB/AODSIM/75X_mcRun2_HeavyIon_v13-v1/60000/045C1466-13E4-E511-85E0-0025904C7DFA.root"
+                                "file:samples/PbPb_MC_RECODEBUG.root"
                                 )
                             )
 

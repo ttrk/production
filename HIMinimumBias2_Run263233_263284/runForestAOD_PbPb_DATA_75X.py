@@ -25,9 +25,7 @@ process.HiForest.HiForestVersion = cms.string(version)
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-				# run test job one of the files we want to process
-                                # DAS query : file dataset=/HIMinimumBias2/HIRun2015-PromptReco-v1/AOD run=263233 lumi=427
-                                "/store/hidata/HIRun2015/HIMinimumBias2/AOD/PromptReco-v1/000/263/233/00000/B603F936-37A7-E511-B092-02163E011928.root"
+                                "/store/group/phys_heavyions/velicanu/reco/HIPhysicsMinBiasUPC/v0/000/262/548/recoExpress_84.root"
                             )
 )
 
@@ -49,7 +47,7 @@ process.load('FWCore.MessageService.MessageLogger_cfi')
 
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
-process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_v12', '')  #for now track GT manually, since centrality tables updated ex post facto
+process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_v13', '')  #for now track GT manually, since centrality tables updated ex post facto
 process.HiForest.GlobalTagLabel = process.GlobalTag.globaltag
 
 from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_PbPb5020
@@ -84,6 +82,8 @@ process.kt4PFJets.src = cms.InputTag('particleFlowTmp')
 process.kt4PFJets.doAreaFastjet = True
 process.kt4PFJets.jetPtMin      = cms.double(0.0)
 process.kt4PFJets.GhostArea     = cms.double(0.005)
+from RecoHI.HiJetAlgos.hiFJGridEmptyAreaCalculator_cff import hiFJGridEmptyAreaCalculator
+process.hiFJGridEmptyAreaCalculator = hiFJGridEmptyAreaCalculator
 
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 
@@ -132,6 +132,7 @@ process.jetSequences = cms.Sequence(
     voronoiBackgroundCalo+
     process.kt4PFJets +
     process.hiFJRhoProducer +
+	process.hiFJGridEmptyAreaCalculator +
     process.hiFJRhoAnalyzer +
     process.akPu2CaloJets +
     process.akPu2PFJets +

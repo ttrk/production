@@ -25,7 +25,7 @@ process.HiForest.HiForestVersion = cms.string(version)
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-                                "root://xrootd.unl.edu//store/group/phys_heavyions/katatar/HIPhoton40AndZ/HIRun2015-PromptReco-v1-AOD-dielectron-skim/160312_082453/0000/dielectron_skim_1.root"
+                                "/store/user/azsigmon/HIPhoton40AndZ/HIRun2015E-PromptReco-AOD-DielectronSkim-ElePt8-v3/160129_162620/0000/Dielectron_Skim_pt8_106.root"
                             )
 )
 
@@ -82,6 +82,8 @@ process.kt4PFJets.src = cms.InputTag('particleFlowTmp')
 process.kt4PFJets.doAreaFastjet = True
 process.kt4PFJets.jetPtMin      = cms.double(0.0)
 process.kt4PFJets.GhostArea     = cms.double(0.005)
+from RecoHI.HiJetAlgos.hiFJGridEmptyAreaCalculator_cff import hiFJGridEmptyAreaCalculator
+process.hiFJGridEmptyAreaCalculator = hiFJGridEmptyAreaCalculator
 
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 
@@ -130,6 +132,7 @@ process.jetSequences = cms.Sequence(
     voronoiBackgroundCalo+
     process.kt4PFJets +
     process.hiFJRhoProducer +
+	process.hiFJGridEmptyAreaCalculator +
     process.hiFJRhoAnalyzer +
     process.akPu2CaloJets +
     process.akPu2PFJets +
