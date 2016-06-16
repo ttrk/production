@@ -9,8 +9,10 @@ config.General.transferLogs = True
 config.section_('JobType')
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'runForestAOD_PbPb_DATA_75X.py'
-config.JobType.maxMemoryMB = 3500
-# https://github.com/CmsHI/cmssw/tree/4a2ae079f7108bbec72bf36014f136a35bb5be66
+# config.JobType.maxMemoryMB = 3500
+# https://github.com/CmsHI/cmssw/commit/4040e9a38ec26f96541a07c17d09efec9c99db51
+# runForestAOD_PbPb_DATA_75X.py commit
+# https://github.com/CmsHI/cmssw/commit/6cc1e195d3f16a7fd5278191dde31321d13058a4
 
 config.section_('Data')
 config.Data.inputDataset = '/HIEWQExo/azsigmon-HIRun2015E-PromptReco-AOD-DimuonSkim-Mass40-v3-4f10cc0edb1df2aaccd97a62c3f32713/USER'
