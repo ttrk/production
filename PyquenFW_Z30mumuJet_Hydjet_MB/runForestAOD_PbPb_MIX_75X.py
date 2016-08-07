@@ -99,6 +99,7 @@ process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cff')
 process.HiGenParticleAna.genParticleSrc = cms.untracked.InputTag("genParticles")
 # Temporary disactivation - until we have DIGI & RECO in CMSSW_7_5_7_patch4
 process.HiGenParticleAna.doHI = False
+process.HiGenParticleAna.ptMin = cms.untracked.double(0.5)   # lower gen particle pt cut to from 5 GeV to 0.5 GeV
 
 
 #####################################################################################
