@@ -11,16 +11,16 @@ config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "runForestAOD_pPb_MC_80X.py"
 # config.JobType.maxMemoryMB = 3500
 # forest_CMSSW_8_0_22
-# https://github.com/CmsHI/cmssw/commit/a796484d9fb6a6266dc5c482615c1cc1c5763223
+# https://github.com/CmsHI/cmssw/commit/a84c4223643b17bf7b2a6d1f263793a0f8cd82db
 # runForestAOD_pPb_MC_80X.py with commit
 # https://github.com/CmsHI/cmssw/commit/8eb76699d997f6bb8e1b85891417b3c53a537d7d
-# related : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/3409.html
+# related : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/3438.html
 
 config.section_("Data")
-config.Data.inputDataset = "/AllQCDPhoton30_GEN_SIM/gsfs-AllQCDPhoton30_RECO25ns_10252016-8903f9f070d6a6d315ca9abbd5d692c3/USER"
+config.Data.inputDataset = "/AllQCDPhoton30_GEN_SIM/gsfs-AllQCDPhoton30_pPb_RECO25ns_11032016-0ca207214751b2984db5b350cd35fce5/USER"
 config.Data.inputDBS = "phys03"
 config.Data.splitting = "FileBased"
-config.Data.unitsPerJob = 2
+config.Data.unitsPerJob = 4
 config.Data.totalUnits = -1
 config.Data.publication = False
 config.Data.outputDatasetTag = "Pythia8_AllQCDPhoton30_EposLHC_FOREST"

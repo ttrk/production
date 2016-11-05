@@ -28,7 +28,7 @@ process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
 #				"root://cms-xrd-global.cern.ch//store/himc/pPb816Summer16DR/ReggeGribovPartonMC_EposLHC_pPb_4080_4080/AODSIM/80X_mcRun2_asymptotic_v15-v1/100000/003E9BF0-7979-E611-B43E-000E1EB004E0.root"
-"root://cms-xrd-global.cern.ch//store/user/gsfs/AllQCDPhoton30_GEN_SIM/AllQCDPhoton30_RECO25ns_10252016/161026_004818/0000/step3_25ns_RAW2DIGI_L1Reco_RECO_1.root"
+"root://cms-xrd-global.cern.ch//store/user/gsfs/AllQCDPhoton30_GEN_SIM/AllQCDPhoton30_pPb_RECO25ns_11032016/161103_151543/0000/step3_25ns_RAW2DIGI_L1Reco_RECO_1.root"
                             )
 )
 
