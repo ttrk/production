@@ -8,7 +8,7 @@ config.General.transferLogs = False
 
 config.section_('JobType')
 config.JobType.pluginName = 'Analysis'
-config.JobType.psetName = 'runForestAOD_pPb_DATA_80X_HLTfilter.py'
+config.JobType.psetName = 'runForestAOD_pPb_DATA_80X_HLTfilter_EcalRecHit.py'
 # forest_CMSSW_8_0_22
 # https://github.com/CmsHI/cmssw/commit/8e55358ae9a5842cb986078b5db42fac7e5b95ad
 # runForestAOD_pPb_DATA_80X.py commit + HLT filter
