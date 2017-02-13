@@ -11,7 +11,7 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'runForestAOD_pp_MC_75X.py'
 # config.JobType.maxMemoryMB = 3500
 # https://github.com/CmsHI/cmssw/commit/4040e9a38ec26f96541a07c17d09efec9c99db51
-# runForestAOD_pp_MC_75X.py commit
+# runForestAOD_pp_MC_75X.py commit + change gen particle pt and eta cuts
 # https://github.com/CmsHI/cmssw/commit/746b5cde271c0e27629823699677aaf5d2162f26
 
 config.section_('Data')
