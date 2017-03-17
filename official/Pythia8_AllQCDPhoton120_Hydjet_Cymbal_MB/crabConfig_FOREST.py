@@ -12,7 +12,7 @@ config.JobType.psetName = "runForestAOD_PbPb_MIX_75X.py"
 # config.JobType.maxMemoryMB = 3500
 # forest_CMSSW_7_5_8_patch3
 # https://github.com/CmsHI/cmssw/commit/3e925fd90c95e8cd01723a5580e721b7205cb3e9
-# runForestAOD_PbPb_MIX_75X.py commit
+# runForestAOD_PbPb_MIX_75X.py commit + change gen particle pt and eta cuts
 # https://github.com/CmsHI/cmssw/commit/977c4ca9e06fe21aa7bb15bd564b24410d9e72dd
 # related : 
 # https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/3838.html
