@@ -26,15 +26,25 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-                                "file:/afs/cern.ch/work/k/katatar/public/EGamma/CMSSW_7_5_8_patch7/src/SingleGammaFlatPt10To100_Hydjet/step3_RAW2DIGI_L1Reco_RECO.root"
+                                "root://cms-xrd-global.cern.ch//store/user/katatar/EGamma/SingleGammaFlatPt10To100_pythia8_Hydjet_RAW2DIGI_L1Reco_RECO/170623_204011/0000/step3_RAW2DIGI_L1Reco_RECO_1.root"
+#                                "file:samples/PbPb_MC_RECODEBUG.root"
                                 )
                             )
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100)
+    input = cms.untracked.int32(10)
 )
 
+process.output = cms.OutputModule("PoolOutputModule",
+                                  outputCommands = cms.untracked.vstring('drop *',
+                                                                         'keep *_particleFlow_*_*',
+                                                                         'keep *_particleFlowTmp_*_*',
+                                                                         'keep *_mapEtaEdges_*_*',
+                                                                         'keep *_*_*_HiForest'),
+                                  fileName       = cms.untracked.string ("OutputMC.root")
+)
+#process.outpath  = cms.EndPath(process.output)
 
 #####################################################################################
 # Load Global Tag, Geometry, etc.
@@ -50,12 +60,23 @@ from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '75X_mcRun2_HeavyIon_v13', '') #for now track GT manually, since centrality tables updated ex post facto
 process.HiForest.GlobalTagLabel = process.GlobalTag.globaltag
 
+#overwrite GT for centrality table for Cymbal5Ev8 tune
+process.GlobalTag.snapshotTime = cms.string("9999-12-31 23:59:59.000")
+process.GlobalTag.toGet.extend([
+   cms.PSet(record = cms.string("HeavyIonRcd"),
+      tag = cms.string("CentralityTable_HFtowers200_HydjetCymbal5Ev8_v758x01_mc"),
+      connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
+      label = cms.untracked.string("HFtowersHydjetCymbal5Ev8")
+   ),
+])
+
 from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_PbPb5020
 process = overrideJEC_PbPb5020(process)
 
 process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
-# process.centralityBin.Centrality = cms.InputTag("hiCentrality")
-# process.centralityBin.centralityVariable = cms.string("HFtowers")
+process.centralityBin.Centrality = cms.InputTag("hiCentrality")
+process.centralityBin.centralityVariable = cms.string("HFtowers")
+process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetCymbal5Ev8")
 #process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetDrum5")
 
 #####################################################################################
@@ -79,78 +100,12 @@ process.load('HeavyIonsAnalysis.JetAnalysis.GenJetSequence')
 process.load('HeavyIonsAnalysis.JetAnalysis.hiSignalGenFilters')
 
 
+#PU minimal tower cut reco sequence
+process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_puLimitedPbPb')
 # nominal jet reco sequence
-process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPbPb')
+#process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPbPb')
 # replace above with this one for JEC:
 #process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_JECPbPb')
-##### notes on 2016.10.05
-# https://github.com/CmsHI/cmssw/blob/forest_CMSSW_7_5_8_patch3/HeavyIonsAnalysis/JetAnalysis/python/FullJetSequence_nominalPbPb.py#L47-L115
-# removing some jet sequences to save space. remove VS jets and jets with dR=0.2, 0.5.
-# decreases file by size by ~50%
-process.jetSequences = cms.Sequence(
-    process.voronoiBackgroundPF+
-    process.voronoiBackgroundCalo+
-    process.kt2PFJets +
-    process.kt4PFJets +
-    process.hiFJRhoProducer +
-    process.hiFJGridEmptyAreaCalculator +
-
-    process.akPu3CaloJets +
-    process.akPu3PFJets +
-#    process.akVs3CaloJets +
-#    process.akVs3PFJets +
-    process.akCs3PFJets +
-
-    process.akPu4CaloJets +
-    process.akPu4PFJets +
-#    process.akVs4CaloJets +
-#    process.akVs4PFJets +
-    process.akCs4PFJets +
-
-#    process.akPu5CaloJets +
-#    process.akPu5PFJets +
-#    process.akVs5CaloJets +
-#    process.akVs5PFJets +
-#    process.akCs5PFJets +
-
-    process.akCsFilter4PFJets +
-#    process.akCsFilter5PFJets +
-    process.akCsSoftDrop4PFJets +
-#    process.akCsSoftDrop5PFJets +
-
-    process.highPurityTracks +
-    process.offlinePrimaryVertices +
-
-#    process.akPu2CaloJetSequence +
-#    process.akVs2CaloJetSequence +
-#    process.akVs2PFJetSequence +
-#    process.akPu2PFJetSequence +
-#    process.akCs2PFJetSequence +
-
-    process.akPu3CaloJetSequence +
-#    process.akVs3CaloJetSequence +
-#    process.akVs3PFJetSequence +
-    process.akPu3PFJetSequence +
-    process.akCs3PFJetSequence +
-
-    process.akPu4CaloJetSequence +
-#    process.akVs4CaloJetSequence +
-#    process.akVs4PFJetSequence +
-    process.akPu4PFJetSequence +
-    process.akCs4PFJetSequence +
-
-#    process.akPu5CaloJetSequence +
-#    process.akVs5CaloJetSequence +
-#    process.akVs5PFJetSequence +
-#    process.akPu5PFJetSequence +
-#    process.akCs5PFJetSequence +
-
-    process.akCsFilter4PFJetSequence +
-#    process.akCsFilter5PFJetSequence +
-    process.akCsSoftDrop4PFJetSequence 
-#    process.akCsSoftDrop5PFJetSequence
-)
-##### notes on 2016.10.05 - END
 
 #rho analyzer
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
@@ -219,6 +174,20 @@ process.load("HeavyIonsAnalysis.VectorBosonAnalysis.tupelSequence_PbPb_mc_cff")
 
 #####################################################################################
 
+#replace pp CSVv2 with PbPb CSVv2 (positive and negative taggers unchanged!)
+process.load('RecoBTag.CSVscikit.csvscikitTagJetTags_cfi')
+process.load('RecoBTag.CSVscikit.csvscikitTaggerProducer_cfi')
+process.akPu4PFCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.akPu4PFCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akPu4PFImpactParameterTagInfos"), cms.InputTag("akPu4PFSecondaryVertexTagInfos"))
+
+process.akCs4PFCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.akCs4PFCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akCs4PFImpactParameterTagInfos"), cms.InputTag("akCs4PFSecondaryVertexTagInfos"))
+
+process.akPu4CaloCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.akPu4CaloCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akPu4CaloImpactParameterTagInfos"), cms.InputTag("akPu4CaloSecondaryVertexTagInfos"))
+process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/bTagCSVv2PbPb_758p3_Jan2017_BDTG_weights.xml')
+
+
 #########################
 # Main analysis list
 #########################
@@ -232,7 +201,11 @@ process.ana_step = cms.Path(
                             process.hiEvtAnalyzer*
                             process.HiGenParticleAna*
                             process.akHiGenJets +
-                            process.hiSignalGenFilters + 
+                            process.hiSignalGenFilters +
+#                            process.ak2GenNjettiness +
+                            process.ak3GenNjettiness +
+#                            process.ak4GenNjettiness +
+                            process.ak5GenNjettiness *
                             process.jetSequences +
                             process.hiFJRhoAnalyzer +
                             process.ggHiNtuplizer +
