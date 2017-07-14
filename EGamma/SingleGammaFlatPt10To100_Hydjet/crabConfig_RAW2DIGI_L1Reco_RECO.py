@@ -8,7 +8,7 @@ config.General.transferLogs = False
 
 config.section_("JobType")
 config.JobType.pluginName = "Analysis"
-config.JobType.psetName = "step3_RAW2DIGI_L1Reco_RECO.py"
+config.JobType.psetName = "step3_RAW2DIGI_L1Reco_RECO_extendEC.py"
 # config.JobType.maxMemoryMB = 3000    # request high memory machines.
 
 config.section_("Data")
