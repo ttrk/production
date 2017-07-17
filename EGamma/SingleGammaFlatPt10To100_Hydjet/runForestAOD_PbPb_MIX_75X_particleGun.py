@@ -26,7 +26,7 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-                                "root://cms-xrd-global.cern.ch//store/user/katatar/EGamma/SingleGammaFlatPt10To100_pythia8_Hydjet_RAW2DIGI_L1Reco_RECO/170623_204011/0000/step3_RAW2DIGI_L1Reco_RECO_1.root"
+                                "root://cms-xrd-global.cern.ch//store/user/katatar/EGamma/SingleGammaFlatPt10To100_pythia8_Hydjet_RAW2DIGI_L1Reco_RECO/170714_211711/0000/step3_RAW2DIGI_L1Reco_RECO_extendEC_1.root"
 #                                "file:samples/PbPb_MC_RECODEBUG.root"
                                 )
                             )
