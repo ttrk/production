@@ -22,8 +22,8 @@ config.JobType.maxJobRuntimeMin = 2800    # request longer runtime, ~47 hours. 2
 config.section_("Data")
 config.Data.inputDataset = "/QCDPhoton_pThat-30_pPb-EmbEPOS_8p16_Pythia8/pPb816Summer16DR-pPbEmb_80X_mcRun2_pA_v4-v3/AODSIM"
 config.Data.inputDBS = "global"
-config.Data.splitting = "FileBased"
-config.Data.unitsPerJob = 1
+config.Data.splitting = "EventAwareLumiBased" # do not use "FileBased" since some files contain too many events to process with one job.
+config.Data.unitsPerJob = 2000
 config.Data.totalUnits = -1
 config.Data.publication = False
 config.Data.outputDatasetTag = "pPb816Summer16DR-pPbEmb_80X_mcRun2_pA_v4-v3-FOREST"
