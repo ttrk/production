@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "Tier0_LowEGJet_Run306462_RECO_94X"
+config.General.requestName = "LowEGJet_Run306462_RECO_94X_GT_Prompt_forHIN"
 config.General.transferLogs = False
 
 config.section_("JobType")
@@ -25,7 +25,7 @@ config.Data.unitsPerJob = 1
 config.Data.totalUnits = -1
 
 config.Data.outputPrimaryDataset = "dataProcessing"
-config.Data.outputDatasetTag = "LowEGJet_Run306462_RECO_94X"
+config.Data.outputDatasetTag = "LowEGJet_Run306462_RECO_94X_GT_Prompt_forHIN"
 config.Data.outLFNDirBase = "/store/group/phys_heavyions/katatar/HIRun2017PP/"
 
 config.section_("Site")
