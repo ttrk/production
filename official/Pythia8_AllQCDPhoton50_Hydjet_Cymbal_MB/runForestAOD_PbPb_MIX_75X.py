@@ -26,7 +26,8 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-                                "root://cms-xrd-global.cern.ch//store/himc/HINPbPbWinter16DR/Pythia8_AllQCDPhoton30_Hydjet_Cymbal_MB/AODSIM/75X_mcRun2_HeavyIon_v14-v1/130000/0445CE0F-87FA-E611-8619-FA163EB689E1.root"
+                                "root://cms-xrd-global.cern.ch//store/himc/HINPbPbWinter16DR/Pythia8_AllQCDPhoton30_Hydjet_Cymbal_MB/AODSIM/75X_mcRun2_HeavyIon_v14-v1/130000/00502EC0-0BFA-E611-A43B-FA163E16E92B.root"
+#                                "file:samples/PbPb_MC_RECODEBUG.root"
                                 )
                             )
 
@@ -35,6 +36,15 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(10)
 )
 
+process.output = cms.OutputModule("PoolOutputModule",
+                                  outputCommands = cms.untracked.vstring('drop *',
+                                                                         'keep *_particleFlow_*_*',
+                                                                         'keep *_particleFlowTmp_*_*',
+                                                                         'keep *_mapEtaEdges_*_*',
+                                                                         'keep *_*_*_HiForest'),
+                                  fileName       = cms.untracked.string ("OutputMC.root")
+)
+#process.outpath  = cms.EndPath(process.output)
 
 #####################################################################################
 # Load Global Tag, Geometry, etc.
@@ -113,11 +123,10 @@ process.HiGenParticleAna.genParticleSrc = cms.untracked.InputTag("genParticles")
 # Temporary disactivation - until we have DIGI & RECO in CMSSW_7_5_7_patch4
 process.HiGenParticleAna.doHI = False
 # KT - START
-# change gen particle pt and eta cuts : 5 -> 0.75, 2 -> 2.5
+# change gen particle pt and eta cuts : 5 -> 0.75
 process.HiGenParticleAna.ptMin = cms.untracked.double(0.75)
 process.HiGenParticleAna.etaMax = cms.untracked.double(2.5)
 # KT - END
-
 
 #####################################################################################
 
@@ -179,7 +188,9 @@ process.akCs4PFCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.Inpu
 
 process.akPu4CaloCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
 process.akPu4CaloCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akPu4CaloImpactParameterTagInfos"), cms.InputTag("akPu4CaloSecondaryVertexTagInfos"))
-process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/bTagCSVv2PbPb_758p3_Jan2017_BDTG_weights.xml')
+#process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/bTagCSVv2PbPb_758p3_Jan2017_BDTG_weights.xml')
+#trained on CS jets
+process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb_BDTG.weights.xml')
 
 
 #########################
@@ -195,7 +206,11 @@ process.ana_step = cms.Path(
                             process.hiEvtAnalyzer*
                             process.HiGenParticleAna*
                             process.akHiGenJets +
-                            process.hiSignalGenFilters + 
+                            process.hiSignalGenFilters +
+                            process.ak2GenNjettiness +
+                            process.ak3GenNjettiness +
+                            process.ak4GenNjettiness +
+                            process.ak5GenNjettiness *
                             process.jetSequences +
                             process.hiFJRhoAnalyzer +
                             process.ggHiNtuplizer +

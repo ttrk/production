@@ -11,12 +11,12 @@ config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "runForestAOD_PbPb_MIX_75X.py"
 # config.JobType.maxMemoryMB = 3500
 # forest_CMSSW_7_5_8_patch3
-# https://github.com/CmsHI/cmssw/commit/3e925fd90c95e8cd01723a5580e721b7205cb3e9
+# https://github.com/CmsHI/cmssw/commit/f61094f7a81de65dc1f9796236b8ed94fca888a6
 # runForestAOD_PbPb_MIX_75X.py commit + change gen particle pt and eta cuts
-# https://github.com/CmsHI/cmssw/commit/977c4ca9e06fe21aa7bb15bd564b24410d9e72dd
+# https://github.com/CmsHI/cmssw/commit/336108879815bf68a856f23a7a47254ef87347fd
 # related : 
-# https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/3838.html
-# https://twiki.cern.ch/twiki/bin/view/CMS/PbPb5TeVOfficialMC?rev=178#Available_Samples
+# https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/4611.html
+# https://twiki.cern.ch/twiki/bin/view/CMS/PbPb5TeVOfficialMC?rev=203#Available_Samples
 
 config.section_("Data")
 config.Data.inputDataset = "/Pythia8_AllQCDPhoton80_Hydjet_Cymbal_MB/HINPbPbWinter16DR-75X_mcRun2_HeavyIon_v14-v1/AODSIM"
@@ -31,5 +31,6 @@ config.Data.outLFNDirBase = "/store/user/katatar/official/"
 config.section_("Site")
 config.Site.storageSite = "T2_US_MIT"
 config.Site.whitelist = ["T2_US_MIT"]
-# config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
 
+config.section_("Debug")
+config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
