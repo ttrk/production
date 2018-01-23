@@ -6,7 +6,7 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/
 #inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/875/00000/CA409ED8-58AF-E711-9918-02163E01A3EA.root"
 #inputFile="file:CA409ED8-58AF-E711-9918-02163E01A3EA.root"
 
-$runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2017_pp_on_XeXe --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --conditions=auto:run2_data -n 100 --data --no_exec --no_output --filein=$inputFile &> cmsDriver_l1Ntuple_RAW2DIGI.log
+$runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2017_pp_on_XeXe --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAWCalouGT --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --conditions=94X_dataRun2_v2 -n 100 --data --no_exec --no_output --filein=$inputFile &> cmsDriver_l1Ntuple_RAW2DIGI.log
 ## do not use --conditions=92X_dataRun2_HLT_XeXe_v1. It gives the exception with following message : No "RPCOMTFLinkMapRcd" record found in the EventSetup for synchronization value
 
 config_l1Ntuple="l1Ntuple_RAW2DIGI.py"

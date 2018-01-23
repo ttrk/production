@@ -13,6 +13,7 @@ config.JobType.maxMemoryMB = 2500    # request high memory machines, 2500 is the
 config.JobType.maxJobRuntimeMin = 2750 # request longer runtime, ~47 hours. 2750 is the maximum guaranteed number.
 # CMSSW_9_4_0_pre3
 # L1 Stage2 instructions : https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TStage2Instructions?rev=123
+# Specific instructions for running on XeXeRun2017 data : https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=3#L1_Sample_Workflow
 # l1Ntuple_RAW2DIGI_FULL.py is created after calling ./createConfigs.sh
 
 config.section_("Data")

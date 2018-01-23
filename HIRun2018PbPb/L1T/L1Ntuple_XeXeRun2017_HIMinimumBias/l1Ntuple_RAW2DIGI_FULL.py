@@ -13599,7 +13599,7 @@ process.simGtStage2Digis = cms.EDProducer("L1TGlobalProducer",
     EtSumInputTag = cms.InputTag("simCaloStage2Digis"),
     ExtInputTag = cms.InputTag("simGtExtFakeStage2Digis"),
     JetInputTag = cms.InputTag("simCaloStage2Digis"),
-    MuonInputTag = cms.InputTag("simGmtStage2Digis"),
+    MuonInputTag = cms.InputTag("gtStage2Digis","Muon"),
     TauInputTag = cms.InputTag("simCaloStage2Digis")
 )
 
