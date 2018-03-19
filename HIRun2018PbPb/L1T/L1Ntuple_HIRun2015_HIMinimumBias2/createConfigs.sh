@@ -9,7 +9,8 @@ $runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2017 --customise=L1Trigger/
 ## do not use --conditions=92X_dataRun2_HLT_XeXe_v1. It gives the exception with following message : No "RPCOMTFLinkMapRcd" record found in the EventSetup for synchronization value
 
 config_l1Ntuple="l1Ntuple_RAW2DIGI.py"
-echo "process.caloStage2Params.hiFlag = cms.uint32(0)" >> $config_l1Ntuple
+#echo "process.caloStage2Params.hiFlag = cms.uint32(0)" >> $config_l1Ntuple
+echo "process.simCaloStage2Layer1Digis.hcalToken = cms.InputTag('hcalDigis')" >> $config_l1Ntuple # use the unpacked HCal Trigger Primitive instead of the simulated one
 
 config_l1Ntuple_LOG="${config_l1Ntuple/.py/.log}"
 echo "# run the config via"
