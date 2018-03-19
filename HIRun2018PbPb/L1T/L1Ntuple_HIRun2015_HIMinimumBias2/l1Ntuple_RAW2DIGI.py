@@ -95,4 +95,4 @@ process = massReplaceInputTag(process)
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 process = customiseEarlyDelete(process)
 # End adding early deletion
-process.caloStage2Params.hiFlag = cms.uint32(0)
+process.simCaloStage2Layer1Digis.hcalToken = cms.InputTag('hcalDigis')
