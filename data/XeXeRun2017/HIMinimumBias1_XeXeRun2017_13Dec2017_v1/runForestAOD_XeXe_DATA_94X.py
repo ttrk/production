@@ -201,7 +201,8 @@ process.load('HeavyIonsAnalysis.JetAnalysis.TrkAnalyzers_cff')
 #####################
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
 process.ggHiNtuplizer.gsfElectronLabel   = cms.InputTag("gedGsfElectrons")
-process.ggHiNtuplizer.recoPhotonHiIsolationMap = cms.InputTag('photonIsolationHIProducerpp')
+process.ggHiNtuplizer.recoPhotonSrc = cms.InputTag("islandPhotons")
+process.ggHiNtuplizer.recoPhotonHiIsolationMap = cms.InputTag('photonIsolationHIProducerppIsland')
 process.ggHiNtuplizer.useValMapIso = cms.bool(True)
 process.ggHiNtuplizer.VtxLabel  = cms.InputTag("offlinePrimaryVertices")
 process.ggHiNtuplizer.particleFlowCollection = cms.InputTag("particleFlow")
@@ -210,6 +211,8 @@ process.ggHiNtuplizer.doGenParticles = False
 process.ggHiNtuplizer.doElectronVID = cms.bool(True)
 process.ggHiNtuplizerGED = process.ggHiNtuplizer.clone(recoPhotonSrc = cms.InputTag('gedPhotons'),
                                                        recoPhotonHiIsolationMap = cms.InputTag('photonIsolationHIProducerppGED'))
+process.ggHiNtuplizerStd = process.ggHiNtuplizer.clone(recoPhotonSrc = cms.InputTag('photons'),
+                                                       recoPhotonHiIsolationMap = cms.InputTag('photonIsolationHIProducerpp'))
 
 ####################################################################################
 
@@ -256,6 +259,7 @@ process.ana_step = cms.Path(
     #                        process.egmGsfElectronIDSequence + #Should be added in the path for VID module
                             process.ggHiNtuplizer +
                             process.ggHiNtuplizerGED +
+                            process.ggHiNtuplizerStd +
                             #process.pfcandAnalyzer +
 			    #process.pfcandAnalyzerCS +
 			    #process.rechitanalyzer +

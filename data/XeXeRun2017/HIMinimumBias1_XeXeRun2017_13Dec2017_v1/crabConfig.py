@@ -12,9 +12,9 @@ config.JobType.psetName = 'runForestAOD_XeXe_DATA_94X.py'
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2500    # request longer runtime.
 # forest_CMSSW_9_4_1
-# https://github.com/CmsHI/cmssw/commit/cf67e84984c77e273e1f60f4d9bd3b98a24df754
-# runForestAOD_XeXe_DATA_94X.py commit + turn off trees not related to photon production analysis
-# https://github.com/CmsHI/cmssw/commit/0d66547c7fc89875bcbe03f7093412d7e1e3e9be
+# https://github.com/CmsHI/cmssw/commit/09a79bd943eda5136a9de73943553dd2bfd30f3e
+# runForestAOD_XeXe_DATA_94X.py commit + turn off trees not related to photon production analysis + add tree for standard photons
+# https://github.com/CmsHI/cmssw/commit/09a79bd943eda5136a9de73943553dd2bfd30f3e
 # JSON file : /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/HI/Cert_304899-304907_5TeV_PromptReco_XeXe_Collisions17_JSON.txt
 # related : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/4437.html
 
