@@ -1,0 +1,3 @@
+# Add the following lines into reco config to match pp reco process :
+#process.ecalDrivenElectronSeeds.SeedConfiguration.ecalDrivenElectronSeedsParameters.SCEtCut=cms.double(0)  # does not work
+process.ecalDrivenElectronSeeds.SeedConfiguration.SCEtCut=cms.double(0)

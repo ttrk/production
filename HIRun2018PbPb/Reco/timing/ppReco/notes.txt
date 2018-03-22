@@ -1,0 +1,2 @@
+# Add the following lines into reco config to match HI reco process :
+process.ecalDrivenElectronSeeds.SeedConfiguration.SCEtCut=cms.double(15)
