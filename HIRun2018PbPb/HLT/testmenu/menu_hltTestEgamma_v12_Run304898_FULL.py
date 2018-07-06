@@ -1,3 +1,4 @@
+#L1T INFO:  L1REPACK:Full (intended for 2016 & 2017 data) will unpack all L1T inputs, re-emulated (Stage-2), and pack uGT, uGMT, and Calo Stage-2 output.
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("MyHLT")
@@ -4662,6 +4663,584 @@ process.hltTriggerSummaryRAW = cms.EDProducer("TriggerSummaryProducerRAW",
 )
 
 
+process.packCaloStage2 = cms.EDProducer("L1TDigiToRaw",
+    FWId = cms.uint32(1),
+    FedId = cms.int32(1366),
+    InputLabel = cms.InputTag("simCaloStage2Digis"),
+    Setup = cms.string('stage2::CaloSetup'),
+    TowerInputLabel = cms.InputTag("simCaloStage2Layer1Digis"),
+    lenSlinkHeader = cms.untracked.int32(8),
+    lenSlinkTrailer = cms.untracked.int32(8)
+)
+
+
+process.packGmtStage2 = cms.EDProducer("L1TDigiToRaw",
+    BMTFInputLabel = cms.InputTag("simBmtfDigis","BMTF"),
+    EMTFInputLabel = cms.InputTag("simEmtfDigis","EMTF"),
+    FWId = cms.uint32(67174400),
+    FedId = cms.int32(1402),
+    ImdInputLabelBMTF = cms.InputTag("simGmtStage2Digis","imdMuonsBMTF"),
+    ImdInputLabelEMTFNeg = cms.InputTag("simGmtStage2Digis","imdMuonsEMTFNeg"),
+    ImdInputLabelEMTFPos = cms.InputTag("simGmtStage2Digis","imdMuonsEMTFPos"),
+    ImdInputLabelOMTFNeg = cms.InputTag("simGmtStage2Digis","imdMuonsOMTFNeg"),
+    ImdInputLabelOMTFPos = cms.InputTag("simGmtStage2Digis","imdMuonsOMTFPos"),
+    InputLabel = cms.InputTag("simGmtStage2Digis"),
+    OMTFInputLabel = cms.InputTag("simOmtfDigis","OMTF"),
+    Setup = cms.string('stage2::GMTSetup'),
+    lenSlinkHeader = cms.untracked.int32(8),
+    lenSlinkTrailer = cms.untracked.int32(8)
+)
+
+
+process.packGtStage2 = cms.EDProducer("L1TDigiToRaw",
+    EGammaInputTag = cms.InputTag("simCaloStage2Digis"),
+    EtSumInputTag = cms.InputTag("simCaloStage2Digis"),
+    ExtInputTag = cms.InputTag("simGtExtFakeStage2Digis"),
+    FWId = cms.uint32(4262),
+    FedId = cms.int32(1404),
+    GtInputTag = cms.InputTag("simGtStage2Digis"),
+    JetInputTag = cms.InputTag("simCaloStage2Digis"),
+    MuonInputTag = cms.InputTag("simGmtStage2Digis"),
+    Setup = cms.string('stage2::GTSetup'),
+    TauInputTag = cms.InputTag("simCaloStage2Digis"),
+    lenSlinkHeader = cms.untracked.int32(8),
+    lenSlinkTrailer = cms.untracked.int32(8)
+)
+
+
+process.rawDataRepacker = cms.EDProducer("RawDataCollectorByLabel",
+    RawCollectionList = cms.VInputTag(cms.InputTag("packCaloStage2"), cms.InputTag("packGmtStage2"), cms.InputTag("packGtStage2"), cms.InputTag("rawDataRepacker","","@skipCurrentProcess")),
+    verbose = cms.untracked.int32(0)
+)
+
+
+process.simBmtfDigis = cms.EDProducer("L1TMuonBarrelTrackProducer",
+    DTDigi_Source = cms.InputTag("simTwinMuxDigis"),
+    DTDigi_Theta_Source = cms.InputTag("unpackBmtf"),
+    Debug = cms.untracked.int32(0)
+)
+
+
+process.simCaloStage2Digis = cms.EDProducer("L1TStage2Layer2Producer",
+    firmware = cms.int32(1),
+    towerToken = cms.InputTag("simCaloStage2Layer1Digis"),
+    useStaticConfig = cms.bool(False)
+)
+
+
+process.simCaloStage2Layer1Digis = cms.EDProducer("L1TCaloLayer1",
+    ecalToken = cms.InputTag("unpackEcal","EcalTriggerPrimitives"),
+    firmwareVersion = cms.int32(3),
+    hcalToken = cms.InputTag("unpackLayer1"),
+    unpackEcalMask = cms.bool(False),
+    unpackHcalMask = cms.bool(False),
+    useCalib = cms.bool(True),
+    useECALLUT = cms.bool(True),
+    useHCALLUT = cms.bool(True),
+    useHFLUT = cms.bool(True),
+    useLSB = cms.bool(True),
+    verbose = cms.bool(False)
+)
+
+
+process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProducer",
+    CSCComparatorDigiProducer = cms.InputTag("unpackCSC","MuonCSCComparatorDigi"),
+    CSCWireDigiProducer = cms.InputTag("unpackCSC","MuonCSCWireDigi"),
+    MaxBX = cms.int32(9),
+    MinBX = cms.int32(3),
+    alctParam07 = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(4),
+        alctGhostCancellationSideQuality = cms.bool(False),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(False),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(4),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    alctParamMTCC = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(3),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctL1aWindowWidth = cms.uint32(3),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(2),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(2),
+        alctTrigMode = cms.uint32(2),
+        verbosity = cms.int32(0)
+    ),
+    alctParamOldMC = cms.PSet(
+        alctAccelMode = cms.uint32(1),
+        alctDriftDelay = cms.uint32(3),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctL1aWindowWidth = cms.uint32(5),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(2),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(2),
+        alctTrigMode = cms.uint32(3),
+        verbosity = cms.int32(0)
+    ),
+    alctSLHC = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(1),
+        alctGhostCancellationSideQuality = cms.bool(True),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(True),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(0),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    checkBadChambers = cms.bool(False),
+    clctParam07 = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(10),
+        clctNplanesHitPattern = cms.uint32(4),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(2),
+        clctStartBxShift = cms.int32(0),
+        verbosity = cms.int32(0)
+    ),
+    clctParamMTCC = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(6),
+        clctMinSeparation = cms.uint32(10),
+        clctNplanesHitPattern = cms.uint32(1),
+        clctNplanesHitPretrig = cms.uint32(4),
+        clctPidThreshPretrig = cms.uint32(2),
+        verbosity = cms.int32(0)
+    ),
+    clctParamOldMC = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(6),
+        clctMinSeparation = cms.uint32(10),
+        clctNplanesHitPattern = cms.uint32(4),
+        clctNplanesHitPretrig = cms.uint32(2),
+        clctPidThreshPretrig = cms.uint32(2),
+        verbosity = cms.int32(0)
+    ),
+    clctSLHC = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(5),
+        clctNplanesHitPattern = cms.uint32(4),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(4),
+        clctPretriggerTriggerZone = cms.uint32(5),
+        clctStartBxShift = cms.int32(0),
+        clctStateMachineZone = cms.uint32(8),
+        clctUseCorrectedBx = cms.bool(True),
+        useDeadTimeZoning = cms.bool(True),
+        useDynamicStateMachineZone = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    commonParam = cms.PSet(
+        disableME1a = cms.bool(False),
+        disableME42 = cms.bool(False),
+        gangedME1a = cms.bool(False),
+        isMTCC = cms.bool(False),
+        isSLHC = cms.bool(False),
+        isTMB07 = cms.bool(True),
+        smartME1aME1b = cms.bool(False)
+    ),
+    debugParameters = cms.bool(True),
+    mpcRun2 = cms.PSet(
+        dropInvalidStubs = cms.bool(False),
+        dropLowQualityStubs = cms.bool(False),
+        sortStubs = cms.bool(False)
+    ),
+    tmbParam = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        clctToAlct = cms.bool(True),
+        clctTrigEnable = cms.uint32(0),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(7),
+        mpcBlockMe1a = cms.uint32(0),
+        tmbDropUsedAlcts = cms.bool(True),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(7),
+        tmbReadoutEarliest2 = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    tmbSLHC = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        clctToAlct = cms.bool(False),
+        clctTrigEnable = cms.uint32(0),
+        matchEarliestAlctME11Only = cms.bool(False),
+        matchEarliestClctME11Only = cms.bool(False),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(3),
+        maxME11LCTs = cms.uint32(2),
+        mpcBlockMe1a = cms.uint32(0),
+        tmbCrossBxAlgorithm = cms.uint32(1),
+        tmbDropUsedAlcts = cms.bool(False),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(7),
+        tmbReadoutEarliest2 = cms.bool(False),
+        verbosity = cms.int32(0)
+    )
+)
+
+
+process.simDtTriggerPrimitiveDigis = cms.EDProducer("DTTrigProd",
+    DTTFSectorNumbering = cms.bool(True),
+    debug = cms.untracked.bool(False),
+    digiTag = cms.InputTag("unpackDT"),
+    lutBtic = cms.untracked.int32(31),
+    lutDumpFlag = cms.untracked.bool(False)
+)
+
+
+process.simEmtfDigis = cms.EDProducer("L1TMuonEndCapTrackProducer",
+    BXWindow = cms.int32(3),
+    CSCEnable = cms.bool(True),
+    CSCInput = cms.InputTag("unpackEmtf"),
+    CSCInputBXShift = cms.int32(-6),
+    GEMEnable = cms.bool(False),
+    GEMInput = cms.InputTag("simMuonGEMPadDigis"),
+    GEMInputBXShift = cms.int32(0),
+    MaxBX = cms.int32(3),
+    MinBX = cms.int32(-3),
+    RPCEnable = cms.bool(True),
+    RPCInput = cms.InputTag("unpackRPC"),
+    RPCInputBXShift = cms.int32(0),
+    spGCParams16 = cms.PSet(
+        BugSameSectorPt0 = cms.bool(False),
+        MaxRoadsPerZone = cms.int32(3),
+        MaxTracks = cms.int32(3),
+        UseSecondEarliest = cms.bool(True)
+    ),
+    spPAParams16 = cms.PSet(
+        Bug9BitDPhi = cms.bool(False),
+        BugGMTPhi = cms.bool(False),
+        BugMode7CLCT = cms.bool(False),
+        BugNegPt = cms.bool(False),
+        FixMode15HighPt = cms.bool(True),
+        PromoteMode7 = cms.bool(True),
+        PtLUTVersion = cms.int32(7),
+        ReadPtLUTFile = cms.bool(False)
+    ),
+    spPCParams16 = cms.PSet(
+        DuplicateTheta = cms.bool(True),
+        FixME11Edges = cms.bool(True),
+        FixZonePhi = cms.bool(True),
+        IncludeNeighbor = cms.bool(True),
+        UseNewZones = cms.bool(False),
+        ZoneBoundaries = cms.vint32(0, 41, 49, 87, 127),
+        ZoneOverlap = cms.int32(2)
+    ),
+    spPRParams16 = cms.PSet(
+        PatternDefinitions = cms.vstring(
+            '4,15:15,7:7,7:7,7:7', 
+            '3,16:16,7:7,7:6,7:6', 
+            '3,14:14,7:7,8:7,8:7', 
+            '2,18:17,7:7,7:5,7:5', 
+            '2,13:12,7:7,10:7,10:7', 
+            '1,22:19,7:7,7:0,7:0', 
+            '1,11:8,7:7,14:7,14:7', 
+            '0,30:23,7:7,7:0,7:0', 
+            '0,7:0,7:7,14:7,14:7'
+        ),
+        SymPatternDefinitions = cms.vstring(
+            '4,15:15:15:15,7:7:7:7,7:7:7:7,7:7:7:7', 
+            '3,16:16:14:14,7:7:7:7,8:7:7:6,8:7:7:6', 
+            '2,18:17:13:12,7:7:7:7,10:7:7:4,10:7:7:4', 
+            '1,22:19:11:8,7:7:7:7,14:7:7:0,14:7:7:0', 
+            '0,30:23:7:0,7:7:7:7,14:7:7:0,14:7:7:0'
+        ),
+        UseSymmetricalPatterns = cms.bool(True)
+    ),
+    spTBParams16 = cms.PSet(
+        BugME11Dupes = cms.bool(False),
+        BugSt2PhDiff = cms.bool(False),
+        ThetaWindow = cms.int32(8),
+        ThetaWindowRPC = cms.int32(8),
+        UseSingleHits = cms.bool(False)
+    ),
+    verbosity = cms.untracked.int32(0)
+)
+
+
+process.simGmtCaloSumDigis = cms.EDProducer("L1TMuonCaloSumProducer",
+    caloStage2Layer2Label = cms.InputTag("simCaloStage2Layer1Digis")
+)
+
+
+process.simGmtStage2Digis = cms.EDProducer("L1TMuonProducer",
+    autoBxRange = cms.bool(True),
+    autoCancelMode = cms.bool(False),
+    barrelTFInput = cms.InputTag("simBmtfDigis","BMTF"),
+    bxMax = cms.int32(2),
+    bxMin = cms.int32(-2),
+    emtfCancelMode = cms.string('coordinate'),
+    forwardTFInput = cms.InputTag("simEmtfDigis","EMTF"),
+    overlapTFInput = cms.InputTag("simOmtfDigis","OMTF"),
+    triggerTowerInput = cms.InputTag("simGmtCaloSumDigis","TriggerTowerSums")
+)
+
+
+process.simGtExtFakeStage2Digis = cms.EDProducer("L1TExtCondProducer",
+    bxFirst = cms.int32(-2),
+    bxLast = cms.int32(2),
+    setBptxAND = cms.bool(True),
+    setBptxMinus = cms.bool(True),
+    setBptxOR = cms.bool(True),
+    setBptxPlus = cms.bool(True)
+)
+
+
+process.simGtStage2Digis = cms.EDProducer("L1TGlobalProducer",
+    AlgorithmTriggersUnmasked = cms.bool(True),
+    AlgorithmTriggersUnprescaled = cms.bool(True),
+    EGammaInputTag = cms.InputTag("simCaloStage2Digis"),
+    EtSumInputTag = cms.InputTag("simCaloStage2Digis"),
+    ExtInputTag = cms.InputTag("simGtExtFakeStage2Digis"),
+    JetInputTag = cms.InputTag("simCaloStage2Digis"),
+    MuonInputTag = cms.InputTag("simGmtStage2Digis"),
+    TauInputTag = cms.InputTag("simCaloStage2Digis")
+)
+
+
+process.simOmtfDigis = cms.EDProducer("L1TMuonOverlapTrackProducer",
+    XMLDumpFileName = cms.string('TestEvents.xml'),
+    dropCSCPrimitives = cms.bool(False),
+    dropDTPrimitives = cms.bool(False),
+    dropRPCPrimitives = cms.bool(False),
+    dumpDetailedResultToXML = cms.bool(False),
+    dumpGPToXML = cms.bool(False),
+    dumpResultToXML = cms.bool(False),
+    eventsXMLFiles = cms.vstring('TestEvents.xml'),
+    readEventsFromXML = cms.bool(False),
+    srcCSC = cms.InputTag("unpackOmtf"),
+    srcDTPh = cms.InputTag("unpackOmtf"),
+    srcDTTh = cms.InputTag("unpackOmtf"),
+    srcRPC = cms.InputTag("unpackOmtf")
+)
+
+
+process.simTwinMuxDigis = cms.EDProducer("L1TTwinMuxProducer",
+    DTDigi_Source = cms.InputTag("unpackTwinMux","PhIn"),
+    DTThetaDigi_Source = cms.InputTag("unpackTwinMux","ThIn"),
+    RPC_Source = cms.InputTag("unpackRPCTwinMux")
+)
+
+
+process.unpackBmtf = cms.EDProducer("L1TRawToDigi",
+    FWId = cms.uint32(1),
+    FedIds = cms.vint32(1376, 1377),
+    InputLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    Setup = cms.string('stage2::BMTFSetup'),
+    lenAMC13Header = cms.untracked.int32(8),
+    lenAMC13Trailer = cms.untracked.int32(8),
+    lenAMCHeader = cms.untracked.int32(8),
+    lenAMCTrailer = cms.untracked.int32(0),
+    lenSlinkHeader = cms.untracked.int32(8),
+    lenSlinkTrailer = cms.untracked.int32(8)
+)
+
+
+process.unpackCSC = cms.EDProducer("CSCDCCUnpacker",
+    Debug = cms.untracked.bool(False),
+    ErrorMask = cms.uint32(0),
+    ExaminerMask = cms.uint32(535557110),
+    FormatedEventDump = cms.untracked.bool(False),
+    InputObjects = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    PrintEventNumber = cms.untracked.bool(False),
+    SuppressZeroLCT = cms.untracked.bool(True),
+    UnpackStatusDigis = cms.bool(False),
+    UseExaminer = cms.bool(True),
+    UseFormatStatus = cms.bool(True),
+    UseSelectiveUnpacking = cms.bool(True),
+    VisualFEDInspect = cms.untracked.bool(False),
+    VisualFEDShort = cms.untracked.bool(False),
+    runDQM = cms.untracked.bool(False)
+)
+
+
+process.unpackCsctf = cms.EDProducer("CSCTFUnpacker",
+    MaxBX = cms.int32(9),
+    MinBX = cms.int32(3),
+    mappingFile = cms.string(''),
+    producer = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    slot2sector = cms.vint32(
+        0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 
+        0, 0
+    ),
+    swapME1strips = cms.bool(False)
+)
+
+
+process.unpackDT = cms.EDProducer("DTuROSRawToDigi",
+    debug = cms.untracked.bool(False),
+    inputLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess")
+)
+
+
+process.unpackEcal = cms.EDProducer("EcalRawToDigi",
+    DoRegional = cms.bool(False),
+    FEDs = cms.vint32(
+        601, 602, 603, 604, 605, 
+        606, 607, 608, 609, 610, 
+        611, 612, 613, 614, 615, 
+        616, 617, 618, 619, 620, 
+        621, 622, 623, 624, 625, 
+        626, 627, 628, 629, 630, 
+        631, 632, 633, 634, 635, 
+        636, 637, 638, 639, 640, 
+        641, 642, 643, 644, 645, 
+        646, 647, 648, 649, 650, 
+        651, 652, 653, 654
+    ),
+    FedLabel = cms.InputTag("listfeds"),
+    InputLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    eventPut = cms.bool(True),
+    feIdCheck = cms.bool(True),
+    feUnpacking = cms.bool(True),
+    forceToKeepFRData = cms.bool(False),
+    headerUnpacking = cms.bool(True),
+    memUnpacking = cms.bool(True),
+    numbTriggerTSamples = cms.int32(1),
+    numbXtalTSamples = cms.int32(10),
+    orderedDCCIdList = cms.vint32(
+        1, 2, 3, 4, 5, 
+        6, 7, 8, 9, 10, 
+        11, 12, 13, 14, 15, 
+        16, 17, 18, 19, 20, 
+        21, 22, 23, 24, 25, 
+        26, 27, 28, 29, 30, 
+        31, 32, 33, 34, 35, 
+        36, 37, 38, 39, 40, 
+        41, 42, 43, 44, 45, 
+        46, 47, 48, 49, 50, 
+        51, 52, 53, 54
+    ),
+    orderedFedList = cms.vint32(
+        601, 602, 603, 604, 605, 
+        606, 607, 608, 609, 610, 
+        611, 612, 613, 614, 615, 
+        616, 617, 618, 619, 620, 
+        621, 622, 623, 624, 625, 
+        626, 627, 628, 629, 630, 
+        631, 632, 633, 634, 635, 
+        636, 637, 638, 639, 640, 
+        641, 642, 643, 644, 645, 
+        646, 647, 648, 649, 650, 
+        651, 652, 653, 654
+    ),
+    silentMode = cms.untracked.bool(True),
+    srpUnpacking = cms.bool(True),
+    syncCheck = cms.bool(True),
+    tccUnpacking = cms.bool(True)
+)
+
+
+process.unpackEmtf = cms.EDProducer("L1TRawToDigi",
+    FWId = cms.uint32(0),
+    FedIds = cms.vint32(1384, 1385),
+    InputLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    MTF7 = cms.untracked.bool(True),
+    Setup = cms.string('stage2::EMTFSetup'),
+    debug = cms.untracked.bool(False)
+)
+
+
+process.unpackHcal = cms.EDProducer("HcalRawToDigi",
+    ComplainEmptyData = cms.untracked.bool(False),
+    ElectronicsMap = cms.string(''),
+    ExpectedOrbitMessageTime = cms.untracked.int32(-1),
+    FEDs = cms.untracked.vint32(),
+    FilterDataQuality = cms.bool(True),
+    HcalFirstFED = cms.untracked.int32(700),
+    InputLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    UnpackCalib = cms.untracked.bool(True),
+    UnpackTTP = cms.untracked.bool(True),
+    UnpackUMNio = cms.untracked.bool(True),
+    UnpackZDC = cms.untracked.bool(True),
+    UnpackerMode = cms.untracked.int32(0),
+    firstSample = cms.int32(0),
+    lastSample = cms.int32(9),
+    saveQIE10DataNSamples = cms.untracked.vint32(),
+    saveQIE10DataTags = cms.untracked.vstring(),
+    saveQIE11DataNSamples = cms.untracked.vint32(),
+    saveQIE11DataTags = cms.untracked.vstring(),
+    silent = cms.untracked.bool(True)
+)
+
+
+process.unpackLayer1 = cms.EDProducer("L1TCaloLayer1RawToDigi",
+    FEDIDs = cms.vint32(1354, 1356, 1358),
+    fedRawDataLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    verbose = cms.bool(False)
+)
+
+
+process.unpackOmtf = cms.EDProducer("OmtfUnpacker",
+    inputLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    skipRpc = cms.bool(False)
+)
+
+
+process.unpackRPC = cms.EDProducer("RPCUnpackingModule",
+    InputLabel = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    doSynchro = cms.bool(True)
+)
+
+
+process.unpackRPCTwinMux = cms.EDProducer("RPCTwinMuxRawToDigi",
+    bxMax = cms.int32(2),
+    bxMin = cms.int32(-2),
+    calculateCRC = cms.bool(True),
+    fillCounters = cms.bool(True),
+    inputTag = cms.InputTag("rawDataRepacker","","@skipCurrentProcess")
+)
+
+
+process.unpackTwinMux = cms.EDProducer("L1TTwinMuxRawToDigi",
+    DTTM7_FED_Source = cms.InputTag("rawDataRepacker","","@skipCurrentProcess"),
+    amcsecmap = cms.untracked.vint64(20015998343868, 20015998343868, 20015998343868, 20015998343868, 20015998343868),
+    debug = cms.untracked.bool(False),
+    feds = cms.untracked.vint32(1395, 1391, 1390, 1393, 1394),
+    wheels = cms.untracked.vint32(-2, -1, 0, 1, 2)
+)
+
+
 process.hltBoolEnd = cms.EDFilter("HLTBool",
     result = cms.bool(True)
 )
@@ -5005,6 +5584,32 @@ process.CaloGeometryBuilder = cms.ESProducer("CaloGeometryBuilder",
 )
 
 
+process.CaloTPGTranscoder = cms.ESProducer("CaloTPGTranscoderULUTs",
+    LUTfactor = cms.vint32(1, 2, 5, 0),
+    RCTLSB = cms.double(0.25),
+    ZS = cms.vint32(4, 2, 1, 0),
+    hcalLUT1 = cms.FileInPath('CalibCalorimetry/CaloTPG/data/outputLUTtranscoder_physics.dat'),
+    hcalLUT2 = cms.FileInPath('CalibCalorimetry/CaloTPG/data/TPGcalcDecompress2.txt'),
+    ietaLowerBound = cms.vint32(1, 18, 27, 29),
+    ietaUpperBound = cms.vint32(17, 26, 28, 32),
+    linearLUTs = cms.bool(True),
+    nominal_gain = cms.double(0.177),
+    read_Ascii_Compression_LUTs = cms.bool(False),
+    read_Ascii_RCT_LUTs = cms.bool(False),
+    tpScales = cms.PSet(
+        HBHE = cms.PSet(
+            LSBQIE11 = cms.double(0.0625),
+            LSBQIE11Overlap = cms.double(0.125),
+            LSBQIE8 = cms.double(0.125)
+        ),
+        HF = cms.PSet(
+            NCTShift = cms.int32(2),
+            RCTShift = cms.int32(3)
+        )
+    )
+)
+
+
 process.CaloTopologyBuilder = cms.ESProducer("CaloTopologyBuilder")
 
 
@@ -5111,10 +5716,507 @@ process.HcalGeometryFromDBEP = cms.ESProducer("HcalGeometryFromDBEP",
 )
 
 
+process.HcalTPGCoderULUT = cms.ESProducer("HcalTPGCoderULUT",
+    FGLUTs = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/HBHE_FG_LUT.dat'),
+    FG_HF_threshold = cms.uint32(17),
+    LUTGenerationMode = cms.bool(True),
+    MaskBit = cms.int32(32768),
+    RCalibFile = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/RecHit-TPG-calib.dat'),
+    inputLUTs = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/inputLUTcoder_physics.dat'),
+    linearLUTs = cms.bool(True),
+    read_Ascii_LUTs = cms.bool(False),
+    read_FG_LUTs = cms.bool(False),
+    read_XML_LUTs = cms.bool(False),
+    tpScales = cms.PSet(
+        HBHE = cms.PSet(
+            LSBQIE11 = cms.double(0.0625),
+            LSBQIE11Overlap = cms.double(0.125),
+            LSBQIE8 = cms.double(0.125)
+        ),
+        HF = cms.PSet(
+            NCTShift = cms.int32(2),
+            RCTShift = cms.int32(3)
+        )
+    )
+)
+
+
 process.HcalTopologyIdealEP = cms.ESProducer("HcalTopologyIdealEP",
     Exclude = cms.untracked.string(''),
     MergePosition = cms.untracked.bool(True),
     appendToDataLabel = cms.string('')
+)
+
+
+process.HcalTrigTowerGeometryESProducer = cms.ESProducer("HcalTrigTowerGeometryESProducer")
+
+
+process.L1DTConfigFromDB = cms.ESProducer("DTConfigDBProducer",
+    DTTPGMap = cms.untracked.PSet(
+    **dict(
+        [
+            ("wh0st1se1" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se10" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se11" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se12" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se2" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se3" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se4" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se5" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se6" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se7" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se8" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st1se9" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh0st2se1" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se10" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se11" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se12" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se2" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se3" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se4" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se5" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se6" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se7" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se8" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st2se9" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh0st3se1" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se10" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se11" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se12" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se2" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se3" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se4" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se5" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se6" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se7" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se8" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st3se9" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh0st4se1" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh0st4se10" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("wh0st4se11" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("wh0st4se12" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("wh0st4se13" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("wh0st4se14" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("wh0st4se2" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh0st4se3" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh0st4se4" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("wh0st4se5" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh0st4se6" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh0st4se7" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh0st4se8" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("wh0st4se9" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("wh1st1se1" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se10" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se11" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se12" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se2" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se3" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se4" , cms.untracked.vint32(50, 48, 50, 13) ),
+            ("wh1st1se5" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se6" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se7" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se8" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st1se9" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh1st2se1" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se10" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se11" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se12" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se2" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se3" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se4" , cms.untracked.vint32(60, 48, 60, 15) ),
+            ("wh1st2se5" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se6" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se7" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se8" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st2se9" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh1st3se1" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se10" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se11" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se12" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se2" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se3" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se4" , cms.untracked.vint32(72, 48, 72, 18) ),
+            ("wh1st3se5" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se6" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se7" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se8" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st3se9" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh1st4se1" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh1st4se10" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("wh1st4se11" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("wh1st4se12" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("wh1st4se13" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("wh1st4se14" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("wh1st4se2" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh1st4se3" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh1st4se4" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("wh1st4se5" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh1st4se6" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh1st4se7" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh1st4se8" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("wh1st4se9" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("wh2st1se1" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se10" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se11" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se12" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se2" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se3" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se4" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se5" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se6" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se7" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se8" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st1se9" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("wh2st2se1" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se10" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se11" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se12" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se2" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se3" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se4" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se5" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se6" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se7" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se8" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st2se9" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("wh2st3se1" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se10" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se11" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se12" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se2" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se3" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se4" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se5" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se6" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se7" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se8" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st3se9" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("wh2st4se1" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh2st4se10" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("wh2st4se11" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("wh2st4se12" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("wh2st4se13" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("wh2st4se14" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("wh2st4se2" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh2st4se3" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh2st4se4" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("wh2st4se5" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh2st4se6" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh2st4se7" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("wh2st4se8" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("wh2st4se9" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("whm1st1se1" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se10" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se11" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se12" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se2" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se3" , cms.untracked.vint32(50, 48, 50, 13) ),
+            ("whm1st1se4" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se5" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se6" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se7" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se8" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st1se9" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm1st2se1" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se10" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se11" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se12" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se2" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se3" , cms.untracked.vint32(60, 48, 60, 15) ),
+            ("whm1st2se4" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se5" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se6" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se7" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se8" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st2se9" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm1st3se1" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se10" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se11" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se12" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se2" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se3" , cms.untracked.vint32(72, 48, 72, 18) ),
+            ("whm1st3se4" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se5" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se6" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se7" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se8" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st3se9" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm1st4se1" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm1st4se10" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("whm1st4se11" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("whm1st4se12" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("whm1st4se13" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("whm1st4se14" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("whm1st4se2" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm1st4se3" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm1st4se4" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("whm1st4se5" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm1st4se6" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm1st4se7" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm1st4se8" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("whm1st4se9" , cms.untracked.vint32(48, 0, 48, 12) ),
+        ] +
+        [
+            ("whm2st1se1" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se10" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se11" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se12" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se2" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se3" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se4" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se5" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se6" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se7" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se8" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st1se9" , cms.untracked.vint32(50, 58, 50, 13) ),
+            ("whm2st2se1" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se10" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se11" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se12" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se2" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se3" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se4" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se5" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se6" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se7" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se8" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st2se9" , cms.untracked.vint32(60, 58, 60, 15) ),
+            ("whm2st3se1" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se10" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se11" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se12" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se2" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se3" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se4" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se5" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se6" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se7" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se8" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st3se9" , cms.untracked.vint32(72, 58, 72, 18) ),
+            ("whm2st4se1" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm2st4se10" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("whm2st4se11" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ("whm2st4se12" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("whm2st4se13" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("whm2st4se14" , cms.untracked.vint32(60, 0, 60, 15) ),
+            ("whm2st4se2" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm2st4se3" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm2st4se4" , cms.untracked.vint32(72, 0, 72, 18) ),
+            ("whm2st4se5" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm2st4se6" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm2st4se7" , cms.untracked.vint32(96, 0, 96, 24) ),
+            ("whm2st4se8" , cms.untracked.vint32(92, 0, 92, 23) ),
+            ("whm2st4se9" , cms.untracked.vint32(48, 0, 48, 12) ),
+            ]
+        )
+    ),
+    DTTPGParameters = cms.PSet(
+        Debug = cms.untracked.bool(False),
+        SectCollParameters = cms.PSet(
+            Debug = cms.untracked.bool(False),
+            SCCSP1 = cms.int32(0),
+            SCCSP2 = cms.int32(0),
+            SCCSP3 = cms.int32(0),
+            SCCSP4 = cms.int32(0),
+            SCCSP5 = cms.int32(0),
+            SCECF1 = cms.bool(False),
+            SCECF2 = cms.bool(False),
+            SCECF3 = cms.bool(False),
+            SCECF4 = cms.bool(False)
+        ),
+        TUParameters = cms.PSet(
+            BtiParameters = cms.PSet(
+                AC1 = cms.int32(0),
+                AC2 = cms.int32(3),
+                ACH = cms.int32(1),
+                ACL = cms.int32(2),
+                CH = cms.int32(41),
+                CL = cms.int32(22),
+                DEAD = cms.int32(31),
+                Debug = cms.untracked.int32(0),
+                KACCTHETA = cms.int32(1),
+                KMAX = cms.int32(64),
+                LH = cms.int32(21),
+                LL = cms.int32(2),
+                LTS = cms.int32(3),
+                PTMS0 = cms.int32(0),
+                PTMS1 = cms.int32(0),
+                PTMS10 = cms.int32(1),
+                PTMS11 = cms.int32(1),
+                PTMS12 = cms.int32(1),
+                PTMS13 = cms.int32(1),
+                PTMS14 = cms.int32(1),
+                PTMS15 = cms.int32(1),
+                PTMS16 = cms.int32(1),
+                PTMS17 = cms.int32(1),
+                PTMS18 = cms.int32(1),
+                PTMS19 = cms.int32(1),
+                PTMS2 = cms.int32(0),
+                PTMS20 = cms.int32(1),
+                PTMS21 = cms.int32(1),
+                PTMS22 = cms.int32(1),
+                PTMS23 = cms.int32(1),
+                PTMS24 = cms.int32(1),
+                PTMS25 = cms.int32(1),
+                PTMS26 = cms.int32(1),
+                PTMS27 = cms.int32(1),
+                PTMS28 = cms.int32(1),
+                PTMS29 = cms.int32(1),
+                PTMS3 = cms.int32(0),
+                PTMS30 = cms.int32(0),
+                PTMS31 = cms.int32(0),
+                PTMS4 = cms.int32(1),
+                PTMS5 = cms.int32(1),
+                PTMS6 = cms.int32(1),
+                PTMS7 = cms.int32(1),
+                PTMS8 = cms.int32(1),
+                PTMS9 = cms.int32(1),
+                RE43 = cms.int32(2),
+                RH = cms.int32(61),
+                RL = cms.int32(42),
+                RON = cms.bool(True),
+                SET = cms.int32(7),
+                ST43 = cms.int32(42),
+                WEN0 = cms.int32(1),
+                WEN1 = cms.int32(1),
+                WEN2 = cms.int32(1),
+                WEN3 = cms.int32(1),
+                WEN4 = cms.int32(1),
+                WEN5 = cms.int32(1),
+                WEN6 = cms.int32(1),
+                WEN7 = cms.int32(1),
+                WEN8 = cms.int32(1),
+                XON = cms.bool(False)
+            ),
+            Debug = cms.untracked.bool(False),
+            LutParameters = cms.PSet(
+                BTIC = cms.untracked.int32(0),
+                D = cms.untracked.double(0),
+                Debug = cms.untracked.bool(False),
+                WHEEL = cms.untracked.int32(-1),
+                XCN = cms.untracked.double(0)
+            ),
+            TSPhiParameters = cms.PSet(
+                Debug = cms.untracked.bool(False),
+                TSMCCE1 = cms.bool(True),
+                TSMCCE2 = cms.bool(False),
+                TSMCCEC = cms.bool(False),
+                TSMCGS1 = cms.bool(True),
+                TSMCGS2 = cms.bool(True),
+                TSMGS1 = cms.int32(1),
+                TSMGS2 = cms.int32(1),
+                TSMHSP = cms.int32(1),
+                TSMHTE1 = cms.bool(True),
+                TSMHTE2 = cms.bool(False),
+                TSMHTEC = cms.bool(False),
+                TSMMSK1 = cms.int32(312),
+                TSMMSK2 = cms.int32(312),
+                TSMNOE1 = cms.bool(True),
+                TSMNOE2 = cms.bool(False),
+                TSMNOEC = cms.bool(False),
+                TSMWORD = cms.int32(255),
+                TSSCCE1 = cms.bool(True),
+                TSSCCE2 = cms.bool(False),
+                TSSCCEC = cms.bool(False),
+                TSSCGS1 = cms.bool(True),
+                TSSCGS2 = cms.bool(True),
+                TSSGS1 = cms.int32(1),
+                TSSGS2 = cms.int32(1),
+                TSSHTE1 = cms.bool(True),
+                TSSHTE2 = cms.bool(False),
+                TSSHTEC = cms.bool(False),
+                TSSMSK1 = cms.int32(312),
+                TSSMSK2 = cms.int32(312),
+                TSSNOE1 = cms.bool(True),
+                TSSNOE2 = cms.bool(False),
+                TSSNOEC = cms.bool(False),
+                TSTREN0 = cms.bool(True),
+                TSTREN1 = cms.bool(True),
+                TSTREN10 = cms.bool(True),
+                TSTREN11 = cms.bool(True),
+                TSTREN12 = cms.bool(True),
+                TSTREN13 = cms.bool(True),
+                TSTREN14 = cms.bool(True),
+                TSTREN15 = cms.bool(True),
+                TSTREN16 = cms.bool(True),
+                TSTREN17 = cms.bool(True),
+                TSTREN18 = cms.bool(True),
+                TSTREN19 = cms.bool(True),
+                TSTREN2 = cms.bool(True),
+                TSTREN20 = cms.bool(True),
+                TSTREN21 = cms.bool(True),
+                TSTREN22 = cms.bool(True),
+                TSTREN23 = cms.bool(True),
+                TSTREN3 = cms.bool(True),
+                TSTREN4 = cms.bool(True),
+                TSTREN5 = cms.bool(True),
+                TSTREN6 = cms.bool(True),
+                TSTREN7 = cms.bool(True),
+                TSTREN8 = cms.bool(True),
+                TSTREN9 = cms.bool(True)
+            ),
+            TSThetaParameters = cms.PSet(
+                Debug = cms.untracked.bool(False)
+            ),
+            TracoParameters = cms.PSet(
+                BTIC = cms.int32(32),
+                DD = cms.int32(18),
+                Debug = cms.untracked.int32(0),
+                FHISM = cms.int32(0),
+                FHTMSK = cms.int32(0),
+                FHTPRF = cms.int32(1),
+                FLTMSK = cms.int32(1),
+                FPRGCOMP = cms.int32(2),
+                FSLMSK = cms.int32(0),
+                IBTIOFF = cms.int32(0),
+                KPRGCOM = cms.int32(255),
+                KRAD = cms.int32(0),
+                LTF = cms.int32(0),
+                LTS = cms.int32(0),
+                LVALIDIFH = cms.int32(0),
+                REUSEI = cms.int32(1),
+                REUSEO = cms.int32(1),
+                SHISM = cms.int32(0),
+                SHTMSK = cms.int32(0),
+                SHTPRF = cms.int32(1),
+                SLTMSK = cms.int32(1),
+                SPRGCOMP = cms.int32(2),
+                SSLMSK = cms.int32(0),
+                TRGENB0 = cms.int32(1),
+                TRGENB1 = cms.int32(1),
+                TRGENB10 = cms.int32(1),
+                TRGENB11 = cms.int32(1),
+                TRGENB12 = cms.int32(1),
+                TRGENB13 = cms.int32(1),
+                TRGENB14 = cms.int32(1),
+                TRGENB15 = cms.int32(1),
+                TRGENB2 = cms.int32(1),
+                TRGENB3 = cms.int32(1),
+                TRGENB4 = cms.int32(1),
+                TRGENB5 = cms.int32(1),
+                TRGENB6 = cms.int32(1),
+                TRGENB7 = cms.int32(1),
+                TRGENB8 = cms.int32(1),
+                TRGENB9 = cms.int32(1)
+            )
+        )
+    ),
+    TracoLutsFromDB = cms.bool(True),
+    UseBtiAcceptParam = cms.bool(True),
+    UseT0 = cms.bool(False),
+    bxOffset = cms.int32(19),
+    cfgConfig = cms.bool(False),
+    debug = cms.bool(False),
+    debugBti = cms.int32(0),
+    debugDB = cms.bool(False),
+    debugLUTs = cms.bool(False),
+    debugPed = cms.bool(False),
+    debugSC = cms.bool(False),
+    debugTSP = cms.bool(False),
+    debugTST = cms.bool(False),
+    debugTU = cms.bool(False),
+    debugTraco = cms.int32(0),
+    finePhase = cms.double(25.0)
 )
 
 
@@ -5435,6 +6537,18 @@ process.ecalSeverityLevel = cms.ESProducer("EcalSeverityLevelESProducer",
         )
     ),
     timeThresh = cms.double(2.0)
+)
+
+
+process.fakeTwinMuxParams = cms.ESProducer("L1TTwinMuxParamsESProducer",
+    CorrectDTBxwRPC = cms.bool(True),
+    dphiWindowBxShift = cms.uint32(9999),
+    fwVersion = cms.uint32(1),
+    useLowQDT = cms.bool(False),
+    useOnlyDT = cms.bool(False),
+    useOnlyRPC = cms.bool(False),
+    useRpcBxForDtBelowQuality = cms.uint32(4),
+    verbose = cms.bool(False)
 )
 
 
@@ -7271,6 +8385,13 @@ process.HepPDTESSource = cms.ESSource("HepPDTESSource",
 )
 
 
+process.bmbtfParamsSource = cms.ESSource("EmptyESSource",
+    firstValid = cms.vuint32(1),
+    iovIsRunNotTime = cms.bool(True),
+    recordName = cms.string('L1TMuonBarrelParamsRcd')
+)
+
+
 process.eegeom = cms.ESSource("EmptyESSource",
     firstValid = cms.vuint32(1),
     iovIsRunNotTime = cms.bool(True),
@@ -7305,13 +8426,56 @@ process.hltESSHcalSeverityLevel = cms.ESSource("EmptyESSource",
 )
 
 
+process.l1conddb = cms.ESSource("PoolDBESSource",
+    DBParameters = cms.PSet(
+        authenticationPath = cms.untracked.string(''),
+        authenticationSystem = cms.untracked.int32(0),
+        messageLevel = cms.untracked.int32(0),
+        security = cms.untracked.string('')
+    ),
+    connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
+    toGet = cms.VPSet(cms.PSet(
+        record = cms.string('L1TCaloParamsO2ORcd'),
+        tag = cms.string('L1TCaloParams_static_CMSSW_9_2_10_2017_v1_8_2_updateHFSF_v6MET')
+    ))
+)
+
+
+process.l1ugmtdb = cms.ESSource("PoolDBESSource",
+    DBParameters = cms.PSet(
+        authenticationPath = cms.untracked.string(''),
+        authenticationSystem = cms.untracked.int32(0),
+        messageLevel = cms.untracked.int32(0),
+        security = cms.untracked.string('')
+    ),
+    connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
+    toGet = cms.VPSet(cms.PSet(
+        record = cms.string('L1TMuonGlobalParamsO2ORcd'),
+        tag = cms.string('L1TMuonGlobalParamsPrototype_Stage2v0_hlt')
+    ))
+)
+
+
+process.twinmuxParamsSource = cms.ESSource("EmptyESSource",
+    firstValid = cms.vuint32(1),
+    iovIsRunNotTime = cms.bool(True),
+    recordName = cms.string('L1TTwinMuxParamsRcd')
+)
+
+
 process.HLTDoHIEcalClusWithCleaning50nsMultiFitSequence = cms.Sequence(process.hltIslandBasicClusters50nsMultiFitHI+process.hltHiIslandSuperClusters50nsMultiFitHI+process.hltHiCorrectedIslandBarrelSuperClusters50nsMultiFitHI+process.hltHiCorrectedIslandEndcapSuperClusters50nsMultiFitHI+process.hltCleanedHiCorrectedIslandBarrelSuperClusters50nsMultiFitHI+process.hltRecoHIEcalWithCleaningCandidate50nsMultiFit)
+
+
+process.HLTEndSequence = cms.Sequence(process.hltBoolEnd)
+
+
+#process.hgcalTriggerPrimitives = cms.Sequence(process.hgcalTriggerPrimitiveDigiProducer)
 
 
 process.HLTDoFullUnpackingEgammaEcalWithoutPreshower50nsMultiFitSequence = cms.Sequence(process.hltEcalDigis+process.hltEcalUncalibRecHit50nsMultiFit+process.hltEcalDetIdToBeRecovered+process.hltEcalRecHit50nsMultiFit)
 
 
-process.HLTEndSequence = cms.Sequence(process.hltBoolEnd)
+#process.hgcalTriggerPrimitives_reproduce = cms.Sequence(process.hgcalTriggerPrimitiveDigiFEReproducer)
 
 
 process.HLTDoLocalHcalMethod0Sequence = cms.Sequence(process.hltHcalDigis+process.hltHbherecoMethod0+process.hltHfrecoMethod0+process.hltHorecoMethod0)
@@ -7320,28 +8484,34 @@ process.HLTDoLocalHcalMethod0Sequence = cms.Sequence(process.hltHcalDigis+proces
 process.HLTL1UnpackerSequence = cms.Sequence(process.hltGtStage2Digis+process.hltGtStage2ObjectMap)
 
 
+process.SimL1TGlobal = cms.Sequence(process.simGtStage2Digis)
+
+
 process.HLTBeamSpot = cms.Sequence(process.hltScalersRawToDigi+process.hltOnlineBeamSpot)
 
 
 process.HLTDoCaloHcalMethod050nsMultiFitSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalWithoutPreshower50nsMultiFitSequence+process.HLTDoLocalHcalMethod0Sequence+process.hltTowerMakerHcalMethod050nsMultiFitForAll)
 
 
+process.SimL1Emulator = cms.Sequence(process.unpackEcal+process.unpackHcal+process.unpackCSC+process.unpackDT+process.unpackRPC+process.unpackRPCTwinMux+process.unpackTwinMux+process.unpackOmtf+process.unpackEmtf+process.unpackCsctf+process.unpackBmtf+process.unpackLayer1+((process.simCaloStage2Layer1Digis+process.simCaloStage2Digis)+((process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis)+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis)+(process.simGtExtFakeStage2Digis)+process.SimL1TGlobal)+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataRepacker)
+
+
 process.HLTBeginSequence = cms.Sequence(process.hltTriggerType+process.HLTL1UnpackerSequence+process.HLTBeamSpot)
 
 
-process.HLTriggerFirstPath = cms.Path(process.hltGetConditions+process.hltGetRaw+process.hltBoolFalse)
+process.HLTriggerFirstPath = cms.Path(process.SimL1Emulator+process.hltGetConditions+process.hltGetRaw+process.hltBoolFalse)
 
 
-process.HLT_ZeroBias_v6 = cms.Path(process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreZeroBias+process.HLTEndSequence)
+process.HLT_ZeroBias_v6 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreZeroBias+process.HLTEndSequence)
 
 
-process.HLTriggerFinalPath = cms.Path(process.hltGtStage2Digis+process.hltScalersRawToDigi+process.hltFEDSelector+process.hltTriggerSummaryAOD+process.hltTriggerSummaryRAW+process.hltBoolFalse)
+process.HLTriggerFinalPath = cms.Path(process.SimL1Emulator+process.hltGtStage2Digis+process.hltScalersRawToDigi+process.hltFEDSelector+process.hltTriggerSummaryAOD+process.hltTriggerSummaryRAW+process.hltBoolFalse)
 
 
-process.HLT_HISinglePhoton30_Eta3p1_v2_vHLTL1TSeed = cms.Path(process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxANDHLTL1TSeed+process.hltPreHISinglePhoton30Eta3p1v2+process.HLTDoCaloHcalMethod050nsMultiFitSequence+process.HLTDoHIEcalClusWithCleaning50nsMultiFitSequence+process.hltHIPhoton30Eta3p150nsMultiFit+process.HLTEndSequence)
+process.HLT_HISinglePhoton30_Eta3p1_v2_vHLTL1TSeed = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxANDHLTL1TSeed+process.hltPreHISinglePhoton30Eta3p1v2+process.HLTDoCaloHcalMethod050nsMultiFitSequence+process.HLTDoHIEcalClusWithCleaning50nsMultiFitSequence+process.hltHIPhoton30Eta3p150nsMultiFit+process.HLTEndSequence)
 
 
-process.HLTAnalyzerEndpath = cms.EndPath(process.hltGtStage2Digis+process.hltPreHLTAnalyzerEndpath+process.hltL1TGlobalSummary+process.hltTrigReport)
+process.HLTAnalyzerEndpath = cms.EndPath(process.SimL1Emulator+process.hltGtStage2Digis+process.hltPreHLTAnalyzerEndpath+process.hltL1TGlobalSummary+process.hltTrigReport)
 
 
 process.DQMOutput = cms.EndPath(process.dqmOutput)

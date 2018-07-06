@@ -15,7 +15,8 @@ menu="/users/katatar/HI2018PbPb/hltTestEgamma/V12"
 configMenu="menu_hltTestEgamma_v12_Run304898.py"
 nEvents="100"
 
-hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise FWCore/ParameterSet/MassReplace.massReplaceInputTag --process MyHLT --full --offline --data --unprescale --max-events $nEvents > $configMenu
+hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise FWCore/ParameterSet/MassReplace.massReplaceInputTag --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
+# --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 #echo '' >> $configMenu
 #echo 'process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")' >> $configMenu
@@ -30,7 +31,6 @@ hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --cust
 #echo '                                  fileName=cms.string("openHLT.root"))' >> $configMenu
 
 configMenuLOG="${configMenu/.py/.log}"
-
 echo "# run the config via"
 echo "myRun cmsRun $configMenu &> $configMenuLOG &"
 #echo "myRun cmsRun $configMenu 2>&1 | tee $configMenuLOG &"
@@ -39,4 +39,16 @@ echo "myRun cmsRun $configMenu &> $configMenuLOG &"
 configMenuFULL="${configMenu/.py/_FULL.py}"
 edmConfigDump $configMenu > $configMenuFULL
 echo "# Full config is also created : $configMenuFULL"
+
+cp $configMenuFULL "${configMenuFULL/.py/.BACKUP.py}"
+## need to use the modified FULL config if "--l1-emulator Full" option is used
+# replace "rawDataCollector" with "rawDataRepacker"
+sed -i "s/rawDataCollector/rawDataRepacker/g" $configMenuFULL
+sed -i "s/L1T INFO/#L1T INFO/g" $configMenuFULL
+sed -i "s/process.hgcalTriggerPrimitives = cms.Sequence/#process.hgcalTriggerPrimitives = cms.Sequence/g" $configMenuFULL
+sed -i "s/process.hgcalTriggerPrimitives_reproduce = cms.Sequence/#process.hgcalTriggerPrimitives_reproduce = cms.Sequence/g" $configMenuFULL
+
+configMenuFULLLOG="${configMenuFULL/.py/.log}"
+echo "# run the FULL config via"
+echo "myRun cmsRun $configMenuFULL &> $configMenuFULLLOG &"
 

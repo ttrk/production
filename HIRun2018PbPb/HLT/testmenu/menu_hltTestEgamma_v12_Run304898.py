@@ -1,4 +1,4 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V12 --globaltag 100X_dataRun2_v1 --input root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/898/00000/A0E925FB-89AF-E711-8C82-02163E0144E9.root --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise FWCore/ParameterSet/MassReplace.massReplaceInputTag --process MyHLT --full --offline --data --unprescale --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V12 --globaltag 100X_dataRun2_v1 --input root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/898/00000/A0E925FB-89AF-E711-8C82-02163E0144E9.root --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise FWCore/ParameterSet/MassReplace.massReplaceInputTag --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events 100
 
 # /users/katatar/HI2018PbPb/hltTestEgamma/V12 (CMSSW_10_1_2_patch2)
 
@@ -800,6 +800,10 @@ process.source = cms.Source( "PoolSource",
         'keep *'
     )
 )
+
+# run the Full L1T emulator, then repack the data into a new RAW collection, to be used by the HLT
+from HLTrigger.Configuration.CustomConfigs import L1REPACK
+process = L1REPACK(process,"Full")
 
 # avoid PrescaleService error due to missing HLT paths
 if 'PrescaleService' in process.__dict__:
