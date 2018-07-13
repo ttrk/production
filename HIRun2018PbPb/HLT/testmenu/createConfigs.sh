@@ -11,10 +11,10 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/
 #inputFile="root://xrootd.cmsaf.mit.edu//store/data/Run2017G/HighEGJet/RAW/v1/000/306/631/00000/281345C7-8CC9-E711-9D41-02163E01A257.root"
 
 #menu="/users/chenyi/PbPb2018/DefaultMenu/V4"
-#menu="/users/katatar/HI2018PbPb/hltTestEgamma/V12"
-menu="/users/chenyi/PbPb2018/HighPTJetsPbPb2018/V8"
-#configMenu="menu_hltTestEgamma_v12_Run304898.py"
-configMenu="menu_HighPTJetsPbPb2018_v8_Run304898.py"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V14"
+#menu="/users/chenyi/PbPb2018/HighPTJetsPbPb2018/V8"
+configMenu="menu_hltTestEgamma_v14_Run304898.py"
+#configMenu="menu_HighPTJetsPbPb2018_v8_Run304898.py"
 nEvents="100"
 
 hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise FWCore/ParameterSet/MassReplace.massReplaceInputTag --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
