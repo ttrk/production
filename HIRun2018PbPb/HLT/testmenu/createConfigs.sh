@@ -11,11 +11,12 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/
 #inputFile="root://xrootd.cmsaf.mit.edu//store/data/Run2017G/HighEGJet/RAW/v1/000/306/631/00000/281345C7-8CC9-E711-9D41-02163E01A257.root"
 
 #menu="/users/chenyi/PbPb2018/DefaultMenu/V4"
-#menu="/users/katatar/HI2018PbPb/hltTestEgamma/V14"
-menu="/users/davidlw/HLT_PbPb2018_FullTrackv2/V23"
+
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V14"
+#menu="/users/davidlw/HLT_PbPb2018_FullTrackv2/V23"
 #menu="/users/chenyi/PbPb2018/HighPTJetsPbPb2018/V8"
-#configMenu="menu_hltTestEgamma_v14_Run304898.py"
-configMenu="menu_HLT_PbPb2018_FullTrackv2_v23_Run304898.py"
+configMenu="menu_hltTestEgamma_v14_Run304898.py"
+#configMenu="menu_HLT_PbPb2018_FullTrackv2_v23_Run304898.py"
 #configMenu="menu_HighPTJetsPbPb2018_v8_Run304898.py"
 nEvents="100"
 
@@ -34,8 +35,8 @@ hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --cust
 #echo 'process.TFileService = cms.Service("TFileService",' >> $configMenu
 #echo '                                  fileName=cms.string("openHLT.root"))' >> $configMenu
 
-## syntax fixes
-sed -i "s/*(process.HLT_HIFullTracks2018_HighPt8_v1/(process.HLT_HIFullTracks2018_HighPt8_v1/g" $configMenu
+## syntax fixes for HLT_PbPb2018_FullTrackv2_v23
+#sed -i "s/*(process.HLT_HIFullTracks2018_HighPt8_v1/(process.HLT_HIFullTracks2018_HighPt8_v1/g" $configMenu
 
 configMenuLOG="${configMenu/.py/.log}"
 echo "# run the config via"
