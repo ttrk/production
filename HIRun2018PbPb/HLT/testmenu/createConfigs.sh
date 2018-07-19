@@ -8,6 +8,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
 #inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/906/00000/FC95A847-B2AF-E711-8313-02163E012830.root"
 inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/898/00000/A0E925FB-89AF-E711-8C82-02163E0144E9.root"
+#inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/906/00000/FC95A847-B2AF-E711-8313-02163E012830.root"
 #inputFile="root://xrootd.cmsaf.mit.edu//store/data/Run2017G/HighEGJet/RAW/v1/000/306/631/00000/281345C7-8CC9-E711-9D41-02163E01A257.root"
 
 #menu="/users/chenyi/PbPb2018/DefaultMenu/V4"
