@@ -23,6 +23,14 @@ nEvents="100"
 hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise FWCore/ParameterSet/MassReplace.massReplaceInputTag --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
+## need to do the following changes if "--l1-emulator Full" option is used
+# https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=10#Testing_new_paths
+sed -i "s/process = massReplaceInputTag(process)/#process = massReplaceInputTag(process)/g" $configMenu
+# replace "rawDataCollector" with "rawDataRepacker"
+echo 'process = massReplaceInputTag(process, "rawDataCollector", "rawDataRepacker", False, True)' >> $configMenu
+echo 'process.rawDataRepacker = process.rawDataCollector.clone()' >> $configMenu
+echo 'process.SimL1Emulator.replace(process.rawDataCollector, process.rawDataRepacker)' >> $configMenu
+
 #echo '' >> $configMenu
 #echo 'process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")' >> $configMenu
 #echo 'process.hltbitanalysis.HLTProcessName = cms.string("MyHLT")' >> $configMenu
@@ -49,9 +57,7 @@ edmConfigDump $configMenu > $configMenuFULL
 echo "# Full config is also created : $configMenuFULL"
 
 cp $configMenuFULL "${configMenuFULL/.py/.BACKUP.py}"
-## need to use the modified FULL config if "--l1-emulator Full" option is used
-# replace "rawDataCollector" with "rawDataRepacker"
-sed -i "s/rawDataCollector/rawDataRepacker/g" $configMenuFULL
+## need to fix some lines in the full config
 sed -i "s/L1T INFO/#L1T INFO/g" $configMenuFULL
 sed -i "s/process.hgcalTriggerPrimitives = cms.Sequence/#process.hgcalTriggerPrimitives = cms.Sequence/g" $configMenuFULL
 sed -i "s/process.hgcalTriggerPrimitives_reproduce = cms.Sequence/#process.hgcalTriggerPrimitives_reproduce = cms.Sequence/g" $configMenuFULL

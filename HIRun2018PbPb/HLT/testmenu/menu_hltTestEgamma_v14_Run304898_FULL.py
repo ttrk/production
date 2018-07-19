@@ -4933,6 +4933,12 @@ process.packGtStage2 = cms.EDProducer("L1TDigiToRaw",
 )
 
 
+process.rawDataCollector = cms.EDProducer("RawDataCollectorByLabel",
+    RawCollectionList = cms.VInputTag(cms.InputTag("packCaloStage2"), cms.InputTag("packGmtStage2"), cms.InputTag("packGtStage2"), cms.InputTag("rawDataRepacker","","@skipCurrentProcess")),
+    verbose = cms.untracked.int32(0)
+)
+
+
 process.rawDataRepacker = cms.EDProducer("RawDataCollectorByLabel",
     RawCollectionList = cms.VInputTag(cms.InputTag("packCaloStage2"), cms.InputTag("packGmtStage2"), cms.InputTag("packGtStage2"), cms.InputTag("rawDataRepacker","","@skipCurrentProcess")),
     verbose = cms.untracked.int32(0)

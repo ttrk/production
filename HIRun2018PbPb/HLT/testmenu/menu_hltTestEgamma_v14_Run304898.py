@@ -1069,5 +1069,8 @@ modifyHLTforEras(process)
 
 #User-defined customization functions
 from FWCore.ParameterSet.MassReplace import massReplaceInputTag
-process = massReplaceInputTag(process)
+#process = massReplaceInputTag(process)
 
+process = massReplaceInputTag(process, "rawDataCollector", "rawDataRepacker", False, True)
+process.rawDataRepacker = process.rawDataCollector.clone()
+process.SimL1Emulator.replace(process.rawDataCollector, process.rawDataRepacker)
