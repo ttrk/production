@@ -13,10 +13,10 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/
 
 #menu="/users/chenyi/PbPb2018/DefaultMenu/V4"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V21"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V22"
 #menu="/users/davidlw/HLT_PbPb2018_FullTrackv2/V23"
 #menu="/users/chenyi/PbPb2018/HighPTJetsPbPb2018/V8"
-configMenu="menu_hltTestEgamma_v21_Run304898.py"
+configMenu="menu_hltTestEgamma_v22_Run304898.py"
 #configMenu="menu_HLT_PbPb2018_FullTrackv2_v23_Run304898.py"
 #configMenu="menu_HighPTJetsPbPb2018_v8_Run304898.py"
 nEvents="2000"
