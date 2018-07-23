@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT
+# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=11
 # software : CMSSW_10_1_2
 # L1 tag : cms-l1t-offline:l1t-integration-v97.27.1-CMSSW_10_1_2
 
@@ -20,8 +20,9 @@ configMenu="menu_hltTestEgamma_v22_Run304898.py"
 #configMenu="menu_HLT_PbPb2018_FullTrackv2_v23_Run304898.py"
 #configMenu="menu_HighPTJetsPbPb2018_v8_Run304898.py"
 nEvents="2000"
+customizations="HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
 
-hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise FWCore/ParameterSet/MassReplace.massReplaceInputTag --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
+hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise $customizations --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 ## need to do the following changes if "--l1-emulator Full" option is used
