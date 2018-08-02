@@ -13,13 +13,13 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/
 
 #menu="/users/chenyi/PbPb2018/DefaultMenu/V4"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V22"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V23"
 #menu="/users/davidlw/HLT_PbPb2018_FullTrackv2/V23"
 #menu="/users/chenyi/PbPb2018/HighPTJetsPbPb2018/V8"
-configMenu="menu_hltTestEgamma_v22_Run304898.py"
+configMenu="menu_hltTestEgamma_v23_Run304898.py"
 #configMenu="menu_HLT_PbPb2018_FullTrackv2_v23_Run304898.py"
 #configMenu="menu_HighPTJetsPbPb2018_v8_Run304898.py"
-nEvents="2000"
+nEvents="500"
 customizations="HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
 
 hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise $customizations --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
@@ -67,4 +67,15 @@ sed -i "s/process.hgcalTriggerPrimitives_reproduce = cms.Sequence/#process.hgcal
 configMenuFULLLOG="${configMenuFULL/.py/.log}"
 echo "# run the FULL config via"
 echo "myRun cmsRun $configMenuFULL &> $configMenuFULLLOG &"
+
+## NOTES
+# HLT Egamma paths require matching to L1 objects. If there is no L1 object, then HLT paths always fail. This matching can be bypassed by changing HLTEgammaL1TMatchFilterRegional.cc as follows
+#$> git diff --unified=0 HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
+# diff --git a/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc b/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
+# index 6a31c1c933f..8b7afe08474 100644
+# --- a/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
+# +++ b/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
+# @@ -164 +164 @@ HLTEgammaL1TMatchFilterRegional::hltFilter(edm::Event& iEvent, const edm::EventS
+# -       if(matchedSCEG || matchedSCJet || matchedSCTau) {
+# +       if(matchedSCEG || matchedSCJet || matchedSCTau || true) {
 
