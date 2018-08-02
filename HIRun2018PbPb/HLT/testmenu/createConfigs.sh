@@ -72,9 +72,12 @@ echo "myRun cmsRun $configMenuFULL &> $configMenuFULLLOG &"
 # HLT Egamma paths require matching to L1 objects. If there is no L1 object, then HLT paths always fail. This matching can be bypassed by changing HLTEgammaL1TMatchFilterRegional.cc as follows
 #$> git diff --unified=0 HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
 # diff --git a/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc b/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
-# index 6a31c1c933f..8b7afe08474 100644
+# index 6a31c1c933f..3ea64c7d9bd 100644
 # --- a/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
 # +++ b/HLTrigger/Egamma/plugins/HLTEgammaL1TMatchFilterRegional.cc
+# @@ -139 +139 @@ HLTEgammaL1TMatchFilterRegional::hltFilter(edm::Event& iEvent, const edm::EventS
+# -      if(matchedSCEG || matchedSCJet || matchedSCTau) {
+# +      if(matchedSCEG || matchedSCJet || matchedSCTau || true) {
 # @@ -164 +164 @@ HLTEgammaL1TMatchFilterRegional::hltFilter(edm::Event& iEvent, const edm::EventS
 # -       if(matchedSCEG || matchedSCJet || matchedSCTau) {
 # +       if(matchedSCEG || matchedSCJet || matchedSCTau || true) {
