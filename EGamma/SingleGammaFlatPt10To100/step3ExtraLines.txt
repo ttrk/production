@@ -1,0 +1,21 @@
+# extend AOD content
+process.load('Configuration.EventContent.EventContent_cff')
+myNewEventContent = cms.untracked.vstring(['keep recoCaloClusters_islandBasicClusters*_*_*',
+                                           'keep recoCaloClusters_multi5x5BasicClusters*_*_*',
+                                           # add "uncorrected" SC, note that AOD contains final "corrected" SC
+                                           'keep recoSuperClusters_islandSuperClusters*_*_*',
+                                           'keep recoCaloClusters_hybridSuperClusters_*_*',
+                                           'keep recoCaloClusters_*HybridSuperClusters_*_*',
+                                           'keep recoCaloClusters_multi5x5SuperClusters*_*_*',
+                                           'keep recoSuperClusters_*Multi5x5SuperClusters*_*_*',
+                                           # PF
+                                           'keep recoCaloClusteredmPtredmValueMap_particleFlowSuperClusterECAL_*_*',
+                                           'keep recoPFCandidates_particleFlowEGamma_*_*',
+                                           # RecHits
+                                           'keep EcalRecHitsSorted_ecalRecHit_*_*',
+                                           'keep EcalRecHitsSorted_ecalPreshowerRecHit_*_*'
+                                           ])
+process.AODEventContent.outputCommands.extend(myNewEventContent)
+
+process.AODSIMEventContent.outputCommands.extend(myNewEventContent)
+
