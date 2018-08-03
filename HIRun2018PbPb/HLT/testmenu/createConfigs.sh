@@ -22,7 +22,7 @@ configMenu="menu_hltTestEgamma_v24_Run304898.py"
 nEvents="3000"
 customizations="HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
 
-hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise $customizations --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
+hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --setup /dev/CMSSW_10_1_0/GRun --customise $customizations --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 ## need to do the following changes if "--l1-emulator Full" option is used
