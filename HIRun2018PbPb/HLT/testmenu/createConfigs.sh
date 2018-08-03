@@ -13,13 +13,13 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/hidata/XeXeRun2017/HIMinimumBias8/
 
 #menu="/users/chenyi/PbPb2018/DefaultMenu/V4"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V23"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V24"
 #menu="/users/davidlw/HLT_PbPb2018_FullTrackv2/V23"
 #menu="/users/chenyi/PbPb2018/HighPTJetsPbPb2018/V8"
-configMenu="menu_hltTestEgamma_v23_Run304898.py"
+configMenu="menu_hltTestEgamma_v24_Run304898.py"
 #configMenu="menu_HLT_PbPb2018_FullTrackv2_v23_Run304898.py"
 #configMenu="menu_HighPTJetsPbPb2018_v8_Run304898.py"
-nEvents="500"
+nEvents="3000"
 customizations="HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
 
 hltGetConfiguration $menu --globaltag 100X_dataRun2_v1 --input $inputFile --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --setup /dev/CMSSW_10_1_0/GRun --customise $customizations --process MyHLT --full --offline --data --unprescale --l1-emulator Full --max-events $nEvents > $configMenu
@@ -33,17 +33,18 @@ echo 'process = massReplaceInputTag(process, "rawDataCollector", "rawDataRepacke
 echo 'process.rawDataRepacker = process.rawDataCollector.clone()' >> $configMenu
 echo 'process.SimL1Emulator.replace(process.rawDataCollector, process.rawDataRepacker)' >> $configMenu
 
-#echo '' >> $configMenu
-#echo 'process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")' >> $configMenu
-#echo 'process.hltbitanalysis.HLTProcessName = cms.string("MyHLT")' >> $configMenu
-#echo 'process.hltbitanalysis.hltresults = cms.InputTag( "TriggerResults","","MyHLT" )' >> $configMenu
-#echo 'process.hltbitanalysis.l1GtReadoutRecord = cms.InputTag("simGtDigis","","MyHLT")' >> $configMenu
-#echo 'process.hltbitanalysis.l1GctHFBitCounts = cms.InputTag("gctDigis","","MyHLT")' >> $configMenu
-#echo 'process.hltbitanalysis.l1GctHFRingSums = cms.InputTag("gctDigis","","MyHLT")' >> $configMenu
-#echo 'process.hltbitanalysis.UseTFileService = cms.untracked.bool(True)' >> $configMenu
-#echo 'process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)' >> $configMenu
-#echo 'process.TFileService = cms.Service("TFileService",' >> $configMenu
-#echo '                                  fileName=cms.string("openHLT.root"))' >> $configMenu
+# Add hltBitAnalyzer
+echo '' >> $configMenu
+echo 'process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")' >> $configMenu
+echo 'process.hltbitanalysis.HLTProcessName = cms.string("MyHLT")' >> $configMenu
+echo 'process.hltbitanalysis.hltresults = cms.InputTag("TriggerResults", "", "MyHLT")' >> $configMenu
+echo 'process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis", "", "MyHLT")' >> $configMenu
+echo 'process.hltbitanalysis.UseTFileService = cms.untracked.bool(True)' >> $configMenu
+echo 'process.hltbitanalysis.RunParameters = cms.PSet(' >> $configMenu
+echo '   isData = cms.untracked.bool(True))' >> $configMenu
+echo 'process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)' >> $configMenu
+echo 'process.TFileService = cms.Service("TFileService",' >> $configMenu
+echo '   fileName=cms.string("openHLT.root"))' >> $configMenu
 
 ## syntax fixes for HLT_PbPb2018_FullTrackv2_v23
 #sed -i "s/*(process.HLT_HIFullTracks2018_HighPt8_v1/(process.HLT_HIFullTracks2018_HighPt8_v1/g" $configMenu
