@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V24')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V25')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -5274,8 +5274,8 @@ process.hltParticleFlowSuperClusterECALL1Seeded = cms.EDProducer("PFECALSuperClu
     etawidth_SuperClusterBarrel = cms.double(0.04),
     etawidth_SuperClusterEndcap = cms.double(0.04),
     isOOTCollection = cms.bool(False),
-    phiwidth_SuperClusterBarrel = cms.double(0.6),
-    phiwidth_SuperClusterEndcap = cms.double(0.6),
+    phiwidth_SuperClusterBarrel = cms.double(0.2),
+    phiwidth_SuperClusterEndcap = cms.double(0.2),
     regressionConfig = cms.PSet(
         ecalRecHitsEB = cms.InputTag("hltEcalRecHit","EcalRecHitsEB"),
         ecalRecHitsEE = cms.InputTag("hltEcalRecHit","EcalRecHitsEE"),
@@ -5294,7 +5294,7 @@ process.hltParticleFlowSuperClusterECALL1Seeded = cms.EDProducer("PFECALSuperClu
     thresh_PFClusterSeedBarrel = cms.double(1.0),
     thresh_PFClusterSeedEndcap = cms.double(1.0),
     thresh_SCEt = cms.double(4.0),
-    useDynamicDPhiWindow = cms.bool(True),
+    useDynamicDPhiWindow = cms.bool(False),
     useRegression = cms.bool(True),
     use_preshower = cms.bool(True),
     verbose = cms.untracked.bool(False)

@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V24 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V25 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --max-events 100
 
-# /users/katatar/HI2018PbPb/hltTestEgamma/V24 (CMSSW_10_1_2_patch2)
+# /users/katatar/HI2018PbPb/hltTestEgamma/V25 (CMSSW_10_1_2_patch2)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,7 +8,7 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V24')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V25')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
@@ -1337,9 +1337,9 @@ process.hltParticleFlowSuperClusterECALL1Seeded = cms.EDProducer( "PFECALSuperCl
     thresh_PFClusterBarrel = cms.double( 0.5 ),
     thresh_SCEt = cms.double( 4.0 ),
     etawidth_SuperClusterEndcap = cms.double( 0.04 ),
-    phiwidth_SuperClusterEndcap = cms.double( 0.6 ),
+    phiwidth_SuperClusterEndcap = cms.double( 0.2 ),
     verbose = cms.untracked.bool( False ),
-    useDynamicDPhiWindow = cms.bool( True ),
+    useDynamicDPhiWindow = cms.bool( False ),
     PFSuperClusterCollectionBarrel = cms.string( "hltParticleFlowSuperClusterECALBarrel" ),
     regressionConfig = cms.PSet( 
       uncertaintyKeyEB = cms.string( "pfscecal_EBUncertainty_online" ),
@@ -1362,7 +1362,7 @@ process.hltParticleFlowSuperClusterECALL1Seeded = cms.EDProducer( "PFECALSuperCl
     EnergyWeight = cms.string( "Raw" ),
     PFClusters = cms.InputTag( "hltParticleFlowClusterECALL1Seeded" ),
     thresh_PFClusterSeedEndcap = cms.double( 1.0 ),
-    phiwidth_SuperClusterBarrel = cms.double( 0.6 ),
+    phiwidth_SuperClusterBarrel = cms.double( 0.2 ),
     thresh_PFClusterES = cms.double( 0.5 ),
     seedThresholdIsET = cms.bool( True ),
     PFSuperClusterCollectionEndcapWithPreshower = cms.string( "hltParticleFlowSuperClusterECALEndcapWithPreshower" )
