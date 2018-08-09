@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V28')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V29')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -6694,6 +6694,20 @@ process.hltEGL1SingleEGYYtoZZFilter = cms.EDFilter("HLTEgammaL1TMatchFilterRegio
 )
 
 
+process.hltHIPhoton10Eta1p5 = cms.EDFilter("HLT1Photon",
+    MaxEta = cms.double(1.5),
+    MaxMass = cms.double(-1.0),
+    MinE = cms.double(-1.0),
+    MinEta = cms.double(-1.0),
+    MinMass = cms.double(-1.0),
+    MinN = cms.int32(1),
+    MinPt = cms.double(10.0),
+    inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
+    saveTags = cms.bool(True),
+    triggerType = cms.int32(81)
+)
+
+
 process.hltHIPhoton10Eta3p1 = cms.EDFilter("HLT1Photon",
     MaxEta = cms.double(3.1),
     MaxMass = cms.double(-1.0),
@@ -6702,6 +6716,20 @@ process.hltHIPhoton10Eta3p1 = cms.EDFilter("HLT1Photon",
     MinMass = cms.double(-1.0),
     MinN = cms.int32(1),
     MinPt = cms.double(10.0),
+    inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
+    saveTags = cms.bool(True),
+    triggerType = cms.int32(81)
+)
+
+
+process.hltHIPhoton15Eta1p5 = cms.EDFilter("HLT1Photon",
+    MaxEta = cms.double(1.5),
+    MaxMass = cms.double(-1.0),
+    MinE = cms.double(-1.0),
+    MinEta = cms.double(-1.0),
+    MinMass = cms.double(-1.0),
+    MinN = cms.int32(1),
+    MinPt = cms.double(15.0),
     inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
     saveTags = cms.bool(True),
     triggerType = cms.int32(81)
@@ -6722,6 +6750,20 @@ process.hltHIPhoton15Eta3p1 = cms.EDFilter("HLT1Photon",
 )
 
 
+process.hltHIPhoton20Eta1p5 = cms.EDFilter("HLT1Photon",
+    MaxEta = cms.double(1.5),
+    MaxMass = cms.double(-1.0),
+    MinE = cms.double(-1.0),
+    MinEta = cms.double(-1.0),
+    MinMass = cms.double(-1.0),
+    MinN = cms.int32(1),
+    MinPt = cms.double(20.0),
+    inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
+    saveTags = cms.bool(True),
+    triggerType = cms.int32(81)
+)
+
+
 process.hltHIPhoton20Eta3p1 = cms.EDFilter("HLT1Photon",
     MaxEta = cms.double(3.1),
     MaxMass = cms.double(-1.0),
@@ -6730,6 +6772,20 @@ process.hltHIPhoton20Eta3p1 = cms.EDFilter("HLT1Photon",
     MinMass = cms.double(-1.0),
     MinN = cms.int32(1),
     MinPt = cms.double(20.0),
+    inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
+    saveTags = cms.bool(True),
+    triggerType = cms.int32(81)
+)
+
+
+process.hltHIPhoton30Eta1p5 = cms.EDFilter("HLT1Photon",
+    MaxEta = cms.double(1.5),
+    MaxMass = cms.double(-1.0),
+    MinE = cms.double(-1.0),
+    MinEta = cms.double(-1.0),
+    MinMass = cms.double(-1.0),
+    MinN = cms.int32(1),
+    MinPt = cms.double(30.0),
     inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
     saveTags = cms.bool(True),
     triggerType = cms.int32(81)
@@ -6750,6 +6806,20 @@ process.hltHIPhoton30Eta3p1 = cms.EDFilter("HLT1Photon",
 )
 
 
+process.hltHIPhoton40Eta1p5 = cms.EDFilter("HLT1Photon",
+    MaxEta = cms.double(1.5),
+    MaxMass = cms.double(-1.0),
+    MinE = cms.double(-1.0),
+    MinEta = cms.double(-1.0),
+    MinMass = cms.double(-1.0),
+    MinN = cms.int32(1),
+    MinPt = cms.double(40.0),
+    inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
+    saveTags = cms.bool(True),
+    triggerType = cms.int32(81)
+)
+
+
 process.hltHIPhoton40Eta3p1 = cms.EDFilter("HLT1Photon",
     MaxEta = cms.double(3.1),
     MaxMass = cms.double(-1.0),
@@ -6764,6 +6834,20 @@ process.hltHIPhoton40Eta3p1 = cms.EDFilter("HLT1Photon",
 )
 
 
+process.hltHIPhoton50Eta1p5 = cms.EDFilter("HLT1Photon",
+    MaxEta = cms.double(1.5),
+    MaxMass = cms.double(-1.0),
+    MinE = cms.double(-1.0),
+    MinEta = cms.double(-1.0),
+    MinMass = cms.double(-1.0),
+    MinN = cms.int32(1),
+    MinPt = cms.double(50.0),
+    inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
+    saveTags = cms.bool(True),
+    triggerType = cms.int32(81)
+)
+
+
 process.hltHIPhoton50Eta3p1 = cms.EDFilter("HLT1Photon",
     MaxEta = cms.double(3.1),
     MaxMass = cms.double(-1.0),
@@ -6772,6 +6856,20 @@ process.hltHIPhoton50Eta3p1 = cms.EDFilter("HLT1Photon",
     MinMass = cms.double(-1.0),
     MinN = cms.int32(1),
     MinPt = cms.double(50.0),
+    inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
+    saveTags = cms.bool(True),
+    triggerType = cms.int32(81)
+)
+
+
+process.hltHIPhoton60Eta1p5 = cms.EDFilter("HLT1Photon",
+    MaxEta = cms.double(1.5),
+    MaxMass = cms.double(-1.0),
+    MinE = cms.double(-1.0),
+    MinEta = cms.double(-1.0),
+    MinMass = cms.double(-1.0),
+    MinN = cms.int32(1),
+    MinPt = cms.double(60.0),
     inputTag = cms.InputTag("hltRecoHIEcalWithCleaningCandidate"),
     saveTags = cms.bool(True),
     triggerType = cms.int32(81)
@@ -6980,7 +7078,19 @@ process.hltPreGEDPhoton60EB = cms.EDFilter("HLTPrescaler",
 )
 
 
+process.hltPreHISinglePhoton10Eta1p5 = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
+    offset = cms.uint32(0)
+)
+
+
 process.hltPreHISinglePhoton10Eta3p1 = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
+    offset = cms.uint32(0)
+)
+
+
+process.hltPreHISinglePhoton15Eta1p5 = cms.EDFilter("HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
     offset = cms.uint32(0)
 )
@@ -6992,7 +7102,19 @@ process.hltPreHISinglePhoton15Eta3p1 = cms.EDFilter("HLTPrescaler",
 )
 
 
+process.hltPreHISinglePhoton20Eta1p5 = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
+    offset = cms.uint32(0)
+)
+
+
 process.hltPreHISinglePhoton20Eta3p1 = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
+    offset = cms.uint32(0)
+)
+
+
+process.hltPreHISinglePhoton30Eta1p5 = cms.EDFilter("HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
     offset = cms.uint32(0)
 )
@@ -7004,13 +7126,31 @@ process.hltPreHISinglePhoton30Eta3p1 = cms.EDFilter("HLTPrescaler",
 )
 
 
+process.hltPreHISinglePhoton40Eta1p5 = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
+    offset = cms.uint32(0)
+)
+
+
 process.hltPreHISinglePhoton40Eta3p1 = cms.EDFilter("HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
     offset = cms.uint32(0)
 )
 
 
+process.hltPreHISinglePhoton50Eta1p5 = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
+    offset = cms.uint32(0)
+)
+
+
 process.hltPreHISinglePhoton50Eta3p1 = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
+    offset = cms.uint32(0)
+)
+
+
+process.hltPreHISinglePhoton60Eta1p5 = cms.EDFilter("HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag("hltGtDigis"),
     offset = cms.uint32(0)
 )
@@ -10378,22 +10518,43 @@ process.HLT_HISinglePhoton30_Eta3p1_v2_vHLTL1TSeed_vLocalCaloFix = cms.Path(proc
 process.HLT_HISinglePhoton10_Eta3p1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHISinglePhoton10Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton10Eta3p1+process.HLTEndSequence)
 
 
+process.HLT_HISinglePhoton10_Eta1p5 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHISinglePhoton10Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton10Eta1p5+process.HLTEndSequence)
+
+
 process.HLT_HISinglePhoton15_Eta3p1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHISinglePhoton15Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton15Eta3p1+process.HLTEndSequence)
+
+
+process.HLT_HISinglePhoton15_Eta1p5 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHISinglePhoton15Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton15Eta1p5+process.HLTEndSequence)
 
 
 process.HLT_HISinglePhoton20_Eta3p1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHISinglePhoton20Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton20Eta3p1+process.HLTEndSequence)
 
 
+process.HLT_HISinglePhoton20_Eta1p5 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHISinglePhoton20Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton20Eta1p5+process.HLTEndSequence)
+
+
 process.HLT_HISinglePhoton30_Eta3p1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHISinglePhoton30Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton30Eta3p1+process.HLTEndSequence)
+
+
+process.HLT_HISinglePhoton30_Eta1p5 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHISinglePhoton30Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton30Eta1p5+process.HLTEndSequence)
 
 
 process.HLT_HISinglePhoton40_Eta3p1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHISinglePhoton40Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton40Eta3p1+process.HLTEndSequence)
 
 
+process.HLT_HISinglePhoton40_Eta1p5 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHISinglePhoton40Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton40Eta1p5+process.HLTEndSequence)
+
+
 process.HLT_HISinglePhoton50_Eta3p1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHISinglePhoton50Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton50Eta3p1+process.HLTEndSequence)
 
 
+process.HLT_HISinglePhoton50_Eta1p5 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHISinglePhoton50Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton50Eta1p5+process.HLTEndSequence)
+
+
 process.HLT_HISinglePhoton60_Eta3p1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHISinglePhoton60Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton60Eta3p1+process.HLTEndSequence)
+
+
+process.HLT_HISinglePhoton60_Eta1p5 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHISinglePhoton60Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIPhoton60Eta1p5+process.HLTEndSequence)
 
 
 process.HLT_PuAK4CaloJet80Eta5p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPrePuAK4CaloJet80Eta5p1+process.HLTPuAK4CaloJetsSequence+process.hltSinglePuAK4CaloJet80Eta5p1+process.HLTEndSequence)
