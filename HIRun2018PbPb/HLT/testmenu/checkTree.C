@@ -15,3 +15,12 @@ tree->GetEntries("HLT_HISinglePhoton30_Eta3p1 > 0")
 tree->GetEntries("HLT_HISinglePhoton40_Eta3p1 > 0")
 tree->GetEntries("HLT_HISinglePhoton50_Eta3p1 > 0")
 tree->GetEntries("HLT_HISinglePhoton60_Eta3p1 > 0")
+
+tree->GetEntries("HLT_GEDPhoton10_EB > 0")
+tree->GetEntries("HLT_GEDPhoton15_EB > 0")
+tree->GetEntries("HLT_GEDPhoton20_EB > 0")
+tree->GetEntries("HLT_GEDPhoton30_EB > 0")
+tree->GetEntries("HLT_GEDPhoton40_EB > 0")
+tree->GetEntries("HLT_GEDPhoton50_EB > 0")
+tree->GetEntries("HLT_GEDPhoton60_EB > 0")
+
