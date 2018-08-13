@@ -6,8 +6,9 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_863.root"
 
 ## Software
-# CMSSW_10_1_5, l1t-integration-v98.4
-# https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TStage2Instructions?rev=136#Environment_Setup_with_Integrati
+# CMSSW_10_2_1, l1t-integration-v99.0
+# This integration contains the new L1 EG bypass flags : https://github.com/cms-l1t-offline/cmssw/pull/708
+# https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TStage2Instructions?rev=140#Environment_Setup_with_Integrati
 ## Driver
 # https://twiki.cern.ch/twiki/bin/view/CMS/L1HITaskForce?rev=42#Offline_SW_setup
 ERA="Run2_2018"
@@ -18,7 +19,7 @@ $runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2018 \
 --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU \
 --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleGEN \
 --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo \
---customise=L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_1 \
+--customise=L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_2 \
 --customise_commands="process.simTwinMuxDigis.DTDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.DTThetaDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.RPC_Source = cms.InputTag('muonRPCDigis')\n" \
 --conditions=$GLOBALTAG -n $nEvents --mc --no_exec --no_output --filein=$inputFile &> cmsDriver_l1Ntuple_RAW2DIGI.log
 
