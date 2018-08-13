@@ -14,7 +14,9 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton
 ERA="Run2_2018"
 GLOBALTAG="101X_upgrade2018_realistic_v7"
 nEvents=100
-$runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2018 \
+configPrefix="l1Ntuple"
+
+$runCmd cmsDriver.py $configPrefix -s RAW2DIGI --era=Run2_2018 \
 --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAW \
 --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU \
 --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleGEN \
@@ -23,7 +25,7 @@ $runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2018 \
 --customise_commands="process.simTwinMuxDigis.DTDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.DTThetaDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.RPC_Source = cms.InputTag('muonRPCDigis')\n" \
 --conditions=$GLOBALTAG -n $nEvents --mc --no_exec --no_output --filein=$inputFile &> cmsDriver_l1Ntuple_RAW2DIGI.log
 
-config_l1Ntuple="l1Ntuple_RAW2DIGI.py"
+config_l1Ntuple=$configPrefix"_RAW2DIGI.py"
 
 # process.caloStage2Params is somehow not seen. needed to use customiseSettings.L1TSettingsToCaloStage2Params_XXX to make it appear
 echo "process.caloStage2Params.egBypassExtHOverE = cms.uint32(1)" >> $config_l1Ntuple
