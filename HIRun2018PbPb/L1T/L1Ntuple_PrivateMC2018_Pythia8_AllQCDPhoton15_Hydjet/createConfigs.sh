@@ -10,7 +10,17 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton
 # https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TStage2Instructions?rev=136#Environment_Setup_with_Integrati
 ## Driver
 # https://twiki.cern.ch/twiki/bin/view/CMS/L1HITaskForce?rev=42#Offline_SW_setup
-$runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2018 --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAW --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleGEN --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise_commands="process.simTwinMuxDigis.DTDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.DTThetaDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.RPC_Source = cms.InputTag('muonRPCDigis')\n" --customise=L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_1 --conditions=101X_upgrade2018_realistic_v7 -n 100 --mc --no_exec --no_output --filein=$inputFile &> cmsDriver_l1Ntuple_RAW2DIGI.log
+ERA="Run2_2018"
+GLOBALTAG="101X_upgrade2018_realistic_v7"
+nEvents=100
+$runCmd cmsDriver.py l1Ntuple -s RAW2DIGI --era=Run2_2018 \
+--customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAW \
+--customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU \
+--customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleGEN \
+--customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo \
+--customise=L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_1 \
+--customise_commands="process.simTwinMuxDigis.DTDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.DTThetaDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.RPC_Source = cms.InputTag('muonRPCDigis')\n" \
+--conditions=$GLOBALTAG -n $nEvents --mc --no_exec --no_output --filein=$inputFile &> cmsDriver_l1Ntuple_RAW2DIGI.log
 
 config_l1Ntuple="l1Ntuple_RAW2DIGI.py"
 
