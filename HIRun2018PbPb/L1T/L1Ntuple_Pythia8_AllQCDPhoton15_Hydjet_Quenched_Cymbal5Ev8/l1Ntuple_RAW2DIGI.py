@@ -98,6 +98,8 @@ from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEar
 process = customiseEarlyDelete(process)
 # End adding early deletion
 process.caloStage2Params.egBypassExtHOverE = cms.uint32(1)
+process.caloStage2Params.egBypassShape = cms.uint32(1)
+process.caloStage2Params.egBypassECALFG = cms.uint32(1)
 process.caloStage2Params.egHOverEcutBarrel = cms.int32(1)
 process.caloStage2Params.egHOverEcutEndcap = cms.int32(1)
 process.caloStage2Params.egEtaCut = cms.int32(24)
