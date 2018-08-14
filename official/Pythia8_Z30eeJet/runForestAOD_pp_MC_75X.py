@@ -26,13 +26,13 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-                                "/store/himc/HINppWinter16DR/Pythia8_Z30eeJet/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3_ext1-v1/00000/AE785706-3B0D-E611-9C47-001EC9B2150B.root"
+                                "/store/himc/HINppWinter16DR/Pythia8_Ze10e10/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3_ext1-v1/70000/E250857A-300F-E611-A82A-0090FAA57CB4.root"
                             )
 )
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10))
+    input = cms.untracked.int32(100))
 
 
 #####################################################################################
@@ -72,6 +72,10 @@ process.TFileService = cms.Service("TFileService",
 #############################
 
 process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPP")
+
+# Include this to turn on storing the jet constituents and new jet variables for q/g separation
+#process.ak4PFJetAnalyzer.doJetConstituents = cms.untracked.bool(True)
+#process.ak4PFJetAnalyzer.doNewJetVars = cms.untracked.bool(True)
 # Use this version for JEC
 #process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_JECPP")
 
@@ -81,6 +85,7 @@ process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPP")
 # Event Analysis
 ############################
 process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
+process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
 process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi') #use data version to avoid PbPb MC
 process.hiEvtAnalyzer.Vertex = cms.InputTag("offlinePrimaryVertices")
 process.hiEvtAnalyzer.doCentrality = cms.bool(False)
@@ -91,7 +96,6 @@ process.hiEvtAnalyzer.doHiMC = cms.bool(False) #HI specific MC info
 process.load('HeavyIonsAnalysis.JetAnalysis.HiGenAnalyzer_cfi')
 process.HiGenParticleAna.genParticleSrc = cms.untracked.InputTag("genParticles")
 process.HiGenParticleAna.doHI = False
-process.HiGenParticleAna.ptMin = cms.untracked.double(0.5)   # lower gen particle pt cut to from 5 GeV to 0.5 GeV
 process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_pp_cfi")
 process.pfcandAnalyzer.skipCharged = False
@@ -155,10 +159,23 @@ process.load("HeavyIonsAnalysis.VectorBosonAnalysis.tupelSequence_pp_mc_cff")
 
 #####################################################################################
 
+
+####B-TAGGING#####
+
+process.load('RecoBTag.CSVscikit.csvscikitTagJetTags_cfi')
+process.load('RecoBTag.CSVscikit.csvscikitTaggerProducer_cfi')
+
+process.ak4PFCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.ak4PFCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("ak4PFImpactParameterTagInfos"), cms.InputTag("ak4PFSecondaryVertexTagInfos"))
+process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_pp_BDTG.weights.xml')
+
+################
+
 #########################
 # Main analysis list
 #########################
 process.ana_step = cms.Path(process.hltanalysis *
+                            process.hltobject *
                             process.hiEvtAnalyzer *
                             process.HiGenParticleAna*
                             process.jetSequences +
@@ -214,3 +231,138 @@ process.pVertexFilterCutEandG = cms.Path(process.pileupVertexFilterCutEandG)
 process.pAna = cms.EndPath(process.skimanalysis)
 
 # Customization
+
+process.hltobject.triggerNames = cms.vstring(
+#"digitisation_step",
+#"L1simulation_step",
+#"digi2raw_step",
+#"HLTriggerFirstPath",
+"HLT_Physics_v2",
+"DST_Physics_v1",
+"HLT_Random_v1",
+"HLT_ZeroBias_v2",
+"HLT_PixelTracks_Multiplicity60ForPPRef_v1",
+"HLT_PixelTracks_Multiplicity85ForPPRef_v1",
+"HLT_PixelTracks_Multiplicity110ForPPRef_v1",
+"HLT_PixelTracks_Multiplicity135ForPPRef_v1",
+"HLT_PixelTracks_Multiplicity160ForPPRef_v1",
+"HLT_AK4CaloJet40_Eta5p1ForPPRef_v1",
+"HLT_AK4CaloJet60_Eta5p1ForPPRef_v1",
+"HLT_AK4CaloJet80_Eta5p1ForPPRef_v1",
+"HLT_AK4CaloJet100_Eta5p1ForPPRef_v1",
+"HLT_AK4CaloJet110_Eta5p1ForPPRef_v1",
+"HLT_AK4CaloJet120_Eta5p1ForPPRef_v1",
+"HLT_AK4CaloJet150ForPPRef_v1",
+"HLT_AK4PFJet40_Eta5p1ForPPRef_v1",
+"HLT_AK4PFJet60_Eta5p1ForPPRef_v1",
+"HLT_AK4PFJet80_Eta5p1ForPPRef_v1",
+"HLT_AK4PFJet100_Eta5p1ForPPRef_v1",
+"HLT_AK4PFJet110_Eta5p1ForPPRef_v1",
+"HLT_AK4PFJet120_Eta5p1ForPPRef_v1",
+"HLT_AK4CaloJet80_Jet35_Eta1p1ForPPRef_v1",
+"HLT_AK4CaloJet80_Jet35_Eta0p7ForPPRef_v1",
+"HLT_AK4CaloJet100_Jet35_Eta1p1ForPPRef_v1",
+"HLT_AK4CaloJet100_Jet35_Eta0p7ForPPRef_v1",
+"HLT_AK4CaloJet80_45_45_Eta2p1ForPPRef_v1",
+"HLT_HISinglePhoton10_Eta1p5ForPPRef_v1",
+"HLT_HISinglePhoton15_Eta1p5ForPPRef_v1",
+"HLT_HISinglePhoton20_Eta1p5ForPPRef_v1",
+"HLT_HISinglePhoton30_Eta1p5ForPPRef_v1",
+"HLT_HISinglePhoton40_Eta1p5ForPPRef_v1",
+"HLT_HISinglePhoton50_Eta1p5ForPPRef_v1",
+"HLT_HISinglePhoton60_Eta1p5ForPPRef_v1",
+"HLT_HISinglePhoton10_Eta3p1ForPPRef_v1",
+"HLT_HISinglePhoton15_Eta3p1ForPPRef_v1",
+"HLT_HISinglePhoton20_Eta3p1ForPPRef_v1",
+"HLT_HISinglePhoton30_Eta3p1ForPPRef_v1",
+"HLT_HISinglePhoton40_Eta3p1ForPPRef_v1",
+"HLT_HISinglePhoton50_Eta3p1ForPPRef_v1",
+"HLT_HISinglePhoton60_Eta3p1ForPPRef_v1",
+"HLT_HIDoublePhoton15_Eta1p5_Mass50_1000ForPPRef_v1",
+"HLT_HIDoublePhoton15_Eta1p5_Mass50_1000_R9HECutForPPRef_v1",
+"HLT_HIDoublePhoton15_Eta2p1_Mass50_1000_R9CutForPPRef_v1",
+"HLT_HIDoublePhoton15_Eta2p5_Mass50_1000_R9SigmaHECutForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_AK4CaloJet40Eta2p1ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_AK4CaloJet60Eta2p1ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_AK4CaloJet80Eta2p1ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_AK4CaloJet100Eta2p1ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_HIPhoton10Eta1p5ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_HIPhoton15Eta1p5ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_HIPhoton20Eta1p5ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_HIPhoton30Eta1p5ForPPRef_v1",
+"HLT_HIL2Mu3Eta2p5_HIPhoton40Eta1p5ForPPRef_v1",
+"HLT_HIL1DoubleMu0ForPPRef_v1",
+"HLT_HIL1DoubleMu10ForPPRef_v1",
+"HLT_HIL2DoubleMu0_NHitQForPPRef_v1",
+"HLT_HIL3DoubleMu0_OS_m2p5to4p5ForPPRef_v1",
+"HLT_HIL3DoubleMu0_OS_m7to14ForPPRef_v1",
+"HLT_HIL2Mu3_NHitQ10ForPPRef_v1",
+"HLT_HIL3Mu3_NHitQ15ForPPRef_v1",
+"HLT_HIL2Mu5_NHitQ10ForPPRef_v1",
+"HLT_HIL3Mu5_NHitQ15ForPPRef_v1",
+"HLT_HIL2Mu7_NHitQ10ForPPRef_v1",
+"HLT_HIL3Mu7_NHitQ15ForPPRef_v1",
+"HLT_HIL2Mu15ForPPRef_v1",
+"HLT_HIL3Mu15ForPPRef_v1",
+"HLT_HIL2Mu20ForPPRef_v1",
+"HLT_HIL3Mu20ForPPRef_v1",
+"HLT_FullTrack18ForPPRef_v1",
+"HLT_FullTrack24ForPPRef_v1",
+"HLT_FullTrack34ForPPRef_v1",
+"HLT_FullTrack45ForPPRef_v1",
+"HLT_FullTrack53ForPPRef_v1",
+"HLT_HIUPCL1DoubleMuOpenNotHF2ForPPRef_v1",
+"HLT_HIUPCDoubleMuNotHF2Pixel_SingleTrackForPPRef_v1",
+"HLT_HIUPCL1MuOpen_NotMinimumBiasHF2_ANDForPPRef_v1",
+"HLT_HIUPCMuOpen_NotMinimumBiasHF2_ANDPixel_SingleTrackForPPRef_v1",
+"HLT_HIUPCL1NotMinimumBiasHF2_ANDForPPRef_v1",
+"HLT_HIUPCNotMinimumBiasHF2_ANDPixel_SingleTrackForPPRef_v1",
+"HLT_HIUPCL1ZdcOR_BptxANDForPPRef_v1",
+"HLT_HIUPCZdcOR_BptxANDPixel_SingleTrackForPPRef_v1",
+"HLT_HIUPCL1ZdcXOR_BptxANDForPPRef_v1",
+"HLT_HIUPCZdcXOR_BptxANDPixel_SingleTrackForPPRef_v1",
+"HLT_HIUPCL1NotZdcOR_BptxANDForPPRef_v1",
+"HLT_HIUPCNotZdcOR_BptxANDPixel_SingleTrackForPPRef_v1",
+"HLT_HIL1CastorMediumJetForPPRef_v1",
+"HLT_HICastorMediumJetPixel_SingleTrackForPPRef_v1",
+"HLT_DmesonPPTrackingGlobal_Dpt8ForPPRef_v1",
+"HLT_DmesonPPTrackingGlobal_Dpt15ForPPRef_v1",
+"HLT_DmesonPPTrackingGlobal_Dpt20ForPPRef_v1",
+"HLT_DmesonPPTrackingGlobal_Dpt30ForPPRef_v1",
+"HLT_DmesonPPTrackingGlobal_Dpt40ForPPRef_v1",
+"HLT_DmesonPPTrackingGlobal_Dpt50ForPPRef_v1",
+"HLT_DmesonPPTrackingGlobal_Dpt60ForPPRef_v1",
+"HLT_AK4PFBJetBCSV60_Eta2p1ForPPRef_v1",
+"HLT_AK4PFBJetBCSV80_Eta2p1ForPPRef_v1",
+"HLT_AK4PFDJet60_Eta2p1ForPPRef_v1",
+"HLT_AK4PFDJet80_Eta2p1ForPPRef_v1",
+"HLT_AK4PFBJetBSSV60_Eta2p1ForPPRef_v1",
+"HLT_AK4PFBJetBSSV80_Eta2p1ForPPRef_v1",
+#"HLT_EcalCalibration_v2",
+#"HLT_HcalCalibration_v1",
+#"AlCa_EcalPhiSym_v3",
+#"HLT_L1Tech6_BPTX_MinusOnly_v1",
+#"HLT_L1Tech5_BPTX_PlusOnly_v2",
+#"HLT_L1Tech7_NoBPTX_v1",
+#"HLT_L1TOTEM1_MinBias_v1",
+#"HLT_L1TOTEM2_ZeroBias_v1",
+"HLT_L1MinimumBiasHF1OR_v1",
+"HLT_L1MinimumBiasHF2OR_v1",
+"HLT_L1MinimumBiasHF2ORNoBptxGating_v1",
+"HLT_L1MinimumBiasHF1AND_v1",
+"HLT_L1MinimumBiasHF2AND_v1",
+#"AlCa_LumiPixels_Random_v1",
+#"AlCa_LumiPixels_ZeroBias_v2",
+#"HLTriggerFinalPath"
+)
+## NOTES
+# how to check the HLT paths in the input file
+#$> git diff --unified=0  HeavyIonsAnalysis/EventAnalysis/src/TriggerObjectAnalyzer.cc
+# diff --git a/HeavyIonsAnalysis/EventAnalysis/src/TriggerObjectAnalyzer.cc b/HeavyIonsAnalysis/EventAnalysis/src/TriggerObjectAnalyzer.cc
+# index 1ffcafc..886b38b 100644
+# --- a/HeavyIonsAnalysis/EventAnalysis/src/TriggerObjectAnalyzer.cc
+# +++ b/HeavyIonsAnalysis/EventAnalysis/src/TriggerObjectAnalyzer.cc
+# @@ -217,0 +218,3 @@ TriggerObjectAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& iSe
+# +
+# +         std::cout << "activeHLTPathInThisEvent = " << (*iHLT).c_str() << std::endl;
+# +
