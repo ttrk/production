@@ -26,7 +26,8 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-                                "file:samples/PbPb_MC_RECODEBUG.root"
+                                "/store/himc/HINPbPbWinter16DR/Pythia8_Ze10e10_Hydjet_MB/AODSIM/75X_mcRun2_HeavyIon_v13_ext1-v1/70000/F8F5E083-1505-E611-ABED-02163E014509.root"
+#                                "file:samples/PbPb_MC_RECODEBUG.root"
                                 )
                             )
 
@@ -35,6 +36,15 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(10)
 )
 
+process.output = cms.OutputModule("PoolOutputModule",
+                                  outputCommands = cms.untracked.vstring('drop *',
+                                                                         'keep *_particleFlow_*_*',
+                                                                         'keep *_particleFlowTmp_*_*',
+                                                                         'keep *_mapEtaEdges_*_*',
+                                                                         'keep *_*_*_HiForest'),
+                                  fileName       = cms.untracked.string ("OutputMC.root")
+)
+#process.outpath  = cms.EndPath(process.output)
 
 #####################################################################################
 # Load Global Tag, Geometry, etc.
@@ -50,12 +60,23 @@ from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '75X_mcRun2_HeavyIon_v13', '') #for now track GT manually, since centrality tables updated ex post facto
 process.HiForest.GlobalTagLabel = process.GlobalTag.globaltag
 
+#overwrite GT for centrality table for Cymbal5Ev8 tune
+process.GlobalTag.snapshotTime = cms.string("9999-12-31 23:59:59.000")
+process.GlobalTag.toGet.extend([
+   cms.PSet(record = cms.string("HeavyIonRcd"),
+      tag = cms.string("CentralityTable_HFtowers200_HydjetCymbal5Ev8_v758x01_mc"),
+      connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
+      label = cms.untracked.string("HFtowersHydjetCymbal5Ev8")
+   ),
+])
+
 from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_PbPb5020
 process = overrideJEC_PbPb5020(process)
 
 process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
-# process.centralityBin.Centrality = cms.InputTag("hiCentrality")
-# process.centralityBin.centralityVariable = cms.string("HFtowers")
+process.centralityBin.Centrality = cms.InputTag("hiCentrality")
+process.centralityBin.centralityVariable = cms.string("HFtowers")
+process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetCymbal5Ev8")
 #process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetDrum5")
 
 #####################################################################################
@@ -79,8 +100,10 @@ process.load('HeavyIonsAnalysis.JetAnalysis.GenJetSequence')
 process.load('HeavyIonsAnalysis.JetAnalysis.hiSignalGenFilters')
 
 
+#PU minimal tower cut reco sequence
+process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_puLimitedPbPb')
 # nominal jet reco sequence
-process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPbPb')
+#process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPbPb')
 # replace above with this one for JEC:
 #process.load('HeavyIonsAnalysis.JetAnalysis.FullJetSequence_JECPbPb')
 
@@ -99,7 +122,6 @@ process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cff')
 process.HiGenParticleAna.genParticleSrc = cms.untracked.InputTag("genParticles")
 # Temporary disactivation - until we have DIGI & RECO in CMSSW_7_5_7_patch4
 process.HiGenParticleAna.doHI = False
-process.HiGenParticleAna.ptMin = cms.untracked.double(0.5)   # lower gen particle pt cut to from 5 GeV to 0.5 GeV
 
 
 #####################################################################################
@@ -111,6 +133,7 @@ process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_mc_cfi')
 process.hiEvtAnalyzer.doMC = cms.bool(True) #general MC info
 process.hiEvtAnalyzer.doHiMC = cms.bool(True) #HI specific MC info
 process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
+process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
 process.pfcandAnalyzer.skipCharged = False
 process.pfcandAnalyzer.pfPtMin = 0
@@ -151,6 +174,22 @@ process.load("HeavyIonsAnalysis.VectorBosonAnalysis.tupelSequence_PbPb_mc_cff")
 
 #####################################################################################
 
+#replace pp CSVv2 with PbPb CSVv2 (positive and negative taggers unchanged!)
+process.load('RecoBTag.CSVscikit.csvscikitTagJetTags_cfi')
+process.load('RecoBTag.CSVscikit.csvscikitTaggerProducer_cfi')
+process.akPu4PFCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.akPu4PFCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akPu4PFImpactParameterTagInfos"), cms.InputTag("akPu4PFSecondaryVertexTagInfos"))
+
+process.akCs4PFCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.akCs4PFCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akCs4PFImpactParameterTagInfos"), cms.InputTag("akCs4PFSecondaryVertexTagInfos"))
+
+process.akPu4CaloCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.akPu4CaloCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akPu4CaloImpactParameterTagInfos"), cms.InputTag("akPu4CaloSecondaryVertexTagInfos"))
+#process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/bTagCSVv2PbPb_758p3_Jan2017_BDTG_weights.xml')
+#trained on CS jets
+process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb_BDTG.weights.xml')
+
+
 #########################
 # Main analysis list
 #########################
@@ -160,11 +199,16 @@ process.ana_step = cms.Path(
 # process.mixAnalyzer *
                             process.runAnalyzer *
                             process.hltanalysis *
+                            process.hltobject *
                             process.centralityBin *
                             process.hiEvtAnalyzer*
                             process.HiGenParticleAna*
                             process.akHiGenJets +
-                            process.hiSignalGenFilters + 
+                            process.hiSignalGenFilters +
+                            process.ak2GenNjettiness +
+                            process.ak3GenNjettiness +
+                            process.ak4GenNjettiness +
+                            process.ak5GenNjettiness *
                             process.jetSequences +
                             process.hiFJRhoAnalyzer +
                             process.ggHiNtuplizer +
