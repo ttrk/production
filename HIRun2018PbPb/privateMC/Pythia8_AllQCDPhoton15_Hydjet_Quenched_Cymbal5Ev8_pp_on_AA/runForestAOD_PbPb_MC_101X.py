@@ -26,7 +26,7 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
     fileNames = cms.untracked.vstring(
-	'/store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/AODSIM_20180723_pp_on_AA/180724_062202/0000/step3_RAW2DIGI_L1Reco_RECO_1.root'
+	'/store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/AODSIM_20180813_pp_on_AA/180814_163013/0001/step3_RAW2DIGI_L1Reco_RECO_1229.root'
     )
 )
 

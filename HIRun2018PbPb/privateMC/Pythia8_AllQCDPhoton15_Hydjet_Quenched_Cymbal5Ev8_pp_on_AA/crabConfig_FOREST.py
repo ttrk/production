@@ -19,7 +19,7 @@ config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, 48 hours.
 
 # Samples are listed here : https://twiki.cern.ch/twiki/bin/view/CMS/PbPb5TeV2018PrivateMC?rev=18#Tunes
 config.section_("Data")
-config.Data.inputDataset = "/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/clindsey-AODSIM_20180723_pp_on_AA-b7cacae03ea78f1a9a439e6efe1e6356/USER"
+config.Data.inputDataset = "/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/clindsey-AODSIM_20180813_pp_on_AA-b7cacae03ea78f1a9a439e6efe1e6356/USER"
 config.Data.inputDBS = "phys03"
 config.Data.splitting = "FileBased"
 config.Data.unitsPerJob = 10
