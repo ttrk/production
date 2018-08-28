@@ -17771,9 +17771,9 @@ process.simCaloStage2Digis = cms.EDProducer("L1TStage2Layer2Producer",
 
 
 process.simCaloStage2Layer1Digis = cms.EDProducer("L1TCaloLayer1",
-    ecalToken = cms.InputTag("ecalDigis","EcalTriggerPrimitives"),
+    ecalToken = cms.InputTag("simEcalTriggerPrimitiveDigis"),
     firmwareVersion = cms.int32(3),
-    hcalToken = cms.InputTag("hcalDigis"),
+    hcalToken = cms.InputTag("simHcalTriggerPrimitiveDigis"),
     unpackEcalMask = cms.bool(False),
     unpackHcalMask = cms.bool(False),
     useCalib = cms.bool(True),

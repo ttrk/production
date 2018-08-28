@@ -34,6 +34,15 @@ echo "process.caloStage2Params.egBypassECALFG = cms.uint32(1)" >> $config_l1Ntup
 echo "process.caloStage2Params.egHOverEcutBarrel = cms.int32(1)" >> $config_l1Ntuple
 echo "process.caloStage2Params.egHOverEcutEndcap = cms.int32(1)" >> $config_l1Ntuple
 echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $config_l1Ntuple  # ignore all the EGs with ieta > 24
+### modify input for calo digi collection
+## https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TStage2Instructions?rev=141#Workflows_AN1
+#--customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAWSimEcalTP \
+#--customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAWSimHcalTP \
+#--customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAWSimCalTP \
+# https://github.com/cms-sw/cmssw/blob/master/L1Trigger/Configuration/python/customiseReEmul.py#L253-L254
+# https://github.com/cms-sw/cmssw/blob/71741cd7aea763fce2c07ca50370cd14b7edd261/L1Trigger/Configuration/python/customiseReEmul.py#L253-L254
+echo "process.simCaloStage2Layer1Digis.ecalToken = cms.InputTag('simEcalTriggerPrimitiveDigis')" >> $config_l1Ntuple
+echo "process.simCaloStage2Layer1Digis.hcalToken = cms.InputTag('simHcalTriggerPrimitiveDigis')" >> $config_l1Ntuple
 
 config_l1Ntuple_LOG="${config_l1Ntuple/.py/.log}"
 echo "# run the config via"
