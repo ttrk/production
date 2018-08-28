@@ -26,13 +26,13 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
     fileNames = cms.untracked.vstring(
-        '/store/user/clindsey/Pythia8_EmEnrichedDijet30_Hydjet_Quenched_Cymbal5Ev8/AODSIM_20180723_pp_on_AA/180724_062814/0000/step3_RAW2DIGI_L1Reco_RECO_1.root'
+	'/store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/AODSIM_20180813_pp_on_AA/180814_163013/0001/step3_RAW2DIGI_L1Reco_RECO_1229.root'
     )
 )
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10))
+    input = cms.untracked.int32(20))
 
 
 #####################################################################################
@@ -58,6 +58,13 @@ process.GlobalTag.toGet.extend([
 ])
 
 process.load('RecoHI.HiCentralityAlgos.HiCentrality_cfi')
+process.hiCentrality.srcHFhits = cms.InputTag("reducedHcalRecHits", "hfreco")
+process.hiCentrality.srcEBhits = cms.InputTag("reducedEcalRecHitsEB")
+process.hiCentrality.srcEEhits = cms.InputTag("reducedEcalRecHitsEE")
+process.hiCentrality.producePixelhits = cms.bool(False)
+process.hiCentrality.srcVertex = cms.InputTag("offlinePrimaryVertices")
+process.hiCentrality.srcTracks = cms.InputTag("generalTracks")
+process.hiCentrality.producePixelTracks = cms.bool(False)
 
 process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
 process.centralityBin.Centrality = cms.InputTag("hiCentrality")
@@ -89,6 +96,7 @@ process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_XeXe_mc")
 process.akPu4PFcorr.payload = "AK4PF"
 process.akCs4PFcorr.payload = "AK4PF"
 process.ak4PFcorr.payload = "AK4PF"
+process.akPu4Calocorr.payload = "AK4Calo"
 # Use this version for JEC
 #process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_JECPP")
 
@@ -175,9 +183,9 @@ process.ggHiNtuplizerGED = process.ggHiNtuplizer.clone(
 #########################
 process.ana_step = cms.Path(
     # process.hltanalysisReco *
-    # process.hiCentrality *
-    # process.centralityBin *
-    # process.hiEvtAnalyzer *
+    process.hiCentrality *
+    process.centralityBin *
+    process.hiEvtAnalyzer *
     process.HiGenParticleAna *
     process.jetSequences +
     # process.egmGsfElectronIDSequence + #Should be added in the path for VID module
