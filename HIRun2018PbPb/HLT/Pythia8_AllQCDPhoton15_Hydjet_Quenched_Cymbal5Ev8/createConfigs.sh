@@ -10,9 +10,12 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton
 
 menu="/users/katatar/HI2018PbPb/hltTestEgamma/V29"
 configFile="hltConfig.py"
+GLOBALTAG="auto:run2_mc_GRun"
+SETUP="/dev/CMSSW_10_1_0/GRun"
+PROCESS="MyHLT"
 nEvents="100"
 
-hltGetConfiguration $menu --globaltag auto:run2_mc_GRun --input $inputFile --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --max-events $nEvents > $configFile
+hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS --full --offline --mc --unprescale --l1-emulator FullMC --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
@@ -20,9 +23,9 @@ echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 # Add hltBitAnalyzer
 echo '' >> $configFile
 echo 'process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")' >> $configFile
-echo 'process.hltbitanalysis.HLTProcessName = cms.string("MyHLT")' >> $configFile
-echo 'process.hltbitanalysis.hltresults = cms.InputTag("TriggerResults", "", "MyHLT")' >> $configFile
-echo 'process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis", "", "MyHLT")' >> $configFile
+echo 'process.hltbitanalysis.HLTProcessName = cms.string("'${PROCESS}'")' >> $configFile
+echo 'process.hltbitanalysis.hltresults = cms.InputTag("TriggerResults", "", "'${PROCESS}'")' >> $configFile
+echo 'process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis", "", "'${PROCESS}'")' >> $configFile
 echo 'process.hltbitanalysis.UseTFileService = cms.untracked.bool(True)' >> $configFile
 echo 'process.hltbitanalysis.RunParameters = cms.PSet(' >> $configFile
 echo '   isData = cms.untracked.bool(True))' >> $configFile
