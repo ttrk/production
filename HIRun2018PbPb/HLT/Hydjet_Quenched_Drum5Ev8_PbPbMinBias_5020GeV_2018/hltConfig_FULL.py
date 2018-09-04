@@ -7276,7 +7276,7 @@ process.hltbitanalysis = cms.EDAnalyzer("HLTBitAnalyzer",
     HLTProcessName = cms.string('MyHLT'),
     OfflinePrimaryVertices0 = cms.InputTag("offlinePrimaryVertices"),
     RunParameters = cms.PSet(
-        isData = cms.untracked.bool(False)
+        isData = cms.untracked.bool(True)
     ),
     UseTFileService = cms.untracked.bool(True),
     genEventInfo = cms.InputTag("generator","","SIM"),
