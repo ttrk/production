@@ -1,4 +1,4 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V29 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V29 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --max-events 100
 
 # /users/katatar/HI2018PbPb/hltTestEgamma/V29 (CMSSW_10_1_2_patch2)
 
@@ -2349,6 +2349,10 @@ process = customizeHLTforCMSSW(process,"GRun")
 # Eras-based customisations
 from HLTrigger.Configuration.Eras import modifyHLTforEras
 modifyHLTforEras(process)
+
+#User-defined customization functions
+from HLTrigger.Configuration.customizeHLTforCMSSW import customiseFor2017DtUnpacking
+process = customiseFor2017DtUnpacking(process)
 
 process.options.numberOfThreads=cms.untracked.uint32(1)
 

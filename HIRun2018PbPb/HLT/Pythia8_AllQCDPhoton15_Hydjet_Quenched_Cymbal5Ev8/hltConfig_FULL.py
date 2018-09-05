@@ -2627,6 +2627,17 @@ process.datasets = cms.PSet(
         'HLT_ZeroBias_IsolatedBunches_v5', 
         'HLT_ZeroBias_v6'
     ),
+    FSQJet1 = cms.vstring(
+        'HLT_DiPFJet15_NoCaloMatched_v16', 
+        'HLT_DiPFJet25_NoCaloMatched_v16'
+    ),
+    FSQJet2 = cms.vstring(
+        'HLT_DiPFJet15_FBEta3_NoCaloMatched_v17', 
+        'HLT_DiPFJet25_FBEta3_NoCaloMatched_v17', 
+        'HLT_DiPFJetAve15_HFJEC_v17', 
+        'HLT_DiPFJetAve25_HFJEC_v17', 
+        'HLT_DiPFJetAve35_HFJEC_v17'
+    ),
     HINCaloJets = cms.vstring(
         'HLT_AK4CaloJet100_v10', 
         'HLT_AK4CaloJet120_v9', 
@@ -2742,6 +2753,9 @@ process.datasets = cms.PSet(
         'HLT_PFHT350MinPFJet15_v9', 
         'HLT_PFHT350_v19', 
         'HLT_PFHT370_v17', 
+        'HLT_PFHT400_FivePFJet_100_100_60_30_30_DoublePFBTagDeepCSV_4p5_v8', 
+        'HLT_PFHT400_FivePFJet_100_100_60_30_30_v8', 
+        'HLT_PFHT400_FivePFJet_120_120_60_30_30_DoublePFBTagDeepCSV_4p5_v8', 
         'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94_v8', 
         'HLT_PFHT400_SixPFJet32_v8', 
         'HLT_PFHT430_v17', 
@@ -2948,7 +2962,7 @@ process.datasets = cms.PSet(
         'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v11'
     ),
     NoBPTX = cms.vstring(
-        'HLT_CDC_L2cosmic_5_er1p0_v1', 
+        'HLT_CDC_L2cosmic_10_er1p0_v1', 
         'HLT_CDC_L2cosmic_5p5_er1p0_v1', 
         'HLT_L2Mu10_NoVertex_NoBPTX3BX_v5', 
         'HLT_L2Mu10_NoVertex_NoBPTX_v6', 
@@ -3027,7 +3041,7 @@ process.datasets = cms.PSet(
         'HLT_BTagMu_AK8Jet170_DoubleMu5_v2', 
         'HLT_BTagMu_AK8Jet300_Mu5_noalgo_v12', 
         'HLT_BTagMu_AK8Jet300_Mu5_v12', 
-        'HLT_CDC_L2cosmic_5_er1p0_v1', 
+        'HLT_CDC_L2cosmic_10_er1p0_v1', 
         'HLT_CDC_L2cosmic_5p5_er1p0_v1', 
         'HLT_CaloJet500_NoJetID_v12', 
         'HLT_CaloJet550_NoJetID_v7', 
@@ -3051,14 +3065,21 @@ process.datasets = cms.PSet(
         'HLT_DiMu4_Ele9_CaloIdL_TrackIdL_DZ_Mass3p8_v17', 
         'HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ_v17', 
         'HLT_DiMu9_Ele9_CaloIdL_TrackIdL_v17', 
+        'HLT_DiPFJet15_FBEta3_NoCaloMatched_v17', 
+        'HLT_DiPFJet15_NoCaloMatched_v16', 
+        'HLT_DiPFJet25_FBEta3_NoCaloMatched_v17', 
+        'HLT_DiPFJet25_NoCaloMatched_v16', 
         'HLT_DiPFJetAve100_HFJEC_v16', 
         'HLT_DiPFJetAve140_v13', 
+        'HLT_DiPFJetAve15_HFJEC_v17', 
         'HLT_DiPFJetAve160_HFJEC_v16', 
         'HLT_DiPFJetAve200_v13', 
         'HLT_DiPFJetAve220_HFJEC_v16', 
+        'HLT_DiPFJetAve25_HFJEC_v17', 
         'HLT_DiPFJetAve260_v14', 
         'HLT_DiPFJetAve300_HFJEC_v16', 
         'HLT_DiPFJetAve320_v14', 
+        'HLT_DiPFJetAve35_HFJEC_v17', 
         'HLT_DiPFJetAve400_v14', 
         'HLT_DiPFJetAve40_v14', 
         'HLT_DiPFJetAve500_v14', 
@@ -3370,6 +3391,9 @@ process.datasets = cms.PSet(
         'HLT_PFHT350MinPFJet15_v9', 
         'HLT_PFHT350_v19', 
         'HLT_PFHT370_v17', 
+        'HLT_PFHT400_FivePFJet_100_100_60_30_30_DoublePFBTagDeepCSV_4p5_v8', 
+        'HLT_PFHT400_FivePFJet_100_100_60_30_30_v8', 
+        'HLT_PFHT400_FivePFJet_120_120_60_30_30_DoublePFBTagDeepCSV_4p5_v8', 
         'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94_v8', 
         'HLT_PFHT400_SixPFJet32_v8', 
         'HLT_PFHT430_v17', 
@@ -3540,6 +3564,8 @@ process.datasets = cms.PSet(
         'HLT_Mu8_IP3_part0_v3', 
         'HLT_Mu8_IP5_part0_v2', 
         'HLT_Mu8_IP6_part0_v2', 
+        'HLT_Mu9_IP0_part0_v2', 
+        'HLT_Mu9_IP3_part0_v2', 
         'HLT_Mu9_IP4_part0_v2', 
         'HLT_Mu9_IP5_part0_v2', 
         'HLT_Mu9_IP6_part0_v3'
@@ -3786,6 +3812,8 @@ process.streams = cms.PSet(
     PhysicsEGamma = cms.vstring('EGamma'),
     PhysicsEndOfFill = cms.vstring(
         'EmptyBX', 
+        'FSQJet1', 
+        'FSQJet2', 
         'HINCaloJets', 
         'HINPFJets'
     ),
