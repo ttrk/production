@@ -2562,3 +2562,45 @@ process.hltbitanalysis.RunParameters = cms.PSet(
 process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)
 process.TFileService = cms.Service("TFileService",
    fileName=cms.string("openHLT.root"))
+process.load("HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi")
+process.hltobject.processName = cms.string("MyHLT")
+process.hltobject.triggerResults = cms.InputTag("TriggerResults", "", "MyHLT")
+process.hltobject.triggerEvent = cms.InputTag("hltTriggerSummaryAOD", "", "MyHLT")
+process.hltobject.triggerNames = cms.vstring(
+"HLT_GEDPhoton10",
+"HLT_GEDPhoton15",
+"HLT_GEDPhoton20",
+"HLT_GEDPhoton30",
+"HLT_GEDPhoton40",
+"HLT_GEDPhoton50",
+"HLT_GEDPhoton60",
+"HLT_GEDPhoton10_HECut",
+"HLT_GEDPhoton15_HECut",
+"HLT_GEDPhoton20_HECut",
+"HLT_GEDPhoton30_HECut",
+"HLT_GEDPhoton40_HECut",
+"HLT_GEDPhoton50_HECut",
+"HLT_GEDPhoton60_HECut",
+"HLT_GEDPhoton10_EB",
+"HLT_GEDPhoton15_EB",
+"HLT_GEDPhoton20_EB",
+"HLT_GEDPhoton30_EB",
+"HLT_GEDPhoton40_EB",
+"HLT_GEDPhoton50_EB",
+"HLT_GEDPhoton60_EB",
+"HLT_HISinglePhoton10_Eta3p1",
+"HLT_HISinglePhoton15_Eta3p1",
+"HLT_HISinglePhoton20_Eta3p1",
+"HLT_HISinglePhoton30_Eta3p1",
+"HLT_HISinglePhoton40_Eta3p1",
+"HLT_HISinglePhoton50_Eta3p1",
+"HLT_HISinglePhoton60_Eta3p1",
+"HLT_HISinglePhoton10_Eta1p5",
+"HLT_HISinglePhoton15_Eta1p5",
+"HLT_HISinglePhoton20_Eta1p5",
+"HLT_HISinglePhoton30_Eta1p5",
+"HLT_HISinglePhoton40_Eta1p5",
+"HLT_HISinglePhoton50_Eta1p5",
+"HLT_HISinglePhoton60_Eta1p5"
+)
+process.hltObject = cms.EndPath(process.hltobject)

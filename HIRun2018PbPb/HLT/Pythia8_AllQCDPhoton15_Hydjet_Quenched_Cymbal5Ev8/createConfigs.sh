@@ -38,6 +38,50 @@ echo 'process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)' >> $configFi
 echo 'process.TFileService = cms.Service("TFileService",' >> $configFile
 echo '   fileName=cms.string("openHLT.root"))' >> $configFile
 
+# Add hltobject
+echo 'process.load("HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi")' >> $configFile
+echo 'process.hltobject.processName = cms.string("'${PROCESS}'")' >> $configFile
+echo 'process.hltobject.triggerResults = cms.InputTag("TriggerResults", "", "'${PROCESS}'")' >> $configFile
+echo 'process.hltobject.triggerEvent = cms.InputTag("hltTriggerSummaryAOD", "", "'${PROCESS}'")' >> $configFile
+echo 'process.hltobject.triggerNames = cms.vstring(
+"HLT_GEDPhoton10",
+"HLT_GEDPhoton15",
+"HLT_GEDPhoton20",
+"HLT_GEDPhoton30",
+"HLT_GEDPhoton40",
+"HLT_GEDPhoton50",
+"HLT_GEDPhoton60",
+"HLT_GEDPhoton10_HECut",
+"HLT_GEDPhoton15_HECut",
+"HLT_GEDPhoton20_HECut",
+"HLT_GEDPhoton30_HECut",
+"HLT_GEDPhoton40_HECut",
+"HLT_GEDPhoton50_HECut",
+"HLT_GEDPhoton60_HECut",
+"HLT_GEDPhoton10_EB",
+"HLT_GEDPhoton15_EB",
+"HLT_GEDPhoton20_EB",
+"HLT_GEDPhoton30_EB",
+"HLT_GEDPhoton40_EB",
+"HLT_GEDPhoton50_EB",
+"HLT_GEDPhoton60_EB",
+"HLT_HISinglePhoton10_Eta3p1",
+"HLT_HISinglePhoton15_Eta3p1",
+"HLT_HISinglePhoton20_Eta3p1",
+"HLT_HISinglePhoton30_Eta3p1",
+"HLT_HISinglePhoton40_Eta3p1",
+"HLT_HISinglePhoton50_Eta3p1",
+"HLT_HISinglePhoton60_Eta3p1",
+"HLT_HISinglePhoton10_Eta1p5",
+"HLT_HISinglePhoton15_Eta1p5",
+"HLT_HISinglePhoton20_Eta1p5",
+"HLT_HISinglePhoton30_Eta1p5",
+"HLT_HISinglePhoton40_Eta1p5",
+"HLT_HISinglePhoton50_Eta1p5",
+"HLT_HISinglePhoton60_Eta1p5"
+)'>> $configFile
+echo 'process.hltObject = cms.EndPath(process.hltobject)' >> $configFile
+
 configFileLOG="${configFile/.py/.log}"
 echo "# run the config via"
 echo "myRun cmsRun $configFile &> $configFileLOG &"
