@@ -1,7 +1,3 @@
 ### Creating the Config
 
-Run the following to create the l1Ntuple config :
-
-  ```bash
-  ./createConfigs.sh
-  ```
+See README in Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/
