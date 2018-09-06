@@ -25,6 +25,13 @@ hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SET
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 
+## MOD : loose hltRechitInRegionsECAL for PF clustering
+#echo 'process.hltRechitInRegionsECAL.l1InputRegions[0].minEt = cms.double(0.5)' >> $configFile
+
+## MOD : use unfiltered rechit collection for PF clustering, not hltRechitInRegionsECAL
+#echo 'process.hltParticleFlowRecHitECALL1Seeded.producers[0].src = cms.InputTag("hltEcalRecHit","EcalRecHitsEB")' >> $configFile
+#echo 'process.hltParticleFlowRecHitECALL1Seeded.producers[1].src = cms.InputTag("hltEcalRecHit","EcalRecHitsEE")' >> $configFile
+
 # Add hltBitAnalyzer
 echo '' >> $configFile
 echo 'process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")' >> $configFile
