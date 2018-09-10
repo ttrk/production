@@ -22,7 +22,7 @@ configPrefix="l1Ntuple"
 # https://github.com/cms-sw/cmssw/blob/master/L1Trigger/Configuration/python/customiseReEmul.py#L253-L254
 # https://github.com/cms-sw/cmssw/blob/71741cd7aea763fce2c07ca50370cd14b7edd261/L1Trigger/Configuration/python/customiseReEmul.py#L253-L254
 
-$runCmd cmsDriver.py $configPrefix -s RAW2DIGI --era=Run2_2018 \
+$runCmd cmsDriver.py $configPrefix -s RAW2DIGI --era=$ERA \
 --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAWSimCalTP \
 --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU \
 --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleGEN \
