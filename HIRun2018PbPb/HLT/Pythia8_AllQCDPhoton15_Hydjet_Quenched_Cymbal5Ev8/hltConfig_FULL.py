@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V33')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V34')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -12129,67 +12129,67 @@ process.HLT_GEDPhoton15 = cms.Path(process.SimL1Emulator+process.HLTBeginSequenc
 process.HLT_Photon20_v13 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEGYYtoZZ+process.hltPrePhoton20+process.HLTPhoton20Sequence_v13+process.HLTEndSequence)
 
 
-process.HLT_EG10UM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG10UM+process.HLTEG10UnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG10UM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG10UM+process.HLTEG10UnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG15UM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG15UM+process.HLTEG15UnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG15UM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG15UM+process.HLTEG15UnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG20UM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG20UM+process.HLTEG20UnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG20UM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG20UM+process.HLTEG20UnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG30UM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG30UM+process.HLTEG30UnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG30UM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG30UM+process.HLTEG30UnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG40UM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG40UM+process.HLTEG40UnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG40UM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG40UM+process.HLTEG40UnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG50UM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG50UM+process.HLTEG50UnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG50UM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG50UM+process.HLTEG50UnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG60UM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG60UM+process.HLTEG60UnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG60UM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG60UM+process.HLTEG60UnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG10EBUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG10EBUM+process.HLTEG10EBUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG10EBUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG10EBUM+process.HLTEG10EBUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG15EBUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG15EBUM+process.HLTEG15EBUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG15EBUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG15EBUM+process.HLTEG15EBUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG20EBUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG20EBUM+process.HLTEG20EBUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG20EBUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG20EBUM+process.HLTEG20EBUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG30EBUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG30EBUM+process.HLTEG30EBUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG30EBUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG30EBUM+process.HLTEG30EBUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG40EBUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG40EBUM+process.HLTEG40EBUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG40EBUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG40EBUM+process.HLTEG40EBUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG50EBUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG50EBUM+process.HLTEG50EBUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG50EBUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG50EBUM+process.HLTEG50EBUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG60EBUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG60EBUM+process.HLTEG60EBUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG60EBUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG60EBUM+process.HLTEG60EBUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG10HEUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG10HEUM+process.HLTEG10HEUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG10HEUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG10HEUM+process.HLTEG10HEUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG15HEUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG15HEUM+process.HLTEG15HEUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG15HEUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG15HEUM+process.HLTEG15HEUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG20HEUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG20HEUM+process.HLTEG20HEUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG20HEUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG20HEUM+process.HLTEG20HEUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG30HEUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG30HEUM+process.HLTEG30HEUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG30HEUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG30HEUM+process.HLTEG30HEUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG40HEUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG40HEUM+process.HLTEG40HEUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG40HEUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG40HEUM+process.HLTEG40HEUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG50HEUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG50HEUM+process.HLTEG50HEUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG50HEUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG50HEUM+process.HLTEG50HEUnmatchedSequence+process.HLTEndSequence)
 
 
-process.HLT_EG60HEUM_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG60HEUM+process.HLTEG60HEUnmatchedSequence+process.HLTEndSequence)
+process.HLT_EG60HEUM = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sZeroBias+process.hltPreEG60HEUM+process.HLTEG60HEUnmatchedSequence+process.HLTEndSequence)
 
 
 process.HLTAnalyzerEndpath = cms.EndPath(process.SimL1Emulator+process.hltGtStage2Digis+process.hltPreHLTAnalyzerEndpath+process.hltL1TGlobalSummary+process.hltTrigReport)

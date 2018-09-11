@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V33 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V34 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --max-events 100
 
-# /users/katatar/HI2018PbPb/hltTestEgamma/V33 (CMSSW_10_1_2_patch2)
+# /users/katatar/HI2018PbPb/hltTestEgamma/V34 (CMSSW_10_1_2_patch2)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,7 +8,7 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V33')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V34')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
@@ -3458,30 +3458,30 @@ process.HLT_GEDPhoton50 = cms.Path( process.HLTBeginSequence + process.hltL1sSin
 process.HLT_GEDPhoton60 = cms.Path( process.HLTBeginSequence + process.hltL1sSingleEGXX + process.hltPreGEDPhoton60 + process.HLTPhoton60Sequence + process.HLTEndSequence )
 process.HLT_GEDPhoton15 = cms.Path( process.HLTBeginSequence + process.hltL1sSingleEGXX + process.hltPreGEDPhoton15 + process.HLTPhoton15Sequence + process.HLTEndSequence )
 process.HLT_Photon20_v13 = cms.Path( process.HLTBeginSequence + process.hltL1sSingleEGYYtoZZ + process.hltPrePhoton20 + process.HLTPhoton20Sequence_v13 + process.HLTEndSequence )
-process.HLT_EG10UM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG10UM + process.HLTEG10UnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG15UM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG15UM + process.HLTEG15UnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG20UM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG20UM + process.HLTEG20UnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG30UM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG30UM + process.HLTEG30UnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG40UM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG40UM + process.HLTEG40UnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG50UM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG50UM + process.HLTEG50UnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG60UM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG60UM + process.HLTEG60UnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG10EBUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG10EBUM + process.HLTEG10EBUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG15EBUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG15EBUM + process.HLTEG15EBUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG20EBUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG20EBUM + process.HLTEG20EBUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG30EBUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG30EBUM + process.HLTEG30EBUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG40EBUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG40EBUM + process.HLTEG40EBUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG50EBUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG50EBUM + process.HLTEG50EBUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG60EBUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG60EBUM + process.HLTEG60EBUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG10HEUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG10HEUM + process.HLTEG10HEUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG15HEUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG15HEUM + process.HLTEG15HEUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG20HEUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG20HEUM + process.HLTEG20HEUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG30HEUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG30HEUM + process.HLTEG30HEUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG40HEUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG40HEUM + process.HLTEG40HEUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG50HEUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG50HEUM + process.HLTEG50HEUnmatchedSequence + process.HLTEndSequence )
-process.HLT_EG60HEUM_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG60HEUM + process.HLTEG60HEUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG10UM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG10UM + process.HLTEG10UnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG15UM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG15UM + process.HLTEG15UnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG20UM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG20UM + process.HLTEG20UnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG30UM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG30UM + process.HLTEG30UnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG40UM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG40UM + process.HLTEG40UnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG50UM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG50UM + process.HLTEG50UnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG60UM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG60UM + process.HLTEG60UnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG10EBUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG10EBUM + process.HLTEG10EBUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG15EBUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG15EBUM + process.HLTEG15EBUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG20EBUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG20EBUM + process.HLTEG20EBUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG30EBUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG30EBUM + process.HLTEG30EBUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG40EBUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG40EBUM + process.HLTEG40EBUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG50EBUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG50EBUM + process.HLTEG50EBUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG60EBUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG60EBUM + process.HLTEG60EBUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG10HEUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG10HEUM + process.HLTEG10HEUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG15HEUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG15HEUM + process.HLTEG15HEUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG20HEUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG20HEUM + process.HLTEG20HEUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG30HEUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG30HEUM + process.HLTEG30HEUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG40HEUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG40HEUM + process.HLTEG40HEUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG50HEUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG50HEUM + process.HLTEG50HEUnmatchedSequence + process.HLTEndSequence )
+process.HLT_EG60HEUM = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreEG60HEUM + process.HLTEG60HEUnmatchedSequence + process.HLTEndSequence )
 
 
-process.HLTSchedule = cms.Schedule( *(process.HLTriggerFirstPath, process.HLT_ZeroBias_v6, process.HLTriggerFinalPath, process.HLTAnalyzerEndpath, process.HLT_HISinglePhoton30_Eta3p1_v2_vHLTL1TSeed_vLocalCaloFix, process.HLT_HISinglePhoton10_Eta3p1, process.HLT_HISinglePhoton10_Eta1p5, process.HLT_HISinglePhoton15_Eta3p1, process.HLT_HISinglePhoton15_Eta1p5, process.HLT_HISinglePhoton20_Eta3p1, process.HLT_HISinglePhoton20_Eta1p5, process.HLT_HISinglePhoton30_Eta3p1, process.HLT_HISinglePhoton30_Eta1p5, process.HLT_HISinglePhoton40_Eta3p1, process.HLT_HISinglePhoton40_Eta1p5, process.HLT_HISinglePhoton50_Eta3p1, process.HLT_HISinglePhoton50_Eta1p5, process.HLT_HISinglePhoton60_Eta3p1, process.HLT_HISinglePhoton60_Eta1p5, process.HLT_PuAK4CaloJet80Eta5p1_v1, process.HLT_Photon10_v5, process.HLT_GEDPhoton10, process.HLT_GEDPhoton60_HECut, process.HLT_GEDPhoton50_HECut, process.HLT_GEDPhoton40_HECut, process.HLT_GEDPhoton30_HECut, process.HLT_GEDPhoton20_HECut, process.HLT_GEDPhoton15_HECut, process.HLT_GEDPhoton10_HECut, process.HLT_GEDPhoton10_EB, process.HLT_GEDPhoton15_EB, process.HLT_GEDPhoton20_EB, process.HLT_GEDPhoton30_EB, process.HLT_GEDPhoton40_EB, process.HLT_GEDPhoton50_EB, process.HLT_GEDPhoton60_EB, process.HLT_GEDPhoton20, process.HLT_GEDPhoton30, process.HLT_GEDPhoton40, process.HLT_GEDPhoton50, process.HLT_GEDPhoton60, process.HLT_GEDPhoton15, process.HLT_Photon20_v13, process.HLT_EG10UM_v1, process.HLT_EG15UM_v1, process.HLT_EG20UM_v1, process.HLT_EG30UM_v1, process.HLT_EG40UM_v1, process.HLT_EG50UM_v1, process.HLT_EG60UM_v1, process.HLT_EG10EBUM_v1, process.HLT_EG15EBUM_v1, process.HLT_EG20EBUM_v1, process.HLT_EG30EBUM_v1, process.HLT_EG40EBUM_v1, process.HLT_EG50EBUM_v1, process.HLT_EG60EBUM_v1, process.HLT_EG10HEUM_v1, process.HLT_EG15HEUM_v1, process.HLT_EG20HEUM_v1, process.HLT_EG30HEUM_v1, process.HLT_EG40HEUM_v1, process.HLT_EG50HEUM_v1, process.HLT_EG60HEUM_v1 ))
+process.HLTSchedule = cms.Schedule( *(process.HLTriggerFirstPath, process.HLT_ZeroBias_v6, process.HLTriggerFinalPath, process.HLTAnalyzerEndpath, process.HLT_HISinglePhoton30_Eta3p1_v2_vHLTL1TSeed_vLocalCaloFix, process.HLT_HISinglePhoton10_Eta3p1, process.HLT_HISinglePhoton10_Eta1p5, process.HLT_HISinglePhoton15_Eta3p1, process.HLT_HISinglePhoton15_Eta1p5, process.HLT_HISinglePhoton20_Eta3p1, process.HLT_HISinglePhoton20_Eta1p5, process.HLT_HISinglePhoton30_Eta3p1, process.HLT_HISinglePhoton30_Eta1p5, process.HLT_HISinglePhoton40_Eta3p1, process.HLT_HISinglePhoton40_Eta1p5, process.HLT_HISinglePhoton50_Eta3p1, process.HLT_HISinglePhoton50_Eta1p5, process.HLT_HISinglePhoton60_Eta3p1, process.HLT_HISinglePhoton60_Eta1p5, process.HLT_PuAK4CaloJet80Eta5p1_v1, process.HLT_Photon10_v5, process.HLT_GEDPhoton10, process.HLT_GEDPhoton60_HECut, process.HLT_GEDPhoton50_HECut, process.HLT_GEDPhoton40_HECut, process.HLT_GEDPhoton30_HECut, process.HLT_GEDPhoton20_HECut, process.HLT_GEDPhoton15_HECut, process.HLT_GEDPhoton10_HECut, process.HLT_GEDPhoton10_EB, process.HLT_GEDPhoton15_EB, process.HLT_GEDPhoton20_EB, process.HLT_GEDPhoton30_EB, process.HLT_GEDPhoton40_EB, process.HLT_GEDPhoton50_EB, process.HLT_GEDPhoton60_EB, process.HLT_GEDPhoton20, process.HLT_GEDPhoton30, process.HLT_GEDPhoton40, process.HLT_GEDPhoton50, process.HLT_GEDPhoton60, process.HLT_GEDPhoton15, process.HLT_Photon20_v13, process.HLT_EG10UM, process.HLT_EG15UM, process.HLT_EG20UM, process.HLT_EG30UM, process.HLT_EG40UM, process.HLT_EG50UM, process.HLT_EG60UM, process.HLT_EG10EBUM, process.HLT_EG15EBUM, process.HLT_EG20EBUM, process.HLT_EG30EBUM, process.HLT_EG40EBUM, process.HLT_EG50EBUM, process.HLT_EG60EBUM, process.HLT_EG10HEUM, process.HLT_EG15HEUM, process.HLT_EG20HEUM, process.HLT_EG30HEUM, process.HLT_EG40HEUM, process.HLT_EG50HEUM, process.HLT_EG60HEUM ))
 
 
 process.source = cms.Source( "PoolSource",
