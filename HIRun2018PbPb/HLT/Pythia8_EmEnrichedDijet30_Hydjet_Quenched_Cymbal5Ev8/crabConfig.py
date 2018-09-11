@@ -19,9 +19,6 @@ config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, 48 hours.
 config.section_("Data")
 config.Data.inputDataset = "/Pythia8_EmEnrichedDijet30_Hydjet_Quenched_Cymbal5Ev8/clindsey-RAWSIM_20180630-d863108fee469c130ddd2763f36829bb/USER"
 config.Data.inputDBS = "phys03"
-# Code crashes in event with lumi=80527 in the following file. Skip that event by using masking its lumi.
-# root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_EmEnrichedDijet30_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_162218/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_405.root
-config.Data.lumiMask = "customLumiMask.txt"
 config.Data.splitting = "FileBased"
 config.Data.unitsPerJob = 30
 config.Data.totalUnits = -1
