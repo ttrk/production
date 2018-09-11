@@ -8,17 +8,19 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
 inputFile="/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V32"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V34"
 configFile="hltConfig.py"
 GLOBALTAG="auto:run2_mc_GRun"
 SETUP="/dev/CMSSW_10_1_0/GRun"
 PROCESS="MyHLT"
 nEvents="500"
+DATAMC="--mc"
+CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking"
+L1EMU="--l1-emulator FullMC"
 
 ## https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26#Testing_new_paths_with_PbPb_MC
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
---full --offline --mc --unprescale --l1-emulator FullMC \
---customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking \
+--full --offline $DATAMC --unprescale $L1EMU $CUSTOMISE \
 --max-events $nEvents > $configFile
 # --l1Xml L1Menu_CollisionsHeavyIons2018_v1.xml
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
@@ -72,6 +74,27 @@ echo 'process.hltobject.triggerNames = cms.vstring(
 "HLT_GEDPhoton40_EB",
 "HLT_GEDPhoton50_EB",
 "HLT_GEDPhoton60_EB",
+"HLT_EG10UM",
+"HLT_EG15UM",
+"HLT_EG20UM",
+"HLT_EG30UM",
+"HLT_EG40UM",
+"HLT_EG50UM",
+"HLT_EG60UM",
+"HLT_EG10HEUM",
+"HLT_EG15HEUM",
+"HLT_EG20HEUM",
+"HLT_EG30HEUM",
+"HLT_EG40HEUM",
+"HLT_EG50HEUM",
+"HLT_EG60HEUM",
+"HLT_EG10EBUM",
+"HLT_EG15EBUM",
+"HLT_EG20EBUM",
+"HLT_EG30EBUM",
+"HLT_EG40EBUM",
+"HLT_EG50EBUM",
+"HLT_EG60EBUM",
 "HLT_HISinglePhoton10_Eta3p1",
 "HLT_HISinglePhoton15_Eta3p1",
 "HLT_HISinglePhoton20_Eta3p1",
