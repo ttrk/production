@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8_hltTestEgamma_V32"
+config.General.requestName = "Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8_hltTestEgamma_V34"
 config.General.transferLogs = False
 
 config.section_("JobType")
@@ -23,7 +23,7 @@ config.Data.splitting = "FileBased"
 config.Data.unitsPerJob = 30
 config.Data.totalUnits = -1
 config.Data.publication = False
-config.Data.outputDatasetTag = "hltTestEgamma_V32"
+config.Data.outputDatasetTag = "hltTestEgamma_V34"
 config.Data.outLFNDirBase = "/store/user/katatar/HIRun2018PbPb/HLT/"
 
 config.section_("Site")
