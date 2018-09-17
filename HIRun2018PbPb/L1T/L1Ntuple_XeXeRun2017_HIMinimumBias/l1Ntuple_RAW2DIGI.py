@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: l1Ntuple -s RAW2DIGI --era=Run2_2017_pp_on_XeXe --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAWCalouGT --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise=FWCore/ParameterSet/MassReplace.massReplaceInputTag --conditions=94X_dataRun2_v2 -n 100 --data --no_exec --no_output --filein=root://cms-xrd-global.cern.ch//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/899/00000/02339E6D-94AF-E711-A9FC-02163E0122EE.root
+# with command line options: l1Ntuple -s RAW2DIGI --era=Run2_2017_pp_on_XeXe --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulFromRAW --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise=FWCore/ParameterSet/MassReplace.massReplaceInputTag --customise=L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloStage2Params_v3_3_HI --conditions=auto:run2_data -n 100 --mc --no_exec --no_output --filein=root://cms-xrd-global.cern.ch//store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/899/00000/02339E6D-94AF-E711-A9FC-02163E0122EE.root
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -14,9 +14,10 @@ process.load('Configuration.StandardSequences.Services_cff')
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
+process.load('SimGeneral.MixingModule.mixNoPU_cfi')
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
-process.load('Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff')
-process.load('Configuration.StandardSequences.RawToDigi_Data_cff')
+process.load('Configuration.StandardSequences.MagneticField_cff')
+process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
@@ -47,7 +48,7 @@ process.configurationMetadata = cms.untracked.PSet(
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '94X_dataRun2_v2', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
@@ -61,10 +62,10 @@ associatePatAlgosToolsTask(process)
 # customisation of the process.
 
 # Automatic addition of the customisation function from L1Trigger.Configuration.customiseReEmul
-from L1Trigger.Configuration.customiseReEmul import L1TReEmulFromRAWCalouGT 
+from L1Trigger.Configuration.customiseReEmul import L1TReEmulFromRAW 
 
-#call to customisation function L1TReEmulFromRAWCalouGT imported from L1Trigger.Configuration.customiseReEmul
-process = L1TReEmulFromRAWCalouGT(process)
+#call to customisation function L1TReEmulFromRAW imported from L1Trigger.Configuration.customiseReEmul
+process = L1TReEmulFromRAW(process)
 
 # Automatic addition of the customisation function from L1Trigger.L1TNtuples.customiseL1Ntuple
 from L1Trigger.L1TNtuples.customiseL1Ntuple import L1NtupleEMU 
@@ -84,6 +85,12 @@ from FWCore.ParameterSet.MassReplace import massReplaceInputTag
 #call to customisation function massReplaceInputTag imported from FWCore.ParameterSet.MassReplace
 process = massReplaceInputTag(process)
 
+# Automatic addition of the customisation function from L1Trigger.Configuration.customiseSettings
+from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloStage2Params_v3_3_HI 
+
+#call to customisation function L1TSettingsToCaloStage2Params_v3_3_HI imported from L1Trigger.Configuration.customiseSettings
+process = L1TSettingsToCaloStage2Params_v3_3_HI(process)
+
 # End of customisation functions
 
 # Customisation from command line
@@ -92,4 +99,9 @@ process = massReplaceInputTag(process)
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 process = customiseEarlyDelete(process)
 # End adding early deletion
-process.caloStage2Params.hiFlag = cms.uint32(0)
+process.caloStage2Params.egBypassExtHOverE = cms.uint32(1)
+process.caloStage2Params.egBypassShape = cms.uint32(1)
+process.caloStage2Params.egBypassECALFG = cms.uint32(1)
+process.caloStage2Params.egHOverEcutBarrel = cms.int32(1)
+process.caloStage2Params.egHOverEcutEndcap = cms.int32(1)
+process.caloStage2Params.egEtaCut = cms.int32(24)
