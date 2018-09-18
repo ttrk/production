@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V42 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V43 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --max-events 100
 
-# /users/katatar/HI2018PbPb/hltTestEgamma/V42 (CMSSW_10_1_2_patch2)
+# /users/katatar/HI2018PbPb/hltTestEgamma/V43 (CMSSW_10_3_0_pre4)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,12 +8,13 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V42')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V43')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
     dqmPath = cms.untracked.string( "HLT/Throughput" ),
     timeRange = cms.untracked.double( 60000.0 ),
+    dqmPathByProcesses = cms.untracked.bool( False ),
     timeResolution = cms.untracked.double( 5.828 )
 )
 process.MessageLogger = cms.Service( "MessageLogger",
@@ -188,7 +189,9 @@ process.hltGtStage2ObjectMap = cms.EDProducer( "L1TGlobalProducer",
     EmulateBxInEvent = cms.int32( 1 ),
     AlgorithmTriggersUnprescaled = cms.bool( True ),
     PrintL1Menu = cms.untracked.bool( False ),
+    PrescaleCSVFile = cms.string( "prescale_L1TGlobal.csv" ),
     Verbosity = cms.untracked.int32( 0 ),
+    AlgoBlkInputTag = cms.InputTag( "gtDigis" ),
     EtSumInputTag = cms.InputTag( 'hltGtStage2Digis','EtSum' ),
     ProduceL1GtDaqRecord = cms.bool( True ),
     PrescaleSet = cms.uint32( 1 ),
@@ -197,7 +200,7 @@ process.hltGtStage2ObjectMap = cms.EDProducer( "L1TGlobalProducer",
     TriggerMenuLuminosity = cms.string( "startup" ),
     ProduceL1GtObjectMapRecord = cms.bool( True ),
     AlternativeNrBxBoardDaq = cms.uint32( 0 ),
-    PrescaleCSVFile = cms.string( "prescale_L1TGlobal.csv" ),
+    GetPrescaleColumnFromData = cms.bool( False ),
     TauInputTag = cms.InputTag( 'hltGtStage2Digis','Tau' ),
     BstLengthBytes = cms.int32( -1 ),
     MuonInputTag = cms.InputTag( 'hltGtStage2Digis','Muon' )
@@ -702,7 +705,7 @@ process.hltTowerMakerForAll = cms.EDProducer( "CaloTowersCreator",
     UseHO = cms.bool( False ),
     HBWeights = cms.vdouble(  ),
     HF1Weight = cms.double( 1.0 ),
-    HF2Grid = cms.vdouble(  ),
+    missingHcalRescaleFactorForEcal = cms.double( 0.0 ),
     HESThreshold1 = cms.double( 0.8 ),
     HEDWeights = cms.vdouble(  ),
     EBWeight = cms.double( 1.0 ),
@@ -713,8 +716,10 @@ process.hltTowerMakerForAll = cms.EDProducer( "CaloTowersCreator",
     HESThreshold = cms.double( 0.8 ),
     hbheInput = cms.InputTag( "hltHbhereco" ),
     HF2Weight = cms.double( 1.0 ),
+    HBThreshold1 = cms.double( 0.7 ),
     HF2Threshold = cms.double( 0.85 ),
     HcalAcceptSeverityLevel = cms.uint32( 9 ),
+    HBThreshold2 = cms.double( 0.7 ),
     EEThreshold = cms.double( 0.3 ),
     HOThresholdPlus1 = cms.double( 3.5 ),
     HOThresholdPlus2 = cms.double( 3.5 ),
@@ -744,6 +749,7 @@ process.hltTowerMakerForAll = cms.EDProducer( "CaloTowersCreator",
     UseRejectedRecoveredHcalHits = cms.bool( False ),
     MomEBDepth = cms.double( 0.3 ),
     HBWeight = cms.double( 1.0 ),
+    HF2Grid = cms.vdouble(  ),
     HOGrid = cms.vdouble(  ),
     EBGrid = cms.vdouble(  )
 )
