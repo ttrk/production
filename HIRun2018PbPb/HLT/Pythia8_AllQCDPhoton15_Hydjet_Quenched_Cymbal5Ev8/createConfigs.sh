@@ -18,6 +18,16 @@ DATAMC="--mc"
 CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking"
 L1EMU="--l1-emulator FullMC"
 
+isXeXeData=0
+if [ $isXeXeData -gt 0 ]; then
+  inputFile="/store/hidata/XeXeRun2017/HIMinimumBias8/RAW/v1/000/304/906/00000/FA373F85-ACAF-E711-A6F2-02163E01A6EA.root"
+  GLOBALTAG="auto:run2_data_GRun"
+  nEvents="500"
+  DATAMC="--data"
+  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
+  L1EMU="--l1-emulator Full"
+fi
+
 ## https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26#Testing_new_paths_with_PbPb_MC
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
 --full --offline $DATAMC --unprescale $L1EMU $CUSTOMISE \
@@ -26,6 +36,21 @@ hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SET
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
+
+if [ $isXeXeData -gt 0 ]; then
+  oldStr="process\s=\smassReplaceInputTag(process)"
+  # process = massReplaceInputTag(process, "rawDataCollector", "rawDataRepacker", False, True)
+  # process.rawDataRepacker = process.rawDataCollector.clone()
+  # process.SimL1Emulator.replace(process.rawDataCollector, process.rawDataRepacker)
+  newStr1="process = massReplaceInputTag(process, \"rawDataCollector\", \"rawDataRepacker\", False, True)"
+  newStr2="process.rawDataRepacker = process.rawDataCollector.clone()"
+  newStr3="process.SimL1Emulator.replace(process.rawDataCollector, process.rawDataRepacker)"
+  newStr=$newStr1"\n"$newStr2"\n"$newStr3
+  sed -i "s/${oldStr}/${newStr}/g" $configFile
+
+#  echo 'process.hltParticleFlowRecHitECALUnseeded.producers[0].qualityTests[0].applySelectionsToAllCrystals = cms.bool(False)' >> $configFile
+#  echo 'process.hltParticleFlowRecHitECALUnseeded.producers[1].qualityTests[0].applySelectionsToAllCrystals = cms.bool(False)' >> $configFile
+fi
 
 ## MOD : loose hltRechitInRegionsECAL for PF clustering
 #echo 'process.hltRechitInRegionsECAL.l1InputRegions[0].minEt = cms.double(0.5)' >> $configFile
