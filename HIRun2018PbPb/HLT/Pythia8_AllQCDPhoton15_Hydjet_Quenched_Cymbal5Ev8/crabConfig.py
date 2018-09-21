@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8_hltTestEgamma_V34"
+config.General.requestName = "Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8_hltTestEgamma_V43"
 config.General.transferLogs = False
 
 config.section_("JobType")
@@ -12,8 +12,8 @@ config.JobType.psetName = "hltConfig.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, 48 hours.
 # instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26
-# software : CMSSW_10_1_2
-# L1 tag : cms-l1t-offline:l1t-integration-v97.27.1-CMSSW_10_1_2
+# software : CMSSW_10_3_0_pre4
+# L1 tag : no L1 tag for CMSSW_10_3_0_pre4 yet
 
 # Samples are listed here : https://twiki.cern.ch/twiki/bin/view/CMS/PbPb5TeV2018PrivateMC?rev=20#Tunes
 config.section_("Data")
@@ -23,7 +23,7 @@ config.Data.splitting = "FileBased"
 config.Data.unitsPerJob = 30
 config.Data.totalUnits = -1
 config.Data.publication = False
-config.Data.outputDatasetTag = "hltTestEgamma_V34"
+config.Data.outputDatasetTag = "hltTestEgamma_V43"
 config.Data.outLFNDirBase = "/store/user/katatar/HIRun2018PbPb/HLT/"
 
 config.section_("Site")
