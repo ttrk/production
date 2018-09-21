@@ -11,3 +11,9 @@ Run the following to create the DIGI config :
   ```bash
   ./createConfig_DIGI.sh
   ```
+
+Run the following to create the RECO config :
+
+  ```bash
+  ./createConfig_RECO.sh
+  ```
