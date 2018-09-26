@@ -37,6 +37,9 @@ hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SET
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 
+## tweak to run 10_3 menu with cmssw_10_2
+#sed -i "s/missingHcalRescaleFactorForEcal/#missingHcalRescaleFactorForEcal/g" $configFile
+
 if [ $isXeXeData -gt 0 ]; then
   oldStr="process\s=\smassReplaceInputTag(process)"
   # process = massReplaceInputTag(process, "rawDataCollector", "rawDataRepacker", False, True)
