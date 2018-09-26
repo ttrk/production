@@ -8,7 +8,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
 inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V43"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V44"
 configFile="hltConfig.py"
 GLOBALTAG="auto:run2_mc_GRun"
 SETUP="/dev/CMSSW_10_1_0/GRun"
@@ -99,6 +99,13 @@ echo 'process.hltobject.triggerNames = cms.vstring(
 "HLT_HIGEDPhoton40_EB_L1Seeded",
 "HLT_HIGEDPhoton50_EB_L1Seeded",
 "HLT_HIGEDPhoton60_EB_L1Seeded",
+"HLT_HIGEDPhoton10_EB_HECut_L1Seeded",
+"HLT_HIGEDPhoton15_EB_HECut_L1Seeded",
+"HLT_HIGEDPhoton20_EB_HECut_L1Seeded",
+"HLT_HIGEDPhoton30_EB_HECut_L1Seeded",
+"HLT_HIGEDPhoton40_EB_HECut_L1Seeded",
+"HLT_HIGEDPhoton50_EB_HECut_L1Seeded",
+"HLT_HIGEDPhoton60_EB_HECut_L1Seeded",
 "HLT_HIGEDPhoton10",
 "HLT_HIGEDPhoton15",
 "HLT_HIGEDPhoton20",
