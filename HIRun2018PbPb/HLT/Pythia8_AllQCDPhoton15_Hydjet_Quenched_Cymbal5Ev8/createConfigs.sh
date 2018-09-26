@@ -17,6 +17,8 @@ nEvents="100"
 DATAMC="--mc"
 CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking"
 L1EMU="--l1-emulator FullMC"
+#L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
+L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
 
 isXeXeData=0
 if [ $isXeXeData -gt 0 ]; then
@@ -30,7 +32,7 @@ fi
 
 ## https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26#Testing_new_paths_with_PbPb_MC
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
---full --offline $DATAMC --unprescale $L1EMU $CUSTOMISE \
+--full --offline $DATAMC --unprescale $L1EMU $CUSTOMISE --l1Xml $L1XML \
 --max-events $nEvents > $configFile
 # --l1Xml L1Menu_CollisionsHeavyIons2018_v1.xml
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales

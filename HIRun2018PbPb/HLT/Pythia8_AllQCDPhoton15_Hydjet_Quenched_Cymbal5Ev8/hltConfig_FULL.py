@@ -10033,6 +10033,11 @@ process.L1DTConfigFromDB = cms.ESProducer("DTConfigDBProducer",
 )
 
 
+process.L1TriggerMenu = cms.ESProducer("L1TUtmTriggerMenuESProducer",
+    L1TriggerMenuFile = cms.string('L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml')
+)
+
+
 process.MaterialPropagator = cms.ESProducer("PropagatorWithMaterialESProducer",
     ComponentName = cms.string('PropagatorWithMaterial'),
     Mass = cms.double(0.105),
@@ -12288,6 +12293,8 @@ process.twinmuxParamsSource = cms.ESSource("EmptyESSource",
     recordName = cms.string('L1TTwinMuxParamsRcd')
 )
 
+
+process.prefer("L1TriggerMenu")
 
 process.HLTPFClusteringForEgammaUnseeded = cms.Sequence(process.hltParticleFlowRecHitECALUnseeded+process.hltParticleFlowRecHitPSUnseeded+process.hltParticleFlowClusterPSUnseeded+process.hltParticleFlowClusterECALUncorrectedUnseeded+process.hltParticleFlowClusterECALUnseeded+process.hltParticleFlowSuperClusterECALUnseeded)
 
