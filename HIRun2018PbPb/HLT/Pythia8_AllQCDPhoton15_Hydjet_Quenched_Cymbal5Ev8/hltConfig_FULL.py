@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V48')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V49')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -8455,7 +8455,7 @@ process.hltL1sL1MinimumBiasHF1AND = cms.EDFilter("HLTL1TSeed",
     L1JetInputTag = cms.InputTag("hltGtStage2Digis","Jet"),
     L1MuonInputTag = cms.InputTag("hltGtStage2Digis","Muon"),
     L1ObjectMapInputTag = cms.InputTag("hltGtStage2ObjectMap"),
-    L1SeedsLogicalExpression = cms.string('L1_AlwaysTrue'),
+    L1SeedsLogicalExpression = cms.string('L1_SingleEG3_BptxAND'),
     L1TauInputTag = cms.InputTag("hltGtStage2Digis","Tau"),
     saveTags = cms.bool(True)
 )
@@ -8468,7 +8468,7 @@ process.hltL1sL1SingleEG21BptxAND = cms.EDFilter("HLTL1TSeed",
     L1JetInputTag = cms.InputTag("hltGtStage2Digis","Jet"),
     L1MuonInputTag = cms.InputTag("hltGtStage2Digis","Muon"),
     L1ObjectMapInputTag = cms.InputTag("hltGtStage2ObjectMap"),
-    L1SeedsLogicalExpression = cms.string('L1_AlwaysTrue'),
+    L1SeedsLogicalExpression = cms.string('L1_SingleEG21_BptxAND'),
     L1TauInputTag = cms.InputTag("hltGtStage2Digis","Tau"),
     saveTags = cms.bool(True)
 )
@@ -8481,7 +8481,7 @@ process.hltL1sL1SingleEG30BptxAND = cms.EDFilter("HLTL1TSeed",
     L1JetInputTag = cms.InputTag("hltGtStage2Digis","Jet"),
     L1MuonInputTag = cms.InputTag("hltGtStage2Digis","Muon"),
     L1ObjectMapInputTag = cms.InputTag("hltGtStage2ObjectMap"),
-    L1SeedsLogicalExpression = cms.string('L1_AlwaysTrue'),
+    L1SeedsLogicalExpression = cms.string('L1_SingleEG30_BptxAND'),
     L1TauInputTag = cms.InputTag("hltGtStage2Digis","Tau"),
     saveTags = cms.bool(True)
 )
@@ -8494,7 +8494,7 @@ process.hltL1sL1SingleEG7BptxAND = cms.EDFilter("HLTL1TSeed",
     L1JetInputTag = cms.InputTag("hltGtStage2Digis","Jet"),
     L1MuonInputTag = cms.InputTag("hltGtStage2Digis","Muon"),
     L1ObjectMapInputTag = cms.InputTag("hltGtStage2ObjectMap"),
-    L1SeedsLogicalExpression = cms.string('L1_AlwaysTrue'),
+    L1SeedsLogicalExpression = cms.string('L1_SingleEG7_BptxAND'),
     L1TauInputTag = cms.InputTag("hltGtStage2Digis","Tau"),
     saveTags = cms.bool(True)
 )

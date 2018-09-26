@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V48 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V49 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
 
-# /users/katatar/HI2018PbPb/hltTestEgamma/V48 (CMSSW_10_3_0_pre4)
+# /users/katatar/HI2018PbPb/hltTestEgamma/V49 (CMSSW_10_3_0_pre4)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,7 +8,7 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V48')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V49')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
@@ -861,7 +861,7 @@ process.hltHIIslandPhoton30Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 30.0 )
 )
 process.hltL1sL1MinimumBiasHF1AND = cms.EDFilter( "HLTL1TSeed",
-    L1SeedsLogicalExpression = cms.string( "L1_AlwaysTrue" ),
+    L1SeedsLogicalExpression = cms.string( "L1_SingleEG3_BptxAND" ),
     L1EGammaInputTag = cms.InputTag( 'hltGtStage2Digis','EGamma' ),
     L1JetInputTag = cms.InputTag( 'hltGtStage2Digis','Jet' ),
     saveTags = cms.bool( True ),
@@ -968,7 +968,7 @@ process.hltHIIslandPhoton20Eta1p5 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 20.0 )
 )
 process.hltL1sL1SingleEG7BptxAND = cms.EDFilter( "HLTL1TSeed",
-    L1SeedsLogicalExpression = cms.string( "L1_AlwaysTrue" ),
+    L1SeedsLogicalExpression = cms.string( "L1_SingleEG7_BptxAND" ),
     L1EGammaInputTag = cms.InputTag( 'hltGtStage2Digis','EGamma' ),
     L1JetInputTag = cms.InputTag( 'hltGtStage2Digis','Jet' ),
     saveTags = cms.bool( True ),
@@ -995,7 +995,7 @@ process.hltHIIslandPhoton30Eta1p5 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 30.0 )
 )
 process.hltL1sL1SingleEG21BptxAND = cms.EDFilter( "HLTL1TSeed",
-    L1SeedsLogicalExpression = cms.string( "L1_AlwaysTrue" ),
+    L1SeedsLogicalExpression = cms.string( "L1_SingleEG21_BptxAND" ),
     L1EGammaInputTag = cms.InputTag( 'hltGtStage2Digis','EGamma' ),
     L1JetInputTag = cms.InputTag( 'hltGtStage2Digis','Jet' ),
     saveTags = cms.bool( True ),
@@ -1070,7 +1070,7 @@ process.hltHIIslandPhoton50Eta1p5 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 50.0 )
 )
 process.hltL1sL1SingleEG30BptxAND = cms.EDFilter( "HLTL1TSeed",
-    L1SeedsLogicalExpression = cms.string( "L1_AlwaysTrue" ),
+    L1SeedsLogicalExpression = cms.string( "L1_SingleEG30_BptxAND" ),
     L1EGammaInputTag = cms.InputTag( 'hltGtStage2Digis','EGamma' ),
     L1JetInputTag = cms.InputTag( 'hltGtStage2Digis','Jet' ),
     saveTags = cms.bool( True ),
