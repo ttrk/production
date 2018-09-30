@@ -15,7 +15,7 @@ SETUP="/dev/CMSSW_10_1_0/GRun"
 PROCESS="MyHLT"
 nEvents="100"
 DATAMC="--mc"
-CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking"
+CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
 L1EMU="--l1-emulator FullMC"
 #L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
 L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
@@ -34,10 +34,11 @@ fi
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
 --full --offline $DATAMC --unprescale $L1EMU $CUSTOMISE --l1Xml $L1XML \
 --max-events $nEvents > $configFile
-# --l1Xml L1Menu_CollisionsHeavyIons2018_v1.xml
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
+## settings for L1 EG
+echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $configFile  # ignore all the EGs with ieta > 24
 
 ## tweak to run 10_3 menu with cmssw_10_2
 #sed -i "s/missingHcalRescaleFactorForEcal/#missingHcalRescaleFactorForEcal/g" $configFile
