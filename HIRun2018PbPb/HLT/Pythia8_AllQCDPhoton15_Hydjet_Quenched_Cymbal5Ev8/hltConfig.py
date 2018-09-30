@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V49 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V51 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
 
-# /users/katatar/HI2018PbPb/hltTestEgamma/V49 (CMSSW_10_3_0_pre4)
+# /users/katatar/HI2018PbPb/hltTestEgamma/V51 (CMSSW_10_3_0_pre4)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,7 +8,7 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V49')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V51')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
@@ -191,7 +191,7 @@ process.hltGtStage2ObjectMap = cms.EDProducer( "L1TGlobalProducer",
     PrintL1Menu = cms.untracked.bool( False ),
     PrescaleCSVFile = cms.string( "prescale_L1TGlobal.csv" ),
     Verbosity = cms.untracked.int32( 0 ),
-    AlgoBlkInputTag = cms.InputTag( "gtDigis" ),
+    AlgoBlkInputTag = cms.InputTag( "hltGtStage2Digis" ),
     EtSumInputTag = cms.InputTag( 'hltGtStage2Digis','EtSum' ),
     ProduceL1GtDaqRecord = cms.bool( True ),
     PrescaleSet = cms.uint32( 1 ),
@@ -2881,9 +2881,9 @@ process.hltParticleFlowSuperClusterECALUnseeded = cms.EDProducer( "PFECALSuperCl
     thresh_PFClusterBarrel = cms.double( 0.5 ),
     thresh_SCEt = cms.double( 4.0 ),
     etawidth_SuperClusterEndcap = cms.double( 0.04 ),
-    phiwidth_SuperClusterEndcap = cms.double( 0.6 ),
+    phiwidth_SuperClusterEndcap = cms.double( 0.2 ),
     verbose = cms.untracked.bool( False ),
-    useDynamicDPhiWindow = cms.bool( True ),
+    useDynamicDPhiWindow = cms.bool( False ),
     PFSuperClusterCollectionBarrel = cms.string( "hltParticleFlowSuperClusterECALBarrel" ),
     regressionConfig = cms.PSet( 
       uncertaintyKeyEB = cms.string( "pfscecal_EBUncertainty_online" ),
@@ -2896,17 +2896,17 @@ process.hltParticleFlowSuperClusterECALUnseeded = cms.EDProducer( "PFECALSuperCl
     ),
     applyCrackCorrections = cms.bool( False ),
     satelliteClusterSeedThreshold = cms.double( 50.0 ),
-    endcapRecHits = cms.InputTag( 'hltEcalRecHit','EcalRecHitsEB' ),
+    endcapRecHits = cms.InputTag( 'ecalRecHit','EcalRecHitsEB' ),
     etawidth_SuperClusterBarrel = cms.double( 0.04 ),
     PFBasicClusterCollectionEndcap = cms.string( "hltParticleFlowBasicClusterECALEndcap" ),
-    barrelRecHits = cms.InputTag( 'hltEcalRecHit','EcalRecHitsEE' ),
+    barrelRecHits = cms.InputTag( 'ecalRecHit','EcalRecHitsEE' ),
     thresh_PFClusterSeedBarrel = cms.double( 1.0 ),
     ClusteringType = cms.string( "Mustache" ),
     dropUnseedable = cms.bool( False ),
     EnergyWeight = cms.string( "Raw" ),
     PFClusters = cms.InputTag( "hltParticleFlowClusterECALUnseeded" ),
     thresh_PFClusterSeedEndcap = cms.double( 1.0 ),
-    phiwidth_SuperClusterBarrel = cms.double( 0.6 ),
+    phiwidth_SuperClusterBarrel = cms.double( 0.2 ),
     thresh_PFClusterES = cms.double( 0.5 ),
     seedThresholdIsET = cms.bool( True ),
     PFSuperClusterCollectionEndcapWithPreshower = cms.string( "hltParticleFlowSuperClusterECALEndcapWithPreshower" )
@@ -2937,7 +2937,7 @@ process.hltEgammaHoverEUnseeded = cms.EDProducer( "EgammaHLTBcHcalIsolationProdu
     caloTowerProducer = cms.InputTag( "hltTowerMakerForAll" ),
     innerCone = cms.double( 0.0 ),
     useSingleTower = cms.bool( False ),
-    rhoProducer = cms.InputTag( "" ),
+    rhoProducer = cms.InputTag( "hltFixedGridRhoFastjetAllCaloForMuons" ),
     depth = cms.int32( -1 ),
     absEtaLowEdges = cms.vdouble( 0.0, 1.479 ),
     recoEcalCandidateProducer = cms.InputTag( "hltEgammaCandidatesUnseeded" ),
