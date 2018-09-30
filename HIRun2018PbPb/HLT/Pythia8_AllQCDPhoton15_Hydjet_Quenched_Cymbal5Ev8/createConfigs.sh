@@ -36,9 +36,10 @@ hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SET
 --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
-echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 ## settings for L1 EG
 echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $configFile  # ignore all the EGs with ieta > 24
+
+echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 
 ## tweak to run 10_3 menu with cmssw_10_2
 #sed -i "s/missingHcalRescaleFactorForEcal/#missingHcalRescaleFactorForEcal/g" $configFile
