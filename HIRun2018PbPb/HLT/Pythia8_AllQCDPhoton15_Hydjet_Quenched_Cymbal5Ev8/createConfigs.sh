@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=15
-# software : CMSSW_10_3_0_pre4
-# L1 tag : no L1 tag for CMSSW_10_3_0_pre4 yet
+# software : CMSSW_10_3_0_pre5
+# L1 tag : no L1 tag for CMSSW_10_3_0_pre5 yet
 
 ## Download the L1T Calo calibration and LUT files via
 # git clone https://github.com/cms-l1t-offline/L1Trigger-L1TCalorimeter.git L1Trigger/L1TCalorimeter/data
@@ -18,7 +18,7 @@ SETUP="/dev/CMSSW_10_1_0/GRun"
 PROCESS="MyHLT"
 nEvents="100"
 DATAMC="--mc"
-CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_2"
+CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
 L1EMU="--l1-emulator FullMC"
 #L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
 L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
@@ -39,13 +39,8 @@ hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SET
 --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
-## L1TSettingsToCaloParams_2018_v1_4 is not available in CMSSW_10_3_0_pre4, use v1_2 for now and fully override the EG settings
+## L1TSettingsToCaloParams_2018_v1_4 is now available in CMSSW_10_3_0_pre5
 ## settings for L1 EG : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT#How_to_run_L1_EGs
-echo "process.caloStage2Params.egBypassExtHOverE = cms.uint32(1)" >> $configFile
-echo "process.caloStage2Params.egBypassShape = cms.uint32(1)" >> $configFile
-echo "process.caloStage2Params.egBypassECALFG = cms.uint32(1)" >> $configFile
-echo "process.caloStage2Params.egHOverEcutBarrel = cms.int32(1)" >> $configFile
-echo "process.caloStage2Params.egHOverEcutEndcap = cms.int32(1)" >> $configFile
 echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $configFile  # ignore all the EGs with ieta > 24
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
