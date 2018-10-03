@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V52 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_2 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V53 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_2 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
 
-# /users/katatar/HI2018PbPb/hltTestEgamma/V52 (CMSSW_10_3_0_pre4)
+# /users/katatar/HI2018PbPb/hltTestEgamma/V53 (CMSSW_10_3_0_pre4)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,7 +8,7 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V52')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V53')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
@@ -953,7 +953,7 @@ process.hltHIIslandPhoton30Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 30.0 )
 )
 process.hltL1sL1MinimumBiasHF1AND = cms.EDFilter( "HLTL1TSeed",
-    L1SeedsLogicalExpression = cms.string( "L1_SingleEG3_BptxAND" ),
+    L1SeedsLogicalExpression = cms.string( "L1_MinimumBiasHF1_AND_BptxAND" ),
     L1EGammaInputTag = cms.InputTag( 'hltGtStage2Digis','EGamma' ),
     L1JetInputTag = cms.InputTag( 'hltGtStage2Digis','Jet' ),
     saveTags = cms.bool( True ),
@@ -1789,6 +1789,17 @@ process.hltEG10HEFilter = cms.EDFilter( "HLTEgammaGenericFilter",
     rhoMax = cms.double( 9.9999999E7 ),
     useEt = cms.bool( False ),
     rhoScale = cms.double( 1.0 )
+)
+process.hltL1sL1SingleEG3BptxAND = cms.EDFilter( "HLTL1TSeed",
+    L1SeedsLogicalExpression = cms.string( "L1_SingleEG3_BptxAND" ),
+    L1EGammaInputTag = cms.InputTag( 'hltGtStage2Digis','EGamma' ),
+    L1JetInputTag = cms.InputTag( 'hltGtStage2Digis','Jet' ),
+    saveTags = cms.bool( True ),
+    L1ObjectMapInputTag = cms.InputTag( "hltGtStage2ObjectMap" ),
+    L1EtSumInputTag = cms.InputTag( 'hltGtStage2Digis','EtSum' ),
+    L1TauInputTag = cms.InputTag( 'hltGtStage2Digis','Tau' ),
+    L1MuonInputTag = cms.InputTag( 'hltGtStage2Digis','Muon' ),
+    L1GlobalInputTag = cms.InputTag( "hltGtStage2Digis" )
 )
 process.hltPreHIGEDPhoton10L1Seeded = cms.EDFilter( "HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
@@ -3965,34 +3976,34 @@ process.HLT_HIIslandPhoton60_Eta3p1 = cms.Path( process.HLTBeginSequence + proce
 process.HLT_HIIslandPhoton60_Eta1p5 = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG30BptxAND + process.hltPreHIIslandPhoton60Eta1p5 + process.HLTDoCaloSequence + process.HLTDoHIEcalClusWithCleaningSequence + process.hltHIIslandPhoton60Eta1p5 + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_PuAK4CaloJet80Eta5p1_v1 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPrePuAK4CaloJet80Eta5p1 + process.HLTPuAK4CaloJetsSequence + process.hltSinglePuAK4CaloJet80Eta5p1 + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_Photon10_v5 = cms.Path( process.HLTBeginSequence + process.hltL1sSingleEGXX + process.hltPrePhoton10 + process.HLTHIGEDPhoton10L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton10_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton10L1Seeded + process.HLTHIGEDPhoton10L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton10_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton10L1Seeded + process.HLTHIGEDPhoton10L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton60_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG30BptxAND + process.hltPreHIGEDPhoton60HECutL1Seeded + process.HLTHIGEDPhoton60HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton50_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton50HECutL1Seeded + process.HLTHIGEDPhoton50HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton40_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton40HECutL1Seeded + process.HLTHIGEDPhoton40HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton30_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG7BptxAND + process.hltPreHIGEDPhoton30HECutL1Seeded + process.HLTHIGEDPhoton30HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton20_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton20HECutL1Seeded + process.HLTHIGEDPhoton20HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton15_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton15HECutL1Seeded + process.HLTHIGEDPhoton15HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton10_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton10HECutL1Seeded + process.HLTHIGEDPhoton10HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton10_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton10EBHECutL1Seeded + process.HLTHIGEDPhoton10EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton15_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton15EBHECutL1Seeded + process.HLTHIGEDPhoton15EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton20_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton20EBHECutL1Seeded + process.HLTHIGEDPhoton20EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton20_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton20HECutL1Seeded + process.HLTHIGEDPhoton20HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton15_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton15HECutL1Seeded + process.HLTHIGEDPhoton15HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton10_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton10HECutL1Seeded + process.HLTHIGEDPhoton10HECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton10_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton10EBHECutL1Seeded + process.HLTHIGEDPhoton10EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton15_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton15EBHECutL1Seeded + process.HLTHIGEDPhoton15EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton20_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton20EBHECutL1Seeded + process.HLTHIGEDPhoton20EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton30_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG7BptxAND + process.hltPreHIGEDPhoton30EBHECutL1Seeded + process.HLTHIGEDPhoton30EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton40_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton40EBHECutL1Seeded + process.HLTHIGEDPhoton40EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton50_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton50EBHECutL1Seeded + process.HLTHIGEDPhoton50EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton60_EB_HECut_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG30BptxAND + process.hltPreHIGEDPhoton60EBHECutL1Seeded + process.HLTHIGEDPhoton60EBHECutL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton10_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton10EBL1Seeded + process.HLTHIGEDPhoton10EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton15_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton15EBL1Seeded + process.HLTHIGEDPhoton15EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton20_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton20EBL1Seeded + process.HLTHIGEDPhoton20EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton10_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton10EBL1Seeded + process.HLTHIGEDPhoton10EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton15_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton15EBL1Seeded + process.HLTHIGEDPhoton15EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton20_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton20EBL1Seeded + process.HLTHIGEDPhoton20EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton30_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG7BptxAND + process.hltPreHIGEDPhoton30EBL1Seeded + process.HLTHIGEDPhoton30EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton40_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton40EBL1Seeded + process.HLTHIGEDPhoton40EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton50_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton50EBL1Seeded + process.HLTHIGEDPhoton50EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton60_EB_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG30BptxAND + process.hltPreHIGEDPhoton60EBL1Seeded + process.HLTHIGEDPhoton60EBL1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton20_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton20L1Seeded + process.HLTHIGEDPhoton20L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton20_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton20L1Seeded + process.HLTHIGEDPhoton20L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton30_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG7BptxAND + process.hltPreHIGEDPhoton30L1Seeded + process.HLTHIGEDPhoton30L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton40_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton40L1Seeded + process.HLTHIGEDPhoton40L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton50_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG21BptxAND + process.hltPreHIGEDPhoton50L1Seeded + process.HLTHIGEDPhoton50L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton60_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG30BptxAND + process.hltPreHIGEDPhoton60L1Seeded + process.HLTHIGEDPhoton60L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
-process.HLT_HIGEDPhoton15_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton15L1Seeded + process.HLTHIGEDPhoton15L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
+process.HLT_HIGEDPhoton15_L1Seeded = cms.Path( process.HLTBeginSequence + process.hltL1sL1SingleEG3BptxAND + process.hltPreHIGEDPhoton15L1Seeded + process.HLTHIGEDPhoton15L1SeededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_Photon20_v13 = cms.Path( process.HLTBeginSequence + process.hltL1sSingleEGYYtoZZ + process.hltPrePhoton20 + process.HLTPhoton20Sequence_v13 + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton10 = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton10 + process.HLTHIGEDPhoton10UnseededSequence + process.HLTEndSequenceWithZeroSuppression )
 process.HLT_HIGEDPhoton15 = cms.Path( process.HLTBeginSequence + process.hltL1sL1MinimumBiasHF1AND + process.hltPreHIGEDPhoton15 + process.HLTHIGEDPhoton15UnseededSequence + process.HLTEndSequenceWithZeroSuppression )
