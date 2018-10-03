@@ -5952,7 +5952,8 @@ process.hltTowerMakerForAll = cms.EDProducer("CaloTowersCreator",
     ecalInputs = cms.VInputTag("hltEcalRecHit:EcalRecHitsEB", "hltEcalRecHit:EcalRecHitsEE"),
     hbheInput = cms.InputTag("hltHbhereco"),
     hfInput = cms.InputTag("hltHfreco"),
-    hoInput = cms.InputTag("hltHoreco")
+    hoInput = cms.InputTag("hltHoreco"),
+    missingHcalRescaleFactorForEcal = cms.double(0.0)
 )
 
 
@@ -6074,32 +6075,6 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
         alctUseCorrectedBx = cms.bool(False),
         verbosity = cms.int32(0)
     ),
-    alctParamMTCC = cms.PSet(
-        alctAccelMode = cms.uint32(0),
-        alctDriftDelay = cms.uint32(3),
-        alctFifoPretrig = cms.uint32(10),
-        alctFifoTbins = cms.uint32(16),
-        alctL1aWindowWidth = cms.uint32(3),
-        alctNplanesHitAccelPattern = cms.uint32(4),
-        alctNplanesHitAccelPretrig = cms.uint32(2),
-        alctNplanesHitPattern = cms.uint32(4),
-        alctNplanesHitPretrig = cms.uint32(2),
-        alctTrigMode = cms.uint32(2),
-        verbosity = cms.int32(0)
-    ),
-    alctParamOldMC = cms.PSet(
-        alctAccelMode = cms.uint32(1),
-        alctDriftDelay = cms.uint32(3),
-        alctFifoPretrig = cms.uint32(10),
-        alctFifoTbins = cms.uint32(16),
-        alctL1aWindowWidth = cms.uint32(5),
-        alctNplanesHitAccelPattern = cms.uint32(4),
-        alctNplanesHitAccelPretrig = cms.uint32(2),
-        alctNplanesHitPattern = cms.uint32(4),
-        alctNplanesHitPretrig = cms.uint32(2),
-        alctTrigMode = cms.uint32(3),
-        verbosity = cms.int32(0)
-    ),
     alctSLHC = cms.PSet(
         alctAccelMode = cms.uint32(0),
         alctDriftDelay = cms.uint32(2),
@@ -6133,28 +6108,6 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
         clctStartBxShift = cms.int32(0),
         verbosity = cms.int32(0)
     ),
-    clctParamMTCC = cms.PSet(
-        clctDriftDelay = cms.uint32(2),
-        clctFifoPretrig = cms.uint32(7),
-        clctFifoTbins = cms.uint32(12),
-        clctHitPersist = cms.uint32(6),
-        clctMinSeparation = cms.uint32(10),
-        clctNplanesHitPattern = cms.uint32(1),
-        clctNplanesHitPretrig = cms.uint32(4),
-        clctPidThreshPretrig = cms.uint32(2),
-        verbosity = cms.int32(0)
-    ),
-    clctParamOldMC = cms.PSet(
-        clctDriftDelay = cms.uint32(2),
-        clctFifoPretrig = cms.uint32(7),
-        clctFifoTbins = cms.uint32(12),
-        clctHitPersist = cms.uint32(6),
-        clctMinSeparation = cms.uint32(10),
-        clctNplanesHitPattern = cms.uint32(4),
-        clctNplanesHitPretrig = cms.uint32(2),
-        clctPidThreshPretrig = cms.uint32(2),
-        verbosity = cms.int32(0)
-    ),
     clctSLHC = cms.PSet(
         clctDriftDelay = cms.uint32(2),
         clctFifoPretrig = cms.uint32(7),
@@ -6177,9 +6130,7 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
         disableME1a = cms.bool(False),
         disableME42 = cms.bool(False),
         gangedME1a = cms.bool(False),
-        isMTCC = cms.bool(False),
         isSLHC = cms.bool(False),
-        isTMB07 = cms.bool(True),
         smartME1aME1b = cms.bool(False)
     ),
     debugParameters = cms.bool(True),
@@ -6190,7 +6141,7 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
     ),
     tmbParam = cms.PSet(
         alctTrigEnable = cms.uint32(0),
-        clctToAlct = cms.bool(True),
+        clctToAlct = cms.bool(False),
         clctTrigEnable = cms.uint32(0),
         matchTrigEnable = cms.uint32(1),
         matchTrigWindowSize = cms.uint32(7),
@@ -6234,6 +6185,8 @@ process.simDtTriggerPrimitiveDigis = cms.EDProducer("DTTrigProd",
 
 process.simEmtfDigis = cms.EDProducer("L1TMuonEndCapTrackProducer",
     BXWindow = cms.int32(2),
+    CPPFEnable = cms.bool(False),
+    CPPFInput = cms.InputTag("simCPPFDigis"),
     CSCEnable = cms.bool(True),
     CSCInput = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED"),
     CSCInputBXShift = cms.int32(-8),
@@ -6388,6 +6341,7 @@ process.simHcalTriggerPrimitiveDigis = cms.EDProducer("HcalTrigPrimDigiProducer"
     upgradeHB = cms.bool(False),
     upgradeHE = cms.bool(True),
     upgradeHF = cms.bool(True),
+    useTDCInMinBiasBits = cms.bool(False),
     weights = cms.vdouble(1.0, 1.0)
 )
 
@@ -6419,7 +6373,7 @@ process.simTwinMuxDigis = cms.EDProducer("L1TTwinMuxProducer",
 process.unpackCSC = cms.EDProducer("CSCDCCUnpacker",
     Debug = cms.untracked.bool(False),
     ErrorMask = cms.uint32(0),
-    ExaminerMask = cms.uint32(535557110),
+    ExaminerMask = cms.uint32(535558134),
     FormatedEventDump = cms.untracked.bool(False),
     InputObjects = cms.InputTag("rawDataCollector","","@skipCurrentProcess"),
     PrintEventNumber = cms.untracked.bool(False),
@@ -10380,14 +10334,6 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
     etSumBypassEcalSumPUS = cms.uint32(1),
     etSumBypassEttPUS = cms.uint32(1),
     etSumBypassMetPUS = cms.uint32(0),
-    etSumCentralityLower = cms.vdouble(
-        16.5, 183.5, 1460.0, 3143.5, 5837.0, 
-        1.0, 1.0, 1.0
-    ),
-    etSumCentralityUpper = cms.vdouble(
-        25.5, 230.5, 1612.5, 3316.0, 5965.0, 
-        0.0, 0.0, 0.0
-    ),
     etSumEcalSumCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
     etSumEcalSumCalibrationType = cms.string('None'),
     etSumEcalSumPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_dummy.txt'),
@@ -10416,8 +10362,7 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
     jetCompressPtLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_pt_compress_2017v1.txt'),
     jetLsb = cms.double(0.5),
     jetNeighbourThreshold = cms.double(0.0),
-    jetPUSType = cms.string('ChunkySandwich'),
-    jetPUSUseChunkySandwich = cms.uint32(True),
+    jetPUSType = cms.string('ChunkyDonut'),
     jetRegionMask = cms.int32(0),
     jetSeedThreshold = cms.double(4.0),
     layer1ECalScaleETBins = cms.vint32(
@@ -12506,21 +12451,21 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     RefreshEachRun = cms.untracked.bool(False),
     RefreshOpenIOVs = cms.untracked.bool(False),
     connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-    globaltag = cms.string('102X_upgrade2018_realistic_v9'),
+    globaltag = cms.string('103X_upgrade2018_realistic_v4'),
     pfnPostfix = cms.untracked.string('None'),
     snapshotTime = cms.string(''),
     toGet = cms.VPSet(
         cms.PSet(
             connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
             record = cms.string('L1TUtmTriggerMenuRcd'),
-            snapshotTime = cms.string('2018-06-20 15:05:19.000'),
-            tag = cms.string('L1Menu_Collisions2018_v2_0_0-d1_xml')
+            snapshotTime = cms.string('2018-08-14 11:03:08.000'),
+            tag = cms.string('L1Menu_Collisions2018_v2_1_0-d1_xml')
         ), 
         cms.PSet(
             connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
             record = cms.string('L1TUtmTriggerMenuRcd'),
-            snapshotTime = cms.string('2018-06-20 15:05:19.000'),
-            tag = cms.string('L1Menu_Collisions2018_v2_0_0-d1_xml')
+            snapshotTime = cms.string('2018-08-14 11:03:08.000'),
+            tag = cms.string('L1Menu_Collisions2018_v2_1_0-d1_xml')
         )
     )
 )

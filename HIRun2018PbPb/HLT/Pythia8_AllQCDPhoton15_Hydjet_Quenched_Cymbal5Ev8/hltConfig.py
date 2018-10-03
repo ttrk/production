@@ -1,4 +1,4 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V51 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V51 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_2 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
 
 # /users/katatar/HI2018PbPb/hltTestEgamma/V51 (CMSSW_10_3_0_pre4)
 
@@ -4017,9 +4017,14 @@ modifyHLTforEras(process)
 #User-defined customization functions
 from HLTrigger.Configuration.customizeHLTforCMSSW import customiseFor2017DtUnpacking
 process = customiseFor2017DtUnpacking(process)
-from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParams_2018_v1_4
-process = L1TSettingsToCaloParams_2018_v1_4(process)
+from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParams_2018_v1_2
+process = L1TSettingsToCaloParams_2018_v1_2(process)
 
+process.caloStage2Params.egBypassExtHOverE = cms.uint32(1)
+process.caloStage2Params.egBypassShape = cms.uint32(1)
+process.caloStage2Params.egBypassECALFG = cms.uint32(1)
+process.caloStage2Params.egHOverEcutBarrel = cms.int32(1)
+process.caloStage2Params.egHOverEcutEndcap = cms.int32(1)
 process.caloStage2Params.egEtaCut = cms.int32(24)
 process.options.numberOfThreads=cms.untracked.uint32(1)
 
