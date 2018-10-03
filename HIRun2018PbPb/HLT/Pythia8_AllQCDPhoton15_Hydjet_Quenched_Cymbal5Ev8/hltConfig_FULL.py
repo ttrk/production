@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V56')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V57')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -6727,7 +6727,7 @@ process.hltBoolFalse = cms.EDFilter("HLTBool",
 process.hltEG10EBEtFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(10.0),
     etcutEE = cms.double(999999.0),
-    inputTag = cms.InputTag("hltEGL1MinimumBiasHF1ANDFilter"),
+    inputTag = cms.InputTag("hltEGL1SingleEG3BptxANDFilter"),
     l1EGCand = cms.InputTag("hltEgammaCandidates"),
     ncandcut = cms.int32(1),
     saveTags = cms.bool(True)
@@ -6795,7 +6795,7 @@ process.hltEG10EtEBPPOnAAFilter = cms.EDFilter("HLTEgammaEtFilter",
 process.hltEG10EtFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(10.0),
     etcutEE = cms.double(10.0),
-    inputTag = cms.InputTag("hltEGL1MinimumBiasHF1ANDFilter"),
+    inputTag = cms.InputTag("hltEGL1SingleEG3BptxANDFilter"),
     l1EGCand = cms.InputTag("hltEgammaCandidates"),
     ncandcut = cms.int32(1),
     saveTags = cms.bool(True)
@@ -6959,7 +6959,7 @@ process.hltEG10HoverEPPOnAAFilter = cms.EDFilter("HLTEgammaGenericFilter",
 process.hltEG15EBEtFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(15.0),
     etcutEE = cms.double(999999.0),
-    inputTag = cms.InputTag("hltEGL1MinimumBiasHF1ANDFilter"),
+    inputTag = cms.InputTag("hltEGL1SingleEG3BptxANDFilter"),
     l1EGCand = cms.InputTag("hltEgammaCandidates"),
     ncandcut = cms.int32(1),
     saveTags = cms.bool(True)
@@ -7027,7 +7027,7 @@ process.hltEG15EtEBPPOnAAFilter = cms.EDFilter("HLTEgammaEtFilter",
 process.hltEG15EtFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(15.0),
     etcutEE = cms.double(15.0),
-    inputTag = cms.InputTag("hltEGL1MinimumBiasHF1ANDFilter"),
+    inputTag = cms.InputTag("hltEGL1SingleEG3BptxANDFilter"),
     l1EGCand = cms.InputTag("hltEgammaCandidates"),
     ncandcut = cms.int32(1),
     saveTags = cms.bool(True)
@@ -7191,7 +7191,7 @@ process.hltEG15HoverEPPOnAAFilter = cms.EDFilter("HLTEgammaGenericFilter",
 process.hltEG20EBEtFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(20.0),
     etcutEE = cms.double(999999.0),
-    inputTag = cms.InputTag("hltEGL1MinimumBiasHF1ANDFilter"),
+    inputTag = cms.InputTag("hltEGL1SingleEG3BptxANDFilter"),
     l1EGCand = cms.InputTag("hltEgammaCandidates"),
     ncandcut = cms.int32(1),
     saveTags = cms.bool(True)
@@ -7259,7 +7259,7 @@ process.hltEG20EtEBPPOnAAFilter = cms.EDFilter("HLTEgammaEtFilter",
 process.hltEG20EtFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(20.0),
     etcutEE = cms.double(20.0),
-    inputTag = cms.InputTag("hltEGL1MinimumBiasHF1ANDFilter"),
+    inputTag = cms.InputTag("hltEGL1SingleEG3BptxANDFilter"),
     l1EGCand = cms.InputTag("hltEgammaCandidates"),
     ncandcut = cms.int32(1),
     saveTags = cms.bool(True)
@@ -8382,25 +8382,6 @@ process.hltEG60HoverEPPOnAAFilter = cms.EDFilter("HLTEgammaGenericFilter",
 )
 
 
-process.hltEGL1MinimumBiasHF1ANDFilter = cms.EDFilter("HLTEgammaL1TMatchFilterRegional",
-    L1SeedFilterTag = cms.InputTag("hltL1sL1MinimumBiasHF1AND"),
-    barrel_end = cms.double(1.4791),
-    candIsolatedTag = cms.InputTag("hltEgammaCandidates"),
-    candNonIsolatedTag = cms.InputTag(""),
-    doIsolated = cms.bool(False),
-    endcap_end = cms.double(2.65),
-    l1CenJetsTag = cms.InputTag("hltGtStage2Digis","Jet"),
-    l1IsolatedTag = cms.InputTag("hltGtStage2Digis","EGamma"),
-    l1NonIsolatedTag = cms.InputTag("hltGtStage2Digis","EGamma"),
-    l1TausTag = cms.InputTag("hltGtStage2Digis","Tau"),
-    ncandcut = cms.int32(1),
-    region_eta_size = cms.double(0.522),
-    region_eta_size_ecap = cms.double(1.0),
-    region_phi_size = cms.double(1.044),
-    saveTags = cms.bool(True)
-)
-
-
 process.hltEGL1SingleEG21BptxANDFilter = cms.EDFilter("HLTEgammaL1TMatchFilterRegional",
     L1SeedFilterTag = cms.InputTag("hltL1sL1SingleEG21BptxAND"),
     barrel_end = cms.double(1.4791),
@@ -8422,6 +8403,25 @@ process.hltEGL1SingleEG21BptxANDFilter = cms.EDFilter("HLTEgammaL1TMatchFilterRe
 
 process.hltEGL1SingleEG30BptxANDFilter = cms.EDFilter("HLTEgammaL1TMatchFilterRegional",
     L1SeedFilterTag = cms.InputTag("hltL1sL1SingleEG30BptxAND"),
+    barrel_end = cms.double(1.4791),
+    candIsolatedTag = cms.InputTag("hltEgammaCandidates"),
+    candNonIsolatedTag = cms.InputTag(""),
+    doIsolated = cms.bool(False),
+    endcap_end = cms.double(2.65),
+    l1CenJetsTag = cms.InputTag("hltGtStage2Digis","Jet"),
+    l1IsolatedTag = cms.InputTag("hltGtStage2Digis","EGamma"),
+    l1NonIsolatedTag = cms.InputTag("hltGtStage2Digis","EGamma"),
+    l1TausTag = cms.InputTag("hltGtStage2Digis","Tau"),
+    ncandcut = cms.int32(1),
+    region_eta_size = cms.double(0.522),
+    region_eta_size_ecap = cms.double(1.0),
+    region_phi_size = cms.double(1.044),
+    saveTags = cms.bool(True)
+)
+
+
+process.hltEGL1SingleEG3BptxANDFilter = cms.EDFilter("HLTEgammaL1TMatchFilterRegional",
+    L1SeedFilterTag = cms.InputTag("hltL1sL1SingleEG3BptxAND"),
     barrel_end = cms.double(1.4791),
     candIsolatedTag = cms.InputTag("hltEgammaCandidates"),
     candNonIsolatedTag = cms.InputTag(""),
@@ -12944,13 +12944,13 @@ process.HLTHIGEDPhoton50EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpac
 process.HLTHIGEDPhoton30EBHECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG30EtEBPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG30HoverEEBPPOnAAFilter)
 
 
-process.HLTHIGEDPhoton15EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG15EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15EBHEFilterHECut)
+process.HLTHIGEDPhoton15EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG15EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15EBHEFilterHECut)
 
 
 process.HLTHIGEDPhoton60EBHECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG60EtEBPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG60HoverEEBPPOnAAFilter)
 
 
-process.HLTHIGEDPhoton10EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG10EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10EBHEFilterHECut)
+process.HLTHIGEDPhoton10EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG10EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10EBHEFilterHECut)
 
 
 process.HLTHIGEDPhoton40EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG21BptxANDFilter+process.hltEG40EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG40EBHEFilter)
@@ -12980,10 +12980,10 @@ process.HLTHIGEDPhoton60EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFull
 process.HLTDoCaloSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalWithoutPreshowerSequence+process.HLTDoLocalHcalSequence+process.hltTowerMakerForAll)
 
 
-process.HLTHIGEDPhoton10EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG10EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10EBHEFilter)
+process.HLTHIGEDPhoton10EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG10EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10EBHEFilter)
 
 
-process.HLTHIGEDPhoton15L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG15EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15HEFilter)
+process.HLTHIGEDPhoton15L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG15EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15HEFilter)
 
 
 process.HLTHIGEDPhoton60EBPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG60EtEBPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG60HoverELooseEBPPOnAAFilter)
@@ -13034,13 +13034,13 @@ process.HLTPhoton20Sequence_v13 = cms.Sequence(process.HLTDoFullUnpackingEgammaE
 process.HLTHIGEDPhoton15EBPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG15EtEBPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG15HoverELooseEBPPOnAAFilter)
 
 
-process.HLTHIGEDPhoton20L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG20EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20HEFilter)
+process.HLTHIGEDPhoton20L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG20EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20HEFilter)
 
 
 process.HLTHIGEDPhoton30EBPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG30EtEBPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG30HoverELooseEBPPOnAAFilter)
 
 
-process.HLTHIGEDPhoton10HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG10EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10HEFilterHECut)
+process.HLTHIGEDPhoton10HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG10EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10HEFilterHECut)
 
 
 process.HLTHIGEDPhoton50HECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG50EtPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG50HoverEPPOnAAFilter)
@@ -13061,7 +13061,7 @@ process.HLTHIGEDPhoton15EBHECutPPOnAASequence = cms.Sequence(process.HLTDoFullUn
 process.HLTHIGEDPhoton40HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG21BptxANDFilter+process.hltEG40EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG40HEFilterHECut)
 
 
-process.HLTHIGEDPhoton10L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG10EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10HEFilter)
+process.HLTHIGEDPhoton10L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG10EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG10HEFilter)
 
 
 process.HLTHIGEDPhoton30PPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG30EtPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG30HoverELoosePPOnAAFilter)
@@ -13073,16 +13073,16 @@ process.HLTHIGEDPhoton30L1SeededSequence = cms.Sequence(process.HLTDoFullUnpacki
 process.HLTHIGEDPhoton50EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG21BptxANDFilter+process.hltEG50EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG50EBHEFilterHECut)
 
 
-process.HLTHIGEDPhoton20HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG20EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20HEFilterHECut)
+process.HLTHIGEDPhoton20HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG20EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20HEFilterHECut)
 
 
 process.HLTHIGEDPhoton50PPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG50EtPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG50HoverELoosePPOnAAFilter)
 
 
-process.HLTHIGEDPhoton20EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG20EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20EBHEFilterHECut)
+process.HLTHIGEDPhoton20EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG20EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20EBHEFilterHECut)
 
 
-process.HLTHIGEDPhoton20EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG20EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20EBHEFilter)
+process.HLTHIGEDPhoton20EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG20EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG20EBHEFilter)
 
 
 process.HLTHIGEDPhoton60HECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG60EtPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG60HoverEPPOnAAFilter)
@@ -13094,7 +13094,7 @@ process.HLTHIGEDPhoton30EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpac
 process.HLTHIGEDPhoton40HECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG40EtPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG40HoverEPPOnAAFilter)
 
 
-process.HLTHIGEDPhoton15EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG15EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15EBHEFilter)
+process.HLTHIGEDPhoton15EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG15EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15EBHEFilter)
 
 
 process.HLTHIGEDPhoton30HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG7BptxANDFilter+process.hltEG30EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG30HEFilterHECut)
@@ -13103,7 +13103,7 @@ process.HLTHIGEDPhoton30HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUn
 process.HLTHIGEDPhoton30EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG7BptxANDFilter+process.hltEG30EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG30EBHEFilterHECut)
 
 
-process.HLTHIGEDPhoton15HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1MinimumBiasHF1ANDFilter+process.hltEG15EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15HEFilterHECut)
+process.HLTHIGEDPhoton15HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG3BptxANDFilter+process.hltEG15EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG15HEFilterHECut)
 
 
 process.HLTPuAK4CaloJetsReconstructionSequence = cms.Sequence(process.HLTDoCaloSequence+process.hltPuAK4CaloJets+process.hltPuAK4CaloJetsIDPassed)
