@@ -70,6 +70,16 @@ fi
 ## MOD : loose hltRechitInRegionsECAL for PF clustering
 #echo 'process.hltRechitInRegionsECAL.l1InputRegions[0].minEt = cms.double(1.0)' >> $configFile
 
+## MOD : change Rechit threshold test
+#echo "process.hltParticleFlowRecHitECALL1Seeded.producers[0].qualityTests[0] = cms.PSet( \
+#    applySelectionsToAllCrystals = cms.bool(True), \
+#    name = cms.string('PFRecHitQTestDBThreshold') \
+#     )" >> $configFile
+#echo "process.hltParticleFlowRecHitECALL1Seeded.producers[1].qualityTests[0] = cms.PSet( \
+#    applySelectionsToAllCrystals = cms.bool(True), \
+#    name = cms.string('PFRecHitQTestDBThreshold') \
+#     )" >> $configFile
+
 ## MOD : use unfiltered rechit collection for PF clustering, not hltRechitInRegionsECAL
 #echo 'process.hltParticleFlowRecHitECALL1Seeded.producers[0].src = cms.InputTag("hltEcalRecHit","EcalRecHitsEB")' >> $configFile
 #echo 'process.hltParticleFlowRecHitECALL1Seeded.producers[1].src = cms.InputTag("hltEcalRecHit","EcalRecHitsEE")' >> $configFile
