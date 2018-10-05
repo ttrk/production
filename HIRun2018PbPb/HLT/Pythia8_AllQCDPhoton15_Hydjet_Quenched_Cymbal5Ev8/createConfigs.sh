@@ -63,8 +63,12 @@ if [ $isXeXeData -gt 0 ]; then
 #  echo 'process.hltParticleFlowRecHitECALUnseeded.producers[1].qualityTests[0].applySelectionsToAllCrystals = cms.bool(False)' >> $configFile
 fi
 
+## MOD : loose hltRechitInRegionsECAL eta-phi Margin for PF clustering
+#echo 'process.hltRechitInRegionsECAL.l1InputRegions[0].regionEtaMargin = cms.double(1.4)' >> $configFile
+#echo 'process.hltRechitInRegionsECAL.l1InputRegions[0].regionPhiMargin = cms.double(2.4)' >> $configFile
+
 ## MOD : loose hltRechitInRegionsECAL for PF clustering
-#echo 'process.hltRechitInRegionsECAL.l1InputRegions[0].minEt = cms.double(0.5)' >> $configFile
+#echo 'process.hltRechitInRegionsECAL.l1InputRegions[0].minEt = cms.double(1.0)' >> $configFile
 
 ## MOD : use unfiltered rechit collection for PF clustering, not hltRechitInRegionsECAL
 #echo 'process.hltParticleFlowRecHitECALL1Seeded.producers[0].src = cms.InputTag("hltEcalRecHit","EcalRecHitsEB")' >> $configFile
