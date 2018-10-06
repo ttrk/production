@@ -9,7 +9,7 @@
 
 runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
-inputFile="/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root"
+inputFile="/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FEB4B973-66AB-E811-8D5F-00010100097F.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCC55639-81AB-E811-BC64-0242AC1C0501.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCE2A01E-71AB-E811-822C-D4856445E5A4.root"
 
 menu="/users/katatar/HI2018PbPb/hltTestEgamma/V57"
 configFile="hltConfig.py"
@@ -30,7 +30,7 @@ if [ $isXeXeData -gt 0 ]; then
   GLOBALTAG="auto:run2_data_GRun"
   nEvents="500"
   DATAMC="--data"
-  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
+  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
   L1EMU="--l1-emulator Full"
 fi
 

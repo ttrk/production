@@ -4,7 +4,12 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("MyHLT")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root'),
+    fileNames = cms.untracked.vstring(
+        '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root', 
+        '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FEB4B973-66AB-E811-8D5F-00010100097F.root', 
+        '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCC55639-81AB-E811-BC64-0242AC1C0501.root', 
+        '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCE2A01E-71AB-E811-822C-D4856445E5A4.root'
+    ),
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(

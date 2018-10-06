@@ -1,4 +1,4 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V57 --globaltag auto:run2_mc_GRun --input /store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 500
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V57 --globaltag auto:run2_mc_GRun --input /store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FEB4B973-66AB-E811-8D5F-00010100097F.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCC55639-81AB-E811-BC64-0242AC1C0501.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCE2A01E-71AB-E811-822C-D4856445E5A4.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 500
 
 # /users/katatar/HI2018PbPb/hltTestEgamma/V57 (CMSSW_10_3_0_pre4)
 
@@ -4041,6 +4041,9 @@ process.HLTSchedule = cms.Schedule( *(process.HLTriggerFirstPath, process.HLT_Ze
 process.source = cms.Source( "PoolSource",
     fileNames = cms.untracked.vstring(
         '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root',
+        '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FEB4B973-66AB-E811-8D5F-00010100097F.root',
+        '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCC55639-81AB-E811-BC64-0242AC1C0501.root',
+        '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCE2A01E-71AB-E811-822C-D4856445E5A4.root',
     ),
     inputCommands = cms.untracked.vstring(
         'keep *'
@@ -4107,7 +4110,7 @@ _customInfo['inputFiles'][True]  = "file:RelVal_Raw_GRun_DATA.root"
 _customInfo['inputFiles'][False] = "file:RelVal_Raw_GRun_MC.root"
 _customInfo['maxEvents' ]=  500
 _customInfo['globalTag' ]= "auto:run2_mc_GRun"
-_customInfo['inputFile' ]=  ['/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root']
+_customInfo['inputFile' ]=  ['/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root', '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FEB4B973-66AB-E811-8D5F-00010100097F.root', '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCC55639-81AB-E811-BC64-0242AC1C0501.root', '/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCE2A01E-71AB-E811-822C-D4856445E5A4.root']
 _customInfo['realData'  ]=  False
 from HLTrigger.Configuration.customizeHLTforALL import customizeHLTforAll
 process = customizeHLTforAll(process,"GRun",_customInfo)
