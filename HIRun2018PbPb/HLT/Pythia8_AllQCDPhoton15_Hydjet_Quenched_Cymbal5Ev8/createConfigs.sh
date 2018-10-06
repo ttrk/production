@@ -30,7 +30,7 @@ if [ $isXeXeData -gt 0 ]; then
   GLOBALTAG="auto:run2_data_GRun"
   nEvents="500"
   DATAMC="--data"
-  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
+  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
   L1EMU="--l1-emulator Full"
 fi
 
