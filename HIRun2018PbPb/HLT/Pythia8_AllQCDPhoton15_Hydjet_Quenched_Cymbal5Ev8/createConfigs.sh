@@ -20,6 +20,7 @@ nEvents="100"
 DATAMC="--mc"
 CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
 L1EMU="--l1-emulator FullMC"
+## L1 menu v3 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5290.html
 #L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
 L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
 
@@ -45,9 +46,6 @@ echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $configFile  # ignor
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 
-## tweak to run 10_3 menu with cmssw_10_2
-#sed -i "s/missingHcalRescaleFactorForEcal/#missingHcalRescaleFactorForEcal/g" $configFile
-
 if [ $isXeXeData -gt 0 ]; then
   oldStr="process\s=\smassReplaceInputTag(process)"
   # process = massReplaceInputTag(process, "rawDataCollector", "rawDataRepacker", False, True)
@@ -58,9 +56,6 @@ if [ $isXeXeData -gt 0 ]; then
   newStr3="process.SimL1Emulator.replace(process.rawDataCollector, process.rawDataRepacker)"
   newStr=$newStr1"\n"$newStr2"\n"$newStr3
   sed -i "s/${oldStr}/${newStr}/g" $configFile
-
-#  echo 'process.hltParticleFlowRecHitECALUnseeded.producers[0].qualityTests[0].applySelectionsToAllCrystals = cms.bool(False)' >> $configFile
-#  echo 'process.hltParticleFlowRecHitECALUnseeded.producers[1].qualityTests[0].applySelectionsToAllCrystals = cms.bool(False)' >> $configFile
 fi
 
 ## MOD : loose hltRechitInRegionsECAL eta-phi Margin for PF clustering
@@ -73,10 +68,6 @@ fi
 ## MOD : change Rechit threshold test
 #echo "process.hltParticleFlowRecHitECALL1Seeded.producers[0].qualityTests[0] = cms.PSet(applySelectionsToAllCrystals = cms.bool(True), name = cms.string('PFRecHitQTestDBThreshold'))" >> $configFile
 #echo "process.hltParticleFlowRecHitECALL1Seeded.producers[1].qualityTests[0] = cms.PSet(applySelectionsToAllCrystals = cms.bool(True), name = cms.string('PFRecHitQTestDBThreshold'))" >> $configFile
-
-## MOD : use unfiltered rechit collection for PF clustering, not hltRechitInRegionsECAL
-#echo 'process.hltParticleFlowRecHitECALL1Seeded.producers[0].src = cms.InputTag("hltEcalRecHit","EcalRecHitsEB")' >> $configFile
-#echo 'process.hltParticleFlowRecHitECALL1Seeded.producers[1].src = cms.InputTag("hltEcalRecHit","EcalRecHitsEE")' >> $configFile
 
 # Add hltBitAnalyzer
 echo '' >> $configFile
