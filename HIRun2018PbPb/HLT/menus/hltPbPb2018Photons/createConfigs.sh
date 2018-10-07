@@ -12,7 +12,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root"
 
 # menu that was used in the first jira ticket for PbPb 2018 photon paths : https://its.cern.ch/jira/browse/CMSHLT-2008
-menu="/users/katatar/HI2018PbPb/hltPbPb2018Photons/V9"
+menu="/users/katatar/HI2018PbPb/hltPbPb2018Photons/V10"
 configFile="hltConfig.py"
 GLOBALTAG="auto:run2_mc_GRun"
 SETUP="/dev/CMSSW_10_1_0/GRun"
@@ -31,7 +31,7 @@ if [ $isXeXeData -gt 0 ]; then
   GLOBALTAG="auto:run2_data_GRun"
   nEvents="500"
   DATAMC="--data"
-  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag"
+  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
   L1EMU="--l1-emulator Full"
 fi
 
