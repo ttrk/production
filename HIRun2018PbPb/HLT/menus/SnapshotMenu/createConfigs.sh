@@ -15,14 +15,14 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton
 # CaloJet /users/chenyi/PbPb2018/HighPTJetsPbPb2018CaloOnly/V4
 # PFJet /users/chenyi/PbPb2018/HighPTJetsPbPb2018PFRestructure/V16
 # BJet /users/ikucher/PbPb2018/HLT_HI_bJets_Snapshot_v3/V17
-# Photon /users/katatar/HI2018PbPb/hltPbPb2018Photons/V8
+# Photon /users/katatar/HI2018PbPb/hltPbPb2018Photons/V10
 # Electron /users/rbi/PbPb2018/HIElectronPaths2018/V14
 # Muon /users/echapon/PbPb2018/PbPb2018_muons_103X/V17
 # Cross /users/rbi/PbPb2018/HICrossTriggers2018/V14
 # HF/Tracking /users/wangj/PbPb2018/HLTPbPb2018Import/V30
 # LM/HM /users/tuos/PbPb2018/HLT_LowMultiplicity_v1/V28
 # UPC /users/abylinki/PbPb2018/UPC_Collection/V14
-menu="/users/chenyi/PbPb2018/SnapshotMenu/V53"
+menu="/users/chenyi/PbPb2018/SnapshotMenu/V58"
 configFile="hltConfig.py"
 GLOBALTAG="auto:run2_mc_GRun"
 # SETUP="/dev/CMSSW_10_1_0/GRun"
