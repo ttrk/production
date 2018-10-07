@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V57 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V58 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml --max-events 100
 
-# /users/katatar/HI2018PbPb/hltTestEgamma/V57 (CMSSW_10_3_0_pre4)
+# /users/katatar/HI2018PbPb/hltTestEgamma/V58 (CMSSW_10_3_0_pre4)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,7 +8,7 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V57')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V58')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
@@ -375,7 +375,7 @@ process.hltL1sL1SingleEG7BptxANDHLTL1TSeed = cms.EDFilter( "HLTL1TSeed",
     L1GlobalInputTag = cms.InputTag( "hltGtStage2Digis" )
 )
 process.hltPreHIIslandPhoton30Eta3p1 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltEcalDigis = cms.EDProducer( "EcalRawToDigi",
@@ -964,7 +964,7 @@ process.hltL1sL1MinimumBiasHF1AND = cms.EDFilter( "HLTL1TSeed",
     L1GlobalInputTag = cms.InputTag( "hltGtStage2Digis" )
 )
 process.hltPreHIIslandPhoton10Eta3p1 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton10Eta3p1 = cms.EDFilter( "HLT1Photon",
@@ -980,7 +980,7 @@ process.hltHIIslandPhoton10Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 10.0 )
 )
 process.hltPreHIIslandPhoton10Eta1p5 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton10Eta1p5 = cms.EDFilter( "HLT1Photon",
@@ -996,7 +996,7 @@ process.hltHIIslandPhoton10Eta1p5 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 10.0 )
 )
 process.hltPreHIIslandPhoton15Eta3p1 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton15Eta3p1 = cms.EDFilter( "HLT1Photon",
@@ -1012,7 +1012,7 @@ process.hltHIIslandPhoton15Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 15.0 )
 )
 process.hltPreHIIslandPhoton15Eta1p5 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton15Eta1p5 = cms.EDFilter( "HLT1Photon",
@@ -1028,7 +1028,7 @@ process.hltHIIslandPhoton15Eta1p5 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 15.0 )
 )
 process.hltPreHIIslandPhoton20Eta3p1 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton20Eta3p1 = cms.EDFilter( "HLT1Photon",
@@ -1044,7 +1044,7 @@ process.hltHIIslandPhoton20Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 20.0 )
 )
 process.hltPreHIIslandPhoton20Eta1p5 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton20Eta1p5 = cms.EDFilter( "HLT1Photon",
@@ -1071,7 +1071,7 @@ process.hltL1sL1SingleEG7BptxAND = cms.EDFilter( "HLTL1TSeed",
     L1GlobalInputTag = cms.InputTag( "hltGtStage2Digis" )
 )
 process.hltPreHIIslandPhoton30Eta1p5 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton30Eta1p5 = cms.EDFilter( "HLT1Photon",
@@ -1098,7 +1098,7 @@ process.hltL1sL1SingleEG21BptxAND = cms.EDFilter( "HLTL1TSeed",
     L1GlobalInputTag = cms.InputTag( "hltGtStage2Digis" )
 )
 process.hltPreHIIslandPhoton40Eta3p1 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton40Eta3p1 = cms.EDFilter( "HLT1Photon",
@@ -1114,7 +1114,7 @@ process.hltHIIslandPhoton40Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 40.0 )
 )
 process.hltPreHIIslandPhoton40Eta1p5 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton40Eta1p5 = cms.EDFilter( "HLT1Photon",
@@ -1130,7 +1130,7 @@ process.hltHIIslandPhoton40Eta1p5 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 40.0 )
 )
 process.hltPreHIIslandPhoton50Eta3p1 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton50Eta3p1 = cms.EDFilter( "HLT1Photon",
@@ -1146,7 +1146,7 @@ process.hltHIIslandPhoton50Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 50.0 )
 )
 process.hltPreHIIslandPhoton50Eta1p5 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton50Eta1p5 = cms.EDFilter( "HLT1Photon",
@@ -1173,7 +1173,7 @@ process.hltL1sL1SingleEG30BptxAND = cms.EDFilter( "HLTL1TSeed",
     L1GlobalInputTag = cms.InputTag( "hltGtStage2Digis" )
 )
 process.hltPreHIIslandPhoton60Eta3p1 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton60Eta3p1 = cms.EDFilter( "HLT1Photon",
@@ -1189,7 +1189,7 @@ process.hltHIIslandPhoton60Eta3p1 = cms.EDFilter( "HLT1Photon",
     MinPt = cms.double( 60.0 )
 )
 process.hltPreHIIslandPhoton60Eta1p5 = cms.EDFilter( "HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag( "hltGtDigis" ),
+    L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" ),
     offset = cms.uint32( 0 )
 )
 process.hltHIIslandPhoton60Eta1p5 = cms.EDFilter( "HLT1Photon",
