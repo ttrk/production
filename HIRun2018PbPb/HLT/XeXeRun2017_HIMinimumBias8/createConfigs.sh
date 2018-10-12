@@ -11,7 +11,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
 inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V57"
+menu="/users/katatar/HI2018PbPb/hltPbPb2018Photons/V11"
 configFile="hltConfig.py"
 GLOBALTAG="auto:run2_mc_GRun"
 SETUP="/dev/CMSSW_10_1_0/GRun"
@@ -21,8 +21,8 @@ DATAMC="--mc"
 CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
 L1EMU="--l1-emulator FullMC"
 ## L1 menu v3 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5290.html
-#L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
-L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
+L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
+#L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
 
 isXeXeData=1
 if [ $isXeXeData -gt 0 ]; then
@@ -88,34 +88,6 @@ echo 'process.hltobject.processName = cms.string("'${PROCESS}'")' >> $configFile
 echo 'process.hltobject.triggerResults = cms.InputTag("TriggerResults", "", "'${PROCESS}'")' >> $configFile
 echo 'process.hltobject.triggerEvent = cms.InputTag("hltTriggerSummaryAOD", "", "'${PROCESS}'")' >> $configFile
 echo 'process.hltobject.triggerNames = cms.vstring(
-"HLT_HIGEDPhoton10_L1Seeded",
-"HLT_HIGEDPhoton15_L1Seeded",
-"HLT_HIGEDPhoton20_L1Seeded",
-"HLT_HIGEDPhoton30_L1Seeded",
-"HLT_HIGEDPhoton40_L1Seeded",
-"HLT_HIGEDPhoton50_L1Seeded",
-"HLT_HIGEDPhoton60_L1Seeded",
-"HLT_HIGEDPhoton10_HECut_L1Seeded",
-"HLT_HIGEDPhoton15_HECut_L1Seeded",
-"HLT_HIGEDPhoton20_HECut_L1Seeded",
-"HLT_HIGEDPhoton30_HECut_L1Seeded",
-"HLT_HIGEDPhoton40_HECut_L1Seeded",
-"HLT_HIGEDPhoton50_HECut_L1Seeded",
-"HLT_HIGEDPhoton60_HECut_L1Seeded",
-"HLT_HIGEDPhoton10_EB_L1Seeded",
-"HLT_HIGEDPhoton15_EB_L1Seeded",
-"HLT_HIGEDPhoton20_EB_L1Seeded",
-"HLT_HIGEDPhoton30_EB_L1Seeded",
-"HLT_HIGEDPhoton40_EB_L1Seeded",
-"HLT_HIGEDPhoton50_EB_L1Seeded",
-"HLT_HIGEDPhoton60_EB_L1Seeded",
-"HLT_HIGEDPhoton10_EB_HECut_L1Seeded",
-"HLT_HIGEDPhoton15_EB_HECut_L1Seeded",
-"HLT_HIGEDPhoton20_EB_HECut_L1Seeded",
-"HLT_HIGEDPhoton30_EB_HECut_L1Seeded",
-"HLT_HIGEDPhoton40_EB_HECut_L1Seeded",
-"HLT_HIGEDPhoton50_EB_HECut_L1Seeded",
-"HLT_HIGEDPhoton60_EB_HECut_L1Seeded",
 "HLT_HIGEDPhoton10",
 "HLT_HIGEDPhoton15",
 "HLT_HIGEDPhoton20",
