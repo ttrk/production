@@ -80,6 +80,7 @@ tree->GetEntries("HLT_HIIslandPhoton40_Eta1p5_v1 > 0")
 tree->GetEntries("HLT_HIIslandPhoton50_Eta1p5_v1 > 0")
 tree->GetEntries("HLT_HIIslandPhoton60_Eta1p5_v1 > 0")
 
+// L1ZB
 tree->GetEntries("HLT_HIGEDPhoton10_L1ZB_v1 > 0")
 tree->GetEntries("HLT_HIGEDPhoton15_L1ZB_v1 > 0")
 tree->GetEntries("HLT_HIGEDPhoton20_L1ZB_v1 > 0")
@@ -111,4 +112,64 @@ tree->GetEntries("HLT_HIIslandPhoton30_Eta1p5_L1ZB_v1 > 0")
 tree->GetEntries("HLT_HIIslandPhoton40_Eta1p5_L1ZB_v1 > 0")
 tree->GetEntries("HLT_HIIslandPhoton50_Eta1p5_L1ZB_v1 > 0")
 tree->GetEntries("HLT_HIIslandPhoton60_Eta1p5_L1ZB_v1 > 0")
+
+// L1EG3
+tree->GetEntries("HLT_HIGEDPhoton10_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_L1EG3_v1 > 0")
+
+tree->GetEntries("HLT_HIGEDPhoton10_EB_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_EB_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_EB_L1EG3_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta3p1_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta3p1_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta3p1_L1EG3_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta1p5_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta1p5_L1EG3_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta1p5_L1EG3_v1 > 0")
+
+// L1EG5
+tree->GetEntries("HLT_HIGEDPhoton10_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_L1EG5_v1 > 0")
+
+tree->GetEntries("HLT_HIGEDPhoton10_EB_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_EB_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_EB_L1EG5_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta3p1_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta3p1_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta3p1_L1EG5_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta1p5_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta1p5_L1EG5_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta1p5_L1EG5_v1 > 0")
+
+// L1EG7
+tree->GetEntries("HLT_HIGEDPhoton10_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_L1EG7_v1 > 0")
+
+tree->GetEntries("HLT_HIGEDPhoton10_EB_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_EB_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_EB_L1EG7_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta3p1_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta3p1_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta3p1_L1EG7_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta1p5_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta1p5_L1EG7_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta1p5_L1EG7_v1 > 0")
+
+// L1EG12
+tree->GetEntries("HLT_HIGEDPhoton20_L1EG12_v1 > 0")
+
+tree->GetEntries("HLT_HIGEDPhoton20_EB_L1EG12_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton20_Eta3p1_L1EG12_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton20_Eta1p5_L1EG12_v1 > 0")
 
