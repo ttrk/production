@@ -1,11 +1,11 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V68 --globaltag auto:run2_mc_GRun --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_1_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --l1Xml L1Menu_CollisionsHeavyIons2018_v3.xml --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V68 --globaltag 103X_upgrade2018_realistic_HI_v6 --input root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root --setup /dev/CMSSW_10_3_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --l1Xml L1Menu_CollisionsHeavyIons2018_v3.xml --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --max-events 100
 
 # /users/katatar/HI2018PbPb/hltTestEgamma/V68 (CMSSW_10_3_0_pre6)
 
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process( "MyHLT" )
-process.load("setup_dev_CMSSW_10_1_0_GRun_cff")
+process.load("setup_dev_CMSSW_10_3_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
   tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V68')
@@ -4489,7 +4489,7 @@ process.options = cms.untracked.PSet(
 # override the GlobalTag, connection string and pfnPrefix
 if 'GlobalTag' in process.__dict__:
     from Configuration.AlCa.GlobalTag import GlobalTag as customiseGlobalTag
-    process.GlobalTag = customiseGlobalTag(process.GlobalTag, globaltag = 'auto:run2_mc_GRun')
+    process.GlobalTag = customiseGlobalTag(process.GlobalTag, globaltag = '103X_upgrade2018_realistic_HI_v6')
 
 if 'MessageLogger' in process.__dict__:
     process.MessageLogger.categories.append('TriggerSummaryProducerAOD')
@@ -4506,7 +4506,7 @@ process.dqmOutput = cms.OutputModule("DQMRootOutputModule",
     fileName = cms.untracked.string("DQMIO.root")
 )
 
-process.DQMOutput = cms.EndPath( process.dqmOutput )
+#process.DQMOutput = cms.EndPath( process.dqmOutput )
 
 # add specific customizations
 _customInfo = {}
@@ -4518,7 +4518,7 @@ _customInfo['inputFiles']={}
 _customInfo['inputFiles'][True]  = "file:RelVal_Raw_GRun_DATA.root"
 _customInfo['inputFiles'][False] = "file:RelVal_Raw_GRun_MC.root"
 _customInfo['maxEvents' ]=  100
-_customInfo['globalTag' ]= "auto:run2_mc_GRun"
+_customInfo['globalTag' ]= "103X_upgrade2018_realistic_HI_v6"
 _customInfo['inputFile' ]=  ['root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root']
 _customInfo['realData'  ]=  False
 from HLTrigger.Configuration.customizeHLTforALL import customizeHLTforAll
@@ -4532,11 +4532,24 @@ from HLTrigger.Configuration.Eras import modifyHLTforEras
 modifyHLTforEras(process)
 
 #User-defined customization functions
-from HLTrigger.Configuration.customizeHLTforCMSSW import customiseFor2017DtUnpacking
-process = customiseFor2017DtUnpacking(process)
 from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParams_2018_v1_4
 process = L1TSettingsToCaloParams_2018_v1_4(process)
 
+
+import CalibTracker.Configuration.Common.PoolDBESSource_cfi
+process.newBS = CalibTracker.Configuration.Common.PoolDBESSource_cfi.poolDBESSource.clone(connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), toGet = cms.VPSet(cms.PSet(record = cms.string('BeamSpotObjectsRcd'), tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc'))))
+process.prefer_PreferNewBS = cms.ESPrefer('PoolDBESSource', 'newBS')
+
+process.simEmtfDigis.CSCInputBXShift = cms.int32(-6)
+
+process.caloStage2Params.hiMode = cms.uint32(1)
+process.caloStage2Params.jetPUSType = cms.string('PhiRing2')
+process.caloStage2Params.jetPUSUseChunkySandwich = cms.uint32(False)
+
+process.caloStage2Params.etSumCentralityLower = cms.vdouble(0.0, 1.35, 7.15, 71.0, 219.5, 583.4, 1310.6, 65535.0)
+process.caloStage2Params.etSumCentralityUpper = cms.vdouble(4.15, 13.6, 110.95, 302.1, 713.35, 1464.35, 2664.05, 65535.0)
+
+process.GlobalTag.toGet = cms.VPSet(cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4')))
 process.caloStage2Params.egEtaCut = cms.int32(24)
 process.options.numberOfThreads=cms.untracked.uint32(1)
 

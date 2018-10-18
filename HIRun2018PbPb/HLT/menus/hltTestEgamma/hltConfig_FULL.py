@@ -6441,7 +6441,7 @@ process.simEmtfDigis = cms.EDProducer("L1TMuonEndCapTrackProducer",
     CPPFInput = cms.InputTag("simCPPFDigis"),
     CSCEnable = cms.bool(True),
     CSCInput = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED"),
-    CSCInputBXShift = cms.int32(-8),
+    CSCInputBXShift = cms.int32(-6),
     Era = cms.string('Run2_2018'),
     FWConfig = cms.bool(True),
     GEMEnable = cms.bool(False),
@@ -6555,7 +6555,7 @@ process.simGtStage2Digis = cms.EDProducer("L1TGlobalProducer",
 
 
 process.simHcalTriggerPrimitiveDigis = cms.EDProducer("HcalTrigPrimDigiProducer",
-    FG_HF_threshold = cms.uint32(17),
+    FG_HF_thresholds = cms.vuint32(17, 255),
     FG_threshold = cms.uint32(12),
     FrontEndFormatError = cms.bool(False),
     InputTagFEDRaw = cms.InputTag("rawDataCollector"),
@@ -10159,7 +10159,7 @@ process.HcalGeometryFromDBEP = cms.ESProducer("HcalGeometryFromDBEP",
 
 process.HcalTPGCoderULUT = cms.ESProducer("HcalTPGCoderULUT",
     FGLUTs = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/HBHE_FG_LUT.dat'),
-    FG_HF_threshold = cms.uint32(17),
+    FG_HF_thresholds = cms.vuint32(17, 255),
     LUTGenerationMode = cms.bool(True),
     MaskBit = cms.int32(32768),
     RCalibFile = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/RecHit-TPG-calib.dat'),
@@ -10963,12 +10963,12 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
     etSumBypassEttPUS = cms.uint32(1),
     etSumBypassMetPUS = cms.uint32(0),
     etSumCentralityLower = cms.vdouble(
-        16.5, 183.5, 1460.0, 3143.5, 5837.0, 
-        1.0, 1.0, 1.0
+        0.0, 1.35, 7.15, 71.0, 219.5, 
+        583.4, 1310.6, 65535.0
     ),
     etSumCentralityUpper = cms.vdouble(
-        25.5, 230.5, 1612.5, 3316.0, 5965.0, 
-        0.0, 0.0, 0.0
+        4.15, 13.6, 110.95, 302.1, 713.35, 
+        1464.35, 2664.05, 65535.0
     ),
     etSumEcalSumCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
     etSumEcalSumCalibrationType = cms.string('None'),
@@ -10988,6 +10988,7 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
     etSumXCalibrationType = cms.string('None'),
     etSumYCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
     etSumYCalibrationType = cms.string('None'),
+    hiMode = cms.uint32(1),
     isoTauEtaMax = cms.int32(25),
     isoTauEtaMin = cms.int32(0),
     jetBypassPUS = cms.uint32(0),
@@ -10998,8 +10999,8 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
     jetCompressPtLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_pt_compress_2017v1.txt'),
     jetLsb = cms.double(0.5),
     jetNeighbourThreshold = cms.double(0.0),
-    jetPUSType = cms.string('ChunkySandwich'),
-    jetPUSUseChunkySandwich = cms.uint32(True),
+    jetPUSType = cms.string('PhiRing2'),
+    jetPUSUseChunkySandwich = cms.uint32(False),
     jetRegionMask = cms.int32(0),
     jetSeedThreshold = cms.double(4.0),
     layer1ECalScaleETBins = cms.vint32(
@@ -13088,23 +13089,15 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     RefreshEachRun = cms.untracked.bool(False),
     RefreshOpenIOVs = cms.untracked.bool(False),
     connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-    globaltag = cms.string('103X_upgrade2018_realistic_v7'),
+    globaltag = cms.string('103X_upgrade2018_realistic_HI_v6'),
     pfnPostfix = cms.untracked.string('None'),
     snapshotTime = cms.string(''),
-    toGet = cms.VPSet(
-        cms.PSet(
-            connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-            record = cms.string('L1TUtmTriggerMenuRcd'),
-            snapshotTime = cms.string('2018-08-14 11:03:08.000'),
-            tag = cms.string('L1Menu_Collisions2018_v2_1_0-d1_xml')
-        ), 
-        cms.PSet(
-            connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-            record = cms.string('L1TUtmTriggerMenuRcd'),
-            snapshotTime = cms.string('2018-08-14 11:03:08.000'),
-            tag = cms.string('L1Menu_Collisions2018_v2_1_0-d1_xml')
-        )
-    )
+    toGet = cms.VPSet(cms.PSet(
+        connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
+        globaltag = cms.string('103X_upgrade2018_realistic_v4'),
+        record = cms.string('HcalElectronicsMapRcd'),
+        tag = cms.string('HcalElectronicsMap_2018_v3.0_mc')
+    ))
 )
 
 
@@ -13251,6 +13244,23 @@ process.l1ugmtdb = cms.ESSource("PoolDBESSource",
 )
 
 
+process.newBS = cms.ESSource("PoolDBESSource",
+    BlobStreamerName = cms.untracked.string('TBufferBlobStreamingService'),
+    DBParameters = cms.PSet(
+        authenticationPath = cms.untracked.string(''),
+        authenticationSystem = cms.untracked.int32(0),
+        messageLevel = cms.untracked.int32(0),
+        security = cms.untracked.string('')
+    ),
+    appendToDataLabel = cms.string(''),
+    connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
+    toGet = cms.VPSet(cms.PSet(
+        record = cms.string('BeamSpotObjectsRcd'),
+        tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc')
+    ))
+)
+
+
 process.twinmuxParamsSource = cms.ESSource("EmptyESSource",
     firstValid = cms.vuint32(1),
     iovIsRunNotTime = cms.bool(True),
@@ -13259,6 +13269,8 @@ process.twinmuxParamsSource = cms.ESSource("EmptyESSource",
 
 
 process.prefer("L1TriggerMenu")
+
+process.prefer("newBS")
 
 process.HLTDoHIEcalClusWithCleaningSequence = cms.Sequence(process.hltIslandBasicClustersHI+process.hltHiIslandSuperClustersHI+process.hltHiCorrectedIslandBarrelSuperClustersHI+process.hltHiCorrectedIslandEndcapSuperClustersHI+process.hltCleanedHiCorrectedIslandBarrelSuperClustersHI+process.hltRecoHIEcalWithCleaningCandidate)
 
@@ -14143,9 +14155,6 @@ process.HLT_HIGEDPhoton40_EB_Cent50_100_v1 = cms.Path(process.SimL1Emulator+proc
 
 
 process.HLTAnalyzerEndpath = cms.EndPath(process.SimL1Emulator+process.hltGtStage2Digis+process.hltPreHLTAnalyzerEndpath+process.hltL1TGlobalSummary+process.hltTrigReport)
-
-
-process.DQMOutput = cms.EndPath(process.dqmOutput)
 
 
 process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)

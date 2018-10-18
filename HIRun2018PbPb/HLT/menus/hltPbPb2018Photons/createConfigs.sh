@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=15
-# software : CMSSW_10_3_0_pre5
-# L1 tag : no L1 tag for CMSSW_10_3_0_pre5 yet
+# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=28#Instructions_as_of_2018_10_14_in
+## obsolete instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=15
+# software : CMSSW_10_3_0_pre6
+# L1 tag : tag l1t-integration-v101.0 with CMSSW_10_2_1
 
 ## Download the L1T Calo calibration and LUT files via
 # git clone https://github.com/cms-l1t-offline/L1Trigger-L1TCalorimeter.git L1Trigger/L1TCalorimeter/data
@@ -14,12 +15,12 @@ inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton
 # menu V9 was used in the first jira ticket for PbPb 2018 photon paths : https://its.cern.ch/jira/browse/CMSHLT-2008
 menu="/users/katatar/HI2018PbPb/hltPbPb2018Photons/V18"
 configFile="hltConfig.py"
-GLOBALTAG="auto:run2_mc_GRun"
-SETUP="/dev/CMSSW_10_1_0/GRun"
+GLOBALTAG="103X_upgrade2018_realistic_HI_v6"
+SETUP="/dev/CMSSW_10_3_0/GRun"
 PROCESS="MyHLT"
-nEvents="-1"
+nEvents="100"
 DATAMC="--mc"
-CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
+CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
 L1EMU="--l1-emulator FullMC"
 ## L1 menu v3 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5290.html
 L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
@@ -31,15 +32,45 @@ if [ $isXeXeData -gt 0 ]; then
   GLOBALTAG="auto:run2_data_GRun"
   nEvents="500"
   DATAMC="--data"
-  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
+  CUSTOMISE="--customise FWCore/ParameterSet/MassReplace.massReplaceInputTag,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
   L1EMU="--l1-emulator Full"
 fi
 
-## https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26#Testing_new_paths_with_PbPb_MC
+## https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=28#Instructions_as_of_2018_10_14_in
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
---full --offline $DATAMC --unprescale $L1EMU $CUSTOMISE --l1Xml $L1XML \
+--full --offline $DATAMC --unprescale $L1EMU --l1Xml $L1XML $CUSTOMISE \
 --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
+
+#beamspot customization
+echo "" >> $configFile
+echo "import CalibTracker.Configuration.Common.PoolDBESSource_cfi" >> $configFile
+echo "process.newBS = CalibTracker.Configuration.Common.PoolDBESSource_cfi.poolDBESSource.clone(connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), toGet = cms.VPSet(cms.PSet(record = cms.string('BeamSpotObjectsRcd'), tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc'))))" >> $configFile
+echo "process.prefer_PreferNewBS = cms.ESPrefer('PoolDBESSource', 'newBS')" >> $configFile
+
+#muon customization (via Emilien)
+echo "" >> $configFile
+echo "process.simEmtfDigis.CSCInputBXShift = cms.int32(-6)" >> $configFile
+
+#Jet customization (via Chris)
+echo "" >> $configFile
+echo "process.caloStage2Params.hiMode = cms.uint32(1)" >> $configFile
+echo "process.caloStage2Params.jetPUSType = cms.string('PhiRing2')" >> $configFile
+echo "process.caloStage2Params.jetPUSUseChunkySandwich = cms.uint32(False)" >> $configFile
+
+# Centrality customization (via Jing)
+echo "" >> $configFile
+echo "process.caloStage2Params.etSumCentralityLower = cms.vdouble(0.0, 1.35, 7.15, 71.0, 219.5, 583.4, 1310.6, 65535.0)" >> $configFile
+echo "process.caloStage2Params.etSumCentralityUpper = cms.vdouble(4.15, 13.6, 110.95, 302.1, 713.35, 1464.35, 2664.05, 65535.0)" >> $configFile
+
+#Fix for hcal electroics map running on old digi
+#believe this is related to issues running pre5 reco on digi from pre4 or earlier
+#see twiki here: https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtRecoValidation2018#Starting_from_other_CMSSW_10_3_p
+echo "" >> $configFile
+echo "process.GlobalTag.toGet = cms.VPSet(cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4')))" >> $configFile
+
+#Remove dQMIO output
+sed -i -e "s@process.DQMOutput @#process.DQMOutput @g" $configFile
 
 ## L1TSettingsToCaloParams_2018_v1_4 is now available in CMSSW_10_3_0_pre5
 ## settings for L1 EG : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT#How_to_run_L1_EGs
