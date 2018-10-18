@@ -215,3 +215,53 @@ tree->GetEntries("HLT_HIIslandPhoton50_Eta3p1_L1EG30_v1 > 0")
 
 tree->GetEntries("HLT_HIIslandPhoton40_Eta1p5_L1EG30_v1 > 0")
 tree->GetEntries("HLT_HIIslandPhoton50_Eta1p5_L1EG30_v1 > 0")
+
+// Cent30_100
+tree->GetEntries("HLT_HIGEDPhoton10_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton30_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton40_Cent30_100_v1 > 0")
+
+tree->GetEntries("HLT_HIGEDPhoton10_EB_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_EB_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_EB_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton30_EB_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton40_EB_Cent30_100_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta3p1_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta3p1_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta3p1_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton30_Eta3p1_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton40_Eta3p1_Cent30_100_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta1p5_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta1p5_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta1p5_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton30_Eta1p5_Cent30_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton40_Eta1p5_Cent30_100_v1 > 0")
+
+// Cent50_100
+tree->GetEntries("HLT_HIGEDPhoton10_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton30_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton40_Cent50_100_v1 > 0")
+
+tree->GetEntries("HLT_HIGEDPhoton10_EB_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton15_EB_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton20_EB_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton30_EB_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIGEDPhoton40_EB_Cent50_100_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta3p1_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta3p1_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta3p1_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton30_Eta3p1_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton40_Eta3p1_Cent50_100_v1 > 0")
+
+tree->GetEntries("HLT_HIIslandPhoton10_Eta1p5_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton15_Eta1p5_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton20_Eta1p5_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton30_Eta1p5_Cent50_100_v1 > 0")
+tree->GetEntries("HLT_HIIslandPhoton40_Eta1p5_Cent50_100_v1 > 0")
