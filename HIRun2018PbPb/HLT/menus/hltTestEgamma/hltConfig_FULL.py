@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V66')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V67')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -4901,10 +4901,30 @@ process.hltHoreco = cms.EDProducer("HcalHitReconstructor",
 process.hltIslandBasicClustersHI = cms.EDProducer("IslandClusterProducer",
     IslandBarrelSeedThr = cms.double(0.5),
     IslandEndcapSeedThr = cms.double(0.18),
-    RecHitFlagToBeExcludedEB = cms.vstring(),
-    RecHitFlagToBeExcludedEE = cms.vstring(),
-    SeedRecHitFlagToBeExcludedEB = cms.vstring(),
-    SeedRecHitFlagToBeExcludedEE = cms.vstring(),
+    RecHitFlagToBeExcludedEB = cms.vstring(
+        'kWeird', 
+        'kDiWeird', 
+        'kOutOfTime', 
+        'kTowerRecovered'
+    ),
+    RecHitFlagToBeExcludedEE = cms.vstring(
+        'kWeird', 
+        'kDiWeird', 
+        'kOutOfTime', 
+        'kTowerRecovered'
+    ),
+    SeedRecHitFlagToBeExcludedEB = cms.vstring(
+        'kFaultyHardware', 
+        'kTowerRecovered', 
+        'kDead'
+    ),
+    SeedRecHitFlagToBeExcludedEE = cms.vstring(
+        'kFaultyHardware', 
+        'kNeighboursRecovered', 
+        'kTowerRecovered', 
+        'kDead', 
+        'kWeird'
+    ),
     VerbosityLevel = cms.string('ERROR'),
     barrelClusterCollection = cms.string('islandBarrelBasicClustersHI'),
     barrelHits = cms.InputTag("hltEcalRecHit","EcalRecHitsEB"),

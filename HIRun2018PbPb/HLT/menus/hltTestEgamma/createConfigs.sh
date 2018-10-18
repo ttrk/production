@@ -11,7 +11,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
 inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V66"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V67"
 configFile="hltConfig.py"
 GLOBALTAG="auto:run2_mc_GRun"
 SETUP="/dev/CMSSW_10_1_0/GRun"
