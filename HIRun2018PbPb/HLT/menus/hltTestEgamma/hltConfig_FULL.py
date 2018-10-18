@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V65')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V66')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -4419,6 +4419,7 @@ process.hltFixedGridRhoFastjetAllCaloForMuons = cms.EDProducer("FixedGridRhoProd
 
 process.hltGtStage2Digis = cms.EDProducer("L1TRawToDigi",
     CTP7 = cms.untracked.bool(False),
+    DmxFWId = cms.uint32(0),
     FWId = cms.uint32(0),
     FWOverride = cms.bool(False),
     FedIds = cms.vint32(1404),
@@ -4900,6 +4901,10 @@ process.hltHoreco = cms.EDProducer("HcalHitReconstructor",
 process.hltIslandBasicClustersHI = cms.EDProducer("IslandClusterProducer",
     IslandBarrelSeedThr = cms.double(0.5),
     IslandEndcapSeedThr = cms.double(0.18),
+    RecHitFlagToBeExcludedEB = cms.vstring(),
+    RecHitFlagToBeExcludedEE = cms.vstring(),
+    SeedRecHitFlagToBeExcludedEB = cms.vstring(),
+    SeedRecHitFlagToBeExcludedEE = cms.vstring(),
     VerbosityLevel = cms.string('ERROR'),
     barrelClusterCollection = cms.string('islandBarrelBasicClustersHI'),
     barrelHits = cms.InputTag("hltEcalRecHit","EcalRecHitsEB"),
