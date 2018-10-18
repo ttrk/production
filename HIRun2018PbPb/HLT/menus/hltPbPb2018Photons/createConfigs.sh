@@ -22,9 +22,10 @@ nEvents="100"
 DATAMC="--mc"
 CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
 L1EMU="--l1-emulator FullMC"
+## L1 menu v4 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5380/2/1/1.html
+L1XML="L1Menu_CollisionsHeavyIons2018_v4.xml"
 ## L1 menu v3 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5290.html
-L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
-#L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
+#L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
 
 isXeXeData=0
 if [ $isXeXeData -gt 0 ]; then
