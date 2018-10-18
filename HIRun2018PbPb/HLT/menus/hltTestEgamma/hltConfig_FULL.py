@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V63')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V64')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -13226,6 +13226,12 @@ process.HLT_HIGEDPhoton40_L1EG15_v1 = cms.Path(process.SimL1Emulator+process.HLT
 process.HLT_HIGEDPhoton40_L1EG30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton40+process.HLTHIGEDPhoton40PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
+process.HLT_HIGEDPhoton50_L1EG30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton50+process.HLTHIGEDPhoton50PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIGEDPhoton60_L1EG21_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton60+process.HLTHIGEDPhoton60PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+
+
 process.HLT_HIGEDPhoton10_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton10EB+process.HLTHIGEDPhoton10EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
@@ -13290,6 +13296,12 @@ process.HLT_HIGEDPhoton40_EB_L1EG15_v1 = cms.Path(process.SimL1Emulator+process.
 
 
 process.HLT_HIGEDPhoton40_EB_L1EG30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton40EB+process.HLTHIGEDPhoton40EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIGEDPhoton50_EB_L1EG30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton50EB+process.HLTHIGEDPhoton50EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIGEDPhoton60_EB_L1EG21_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton60EB+process.HLTHIGEDPhoton60EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
 process.HLT_HIGEDPhoton10_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton10HECut+process.HLTHIGEDPhoton10HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
@@ -13632,6 +13644,18 @@ process.HLT_HIIslandPhoton40_Eta3p1_L1EG30_v1 = cms.Path(process.SimL1Emulator+p
 
 
 process.HLT_HIIslandPhoton40_Eta1p5_L1EG30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIIslandPhoton40Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIIslandPhoton50_Eta3p1_L1EG30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIIslandPhoton50Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton50Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIIslandPhoton50_Eta1p5_L1EG30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIIslandPhoton50Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton50Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIIslandPhoton60_Eta3p1_L1EG21_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIIslandPhoton60Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton60Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIIslandPhoton60_Eta1p5_L1EG21_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIIslandPhoton60Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton60Eta1p5+process.HLTEndSequenceWithZeroSuppression)
 
 
 process.HLT_HIIslandPhoton30_Eta3p1_v2_vHLTL1TSeed_vLocalCaloFix = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxANDHLTL1TSeed+process.hltPreHIIslandPhoton30Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta3p1+process.HLTEndSequenceWithZeroSuppression)
