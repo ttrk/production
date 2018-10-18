@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V64')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V65')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -6109,13 +6109,7 @@ process.rawDataCollector = cms.EDProducer("RawDataCollectorByLabel",
 )
 
 
-process.rawDataRepacker = cms.EDProducer("RawDataCollectorByLabel",
-    RawCollectionList = cms.VInputTag("hltSiStripDigiToZSRaw", "source", "rawDataCollector"),
-    verbose = cms.untracked.int32(0)
-)
-
-
-process.rawDataRepackerReducedFormat = cms.EDProducer("EvFFEDSelector",
+process.rawDataReducedFormat = cms.EDProducer("EvFFEDSelector",
     fedList = cms.vuint32( (
         100, 101, 102, 1024, 103, 
         104, 105, 106, 107, 108, 
@@ -6245,6 +6239,12 @@ process.rawDataRepackerReducedFormat = cms.EDProducer("EvFFEDSelector",
         99
      ) ),
     inputTag = cms.InputTag("rawDataRepacker")
+)
+
+
+process.rawDataRepacker = cms.EDProducer("RawDataCollectorByLabel",
+    RawCollectionList = cms.VInputTag("hltSiStripDigiToZSRaw", "source", "rawDataCollector"),
+    verbose = cms.untracked.int32(0)
 )
 
 
@@ -12929,7 +12929,7 @@ process.HLTL1UnpackerSequence = cms.Sequence(process.hltGtStage2Digis+process.hl
 process.HLTDoLocalHcalSequence = cms.Sequence(process.hltHcalDigis+process.hltHbhePhase1Reco+process.hltHbhereco+process.hltHfprereco+process.hltHfreco+process.hltHoreco)
 
 
-process.HLTDoHIStripZeroSuppression = cms.Sequence(process.hltSiStripRawToDigi+process.hltSiStripZeroSuppression+process.hltSiStripDigiToZSRaw+process.hltSiStripRawDigiToVirginRaw+process.virginRawDataRepacker+process.rawDataRepacker+process.rawDataRepackerReducedFormat)
+process.HLTDoHIStripZeroSuppression = cms.Sequence(process.hltSiStripRawToDigi+process.hltSiStripZeroSuppression+process.hltSiStripDigiToZSRaw+process.hltSiStripRawDigiToVirginRaw+process.virginRawDataRepacker+process.rawDataRepacker+process.rawDataReducedFormat)
 
 
 process.HLTEndSequence = cms.Sequence(process.hltBoolEnd)
