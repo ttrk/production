@@ -10662,7 +10662,7 @@ process.L1DTConfigFromDB = cms.ESProducer("DTConfigDBProducer",
 
 
 process.L1TriggerMenu = cms.ESProducer("L1TUtmTriggerMenuESProducer",
-    L1TriggerMenuFile = cms.string('L1Menu_CollisionsHeavyIons2018_v3.xml')
+    L1TriggerMenuFile = cms.string('L1Menu_CollisionsHeavyIons2018_v4.xml')
 )
 
 
