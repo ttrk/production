@@ -4,7 +4,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("MyHLT")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root'),
+    fileNames = cms.untracked.vstring('/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root'),
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
@@ -6373,7 +6373,7 @@ process.simCaloStage2Digis = cms.EDProducer("L1TStage2Layer2Producer",
 
 
 process.simCaloStage2Layer1Digis = cms.EDProducer("L1TCaloLayer1",
-    ecalToken = cms.InputTag("unpackEcal","EcalTriggerPrimitives"),
+    ecalToken = cms.InputTag("simEcalTriggerPrimitiveDigis"),
     firmwareVersion = cms.int32(3),
     hcalToken = cms.InputTag("simHcalTriggerPrimitiveDigis"),
     unpackEcalMask = cms.bool(False),
@@ -6517,6 +6517,18 @@ process.simDtTriggerPrimitiveDigis = cms.EDProducer("DTTrigProd",
     digiTag = cms.InputTag("unpackDT"),
     lutBtic = cms.untracked.int32(31),
     lutDumpFlag = cms.untracked.bool(False)
+)
+
+
+process.simEcalTriggerPrimitiveDigis = cms.EDProducer("EcalTrigPrimProducer",
+    BarrelOnly = cms.bool(False),
+    Debug = cms.bool(False),
+    Famos = cms.bool(False),
+    InstanceEB = cms.string('ebDigis'),
+    InstanceEE = cms.string('eeDigis'),
+    Label = cms.string('unpackEcal'),
+    TcpOutput = cms.bool(False),
+    binOfMaximum = cms.int32(6)
 )
 
 
@@ -11574,12 +11586,18 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     globaltag = cms.string('103X_upgrade2018_realistic_HI_v6'),
     pfnPostfix = cms.untracked.string('None'),
     snapshotTime = cms.string(''),
-    toGet = cms.VPSet(cms.PSet(
-        connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-        globaltag = cms.string('103X_upgrade2018_realistic_v4'),
-        record = cms.string('HcalElectronicsMapRcd'),
-        tag = cms.string('HcalElectronicsMap_2018_v3.0_mc')
-    ))
+    toGet = cms.VPSet(
+        cms.PSet(
+            connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
+            record = cms.string('EcalTPGFineGrainStripEERcd'),
+            tag = cms.string('EcalTPGFineGrainStrip_12')
+        ), 
+        cms.PSet(
+            connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
+            record = cms.string('EcalTPGSpikeRcd'),
+            tag = cms.string('EcalTPGSpike_12')
+        )
+    )
 )
 
 
@@ -11796,7 +11814,7 @@ process.HLTBeginSequence = cms.Sequence(process.hltTriggerType+process.HLTL1Unpa
 process.SimL1TGlobal = cms.Sequence(process.simGtStage2Digis)
 
 
-process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+((process.simCaloStage2Layer1Digis+process.simCaloStage2Digis)+((process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis)+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis)+(process.simGtExtFakeStage2Digis)+process.SimL1TGlobal)+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)
+process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+process.simEcalTriggerPrimitiveDigis+process.simCaloStage2Layer1Digis+process.simCaloStage2Digis+process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis+process.simGtExtFakeStage2Digis+process.SimL1TGlobal+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)
 
 
 process.HLTPFClusteringForEgammaPPOnAA = cms.Sequence(process.hltParticleFlowRecHitECALPPOnAA+process.hltParticleFlowRecHitPSPPOnAA+process.hltParticleFlowClusterPSPPOnAA+process.hltParticleFlowClusterECALUncorrectedPPOnAA+process.hltParticleFlowClusterECALPPOnAA+process.hltParticleFlowSuperClusterECALPPOnAA)
