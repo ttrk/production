@@ -10,7 +10,10 @@
 
 runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
-inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root"
+## sample with DIGI earlier than 103Xpre4
+#inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root"
+## sample with DIGI made with or after 103Xpre4
+inputFile="/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root"
 
 menu="/users/katatar/HI2018PbPb/hltTestEgamma/V68"
 configFile="hltConfig.py"
@@ -77,8 +80,8 @@ strGTtoGet=$strGTtoGet1
 #believe this is related to issues running pre5 reco on digi from pre4 or earlier
 #see twiki here: https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtRecoValidation2018#Starting_from_other_CMSSW_10_3_p
 #DO NOT DO THE NEXT TWO LINES IF YOUR RAW/DIGI is 1030pre5 OR LATER
-strGTtoGet2="cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4'))" #IF YOU FAIL PROCESSING RAW/DIGI 1030pre5 OR LATER THIS IS THE LIKELY CAUSE
-strGTtoGet=$strGTtoGet1", "$strGTtoGet2
+#strGTtoGet2="cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4'))" #IF YOU FAIL PROCESSING RAW/DIGI 1030pre5 OR LATER THIS IS THE LIKELY CAUSE
+#strGTtoGet=$strGTtoGet1", "$strGTtoGet2
 
 ## custom GT for Spike Killer and/or Hcal electronics map
 echo "" >> $configFile
