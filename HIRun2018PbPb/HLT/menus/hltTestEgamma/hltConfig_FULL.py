@@ -7044,7 +7044,7 @@ process.simCaloStage2Digis = cms.EDProducer("L1TStage2Layer2Producer",
 
 
 process.simCaloStage2Layer1Digis = cms.EDProducer("L1TCaloLayer1",
-    ecalToken = cms.InputTag("unpackEcal","EcalTriggerPrimitives"),
+    ecalToken = cms.InputTag("simEcalTriggerPrimitiveDigis"),
     firmwareVersion = cms.int32(3),
     hcalToken = cms.InputTag("simHcalTriggerPrimitiveDigis"),
     unpackEcalMask = cms.bool(False),
@@ -7188,6 +7188,18 @@ process.simDtTriggerPrimitiveDigis = cms.EDProducer("DTTrigProd",
     digiTag = cms.InputTag("unpackDT"),
     lutBtic = cms.untracked.int32(31),
     lutDumpFlag = cms.untracked.bool(False)
+)
+
+
+process.simEcalTriggerPrimitiveDigis = cms.EDProducer("EcalTrigPrimProducer",
+    BarrelOnly = cms.bool(False),
+    Debug = cms.bool(False),
+    Famos = cms.bool(False),
+    InstanceEB = cms.string('ebDigis'),
+    InstanceEE = cms.string('eeDigis'),
+    Label = cms.string('unpackEcal'),
+    TcpOutput = cms.bool(False),
+    binOfMaximum = cms.int32(6)
 )
 
 
@@ -13848,12 +13860,24 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     globaltag = cms.string('103X_upgrade2018_realistic_HI_v6'),
     pfnPostfix = cms.untracked.string('None'),
     snapshotTime = cms.string(''),
-    toGet = cms.VPSet(cms.PSet(
-        connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-        globaltag = cms.string('103X_upgrade2018_realistic_v4'),
-        record = cms.string('HcalElectronicsMapRcd'),
-        tag = cms.string('HcalElectronicsMap_2018_v3.0_mc')
-    ))
+    toGet = cms.VPSet(
+        cms.PSet(
+            connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
+            record = cms.string('EcalTPGFineGrainStripEERcd'),
+            tag = cms.string('EcalTPGFineGrainStrip_12')
+        ), 
+        cms.PSet(
+            connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
+            record = cms.string('EcalTPGSpikeRcd'),
+            tag = cms.string('EcalTPGSpike_12')
+        ), 
+        cms.PSet(
+            connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
+            globaltag = cms.string('103X_upgrade2018_realistic_v4'),
+            record = cms.string('HcalElectronicsMapRcd'),
+            tag = cms.string('HcalElectronicsMap_2018_v3.0_mc')
+        )
+    )
 )
 
 
@@ -14073,7 +14097,7 @@ process.HLTEndSequenceWithZeroSuppression = cms.Sequence(process.HLTDoHIStripZer
 process.HLTDoLocalHcalWithTowerSequence = cms.Sequence(process.hltHcalDigis+process.hltHbhePhase1Reco+process.hltHbhereco+process.hltHfprereco+process.hltHfreco+process.hltHoreco+process.hltTowerMakerForAll)
 
 
-process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+((process.simCaloStage2Layer1Digis+process.simCaloStage2Digis)+((process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis)+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis)+(process.simGtExtFakeStage2Digis)+process.SimL1TGlobal)+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)
+process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+process.simEcalTriggerPrimitiveDigis+process.simCaloStage2Layer1Digis+process.simCaloStage2Digis+process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis+process.simGtExtFakeStage2Digis+process.SimL1TGlobal+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)
 
 
 process.HLTPFClusteringForEgamma = cms.Sequence(process.hltRechitInRegionsECAL+process.hltRechitInRegionsES+process.hltParticleFlowRecHitECALL1Seeded+process.hltParticleFlowRecHitPSL1Seeded+process.hltParticleFlowClusterPSL1Seeded+process.hltParticleFlowClusterECALUncorrectedL1Seeded+process.hltParticleFlowClusterECALL1Seeded+process.hltParticleFlowSuperClusterECALL1Seeded)

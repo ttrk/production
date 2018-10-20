@@ -4549,7 +4549,13 @@ process.caloStage2Params.jetPUSUseChunkySandwich = cms.uint32(False)
 process.caloStage2Params.etSumCentralityLower = cms.vdouble(0.0, 1.35, 7.15, 71.0, 219.5, 583.4, 1310.6, 65535.0)
 process.caloStage2Params.etSumCentralityUpper = cms.vdouble(4.15, 13.6, 110.95, 302.1, 713.35, 1464.35, 2664.05, 65535.0)
 
-process.GlobalTag.toGet = cms.VPSet(cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4')))
+process.simEcalTriggerPrimitiveDigis = cms.EDProducer('EcalTrigPrimProducer', BarrelOnly = cms.bool(False), Debug = cms.bool(False), Famos = cms.bool(False), InstanceEB = cms.string('ebDigis'), InstanceEE = cms.string('eeDigis'), Label = cms.string('unpackEcal'), TcpOutput = cms.bool(False), binOfMaximum = cms.int32(6))
+
+process.simCaloStage2Layer1Digis.ecalToken = cms.InputTag('simEcalTriggerPrimitiveDigis')
+
+process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+process.simEcalTriggerPrimitiveDigis+((process.simCaloStage2Layer1Digis+process.simCaloStage2Digis)+((process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis)+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis)+(process.simGtExtFakeStage2Digis)+process.SimL1TGlobal)+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)
+
+process.GlobalTag.toGet = cms.VPSet(cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'), tag = cms.string('EcalTPGFineGrainStrip_12'), connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')), cms.PSet(record = cms.string('EcalTPGSpikeRcd'), tag = cms.string('EcalTPGSpike_12'), connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')), cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4')))
 process.caloStage2Params.egEtaCut = cms.int32(24)
 process.options.numberOfThreads=cms.untracked.uint32(1)
 
