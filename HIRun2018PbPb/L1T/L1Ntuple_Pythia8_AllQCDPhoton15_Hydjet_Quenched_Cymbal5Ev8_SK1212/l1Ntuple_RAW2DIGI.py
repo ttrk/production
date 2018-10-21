@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: l1Ntuple -s RAW2DIGI --era=Run2_2018 --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAWSimCalTP --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleGEN --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise=L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_2 --customise_commands=process.simTwinMuxDigis.DTDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.DTThetaDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.RPC_Source = cms.InputTag('muonRPCDigis')\n --conditions=101X_upgrade2018_realistic_v7 -n 100 --mc --no_exec --no_output --filein=root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_863.root
+# with command line options: l1Ntuple -s RAW2DIGI --era=Run2_2018 --customise=L1Trigger/Configuration/customiseReEmul.L1TReEmulMCFromRAWSimCalTP --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleEMU --customise=L1Trigger/L1TNtuples/customiseL1Ntuple.L1NtupleGEN --customise=L1Trigger/Configuration/customiseUtils.L1TTurnOffUnpackStage2GtGmtAndCalo --customise=L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --customise_commands=process.simTwinMuxDigis.DTDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.DTThetaDigi_Source = cms.InputTag('bmtfDigis')\n process.simTwinMuxDigis.RPC_Source = cms.InputTag('muonRPCDigis')\n --conditions=103X_upgrade2018_realistic_HI_v6 -n 100 --mc --no_exec --no_output --filein=/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -27,7 +27,7 @@ process.maxEvents = cms.untracked.PSet(
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_863.root'),
+    fileNames = cms.untracked.vstring('/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -48,7 +48,7 @@ process.configurationMetadata = cms.untracked.PSet(
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '101X_upgrade2018_realistic_v7', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '103X_upgrade2018_realistic_HI_v6', '')
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
@@ -83,10 +83,10 @@ from L1Trigger.Configuration.customiseUtils import L1TTurnOffUnpackStage2GtGmtAn
 process = L1TTurnOffUnpackStage2GtGmtAndCalo(process)
 
 # Automatic addition of the customisation function from L1Trigger.Configuration.customiseSettings
-from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParams_2018_v1_2 
+from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParams_2018_v1_4 
 
-#call to customisation function L1TSettingsToCaloParams_2018_v1_2 imported from L1Trigger.Configuration.customiseSettings
-process = L1TSettingsToCaloParams_2018_v1_2(process)
+#call to customisation function L1TSettingsToCaloParams_2018_v1_4 imported from L1Trigger.Configuration.customiseSettings
+process = L1TSettingsToCaloParams_2018_v1_4(process)
 
 # End of customisation functions
 
@@ -97,11 +97,15 @@ process.simTwinMuxDigis.DTDigi_Source
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 process = customiseEarlyDelete(process)
 # End adding early deletion
-process.caloStage2Params.egBypassExtHOverE = cms.uint32(1)
-process.caloStage2Params.egBypassShape = cms.uint32(1)
-process.caloStage2Params.egBypassECALFG = cms.uint32(1)
-process.caloStage2Params.egHOverEcutBarrel = cms.int32(1)
-process.caloStage2Params.egHOverEcutEndcap = cms.int32(1)
+
+process.simEmtfDigis.CSCInputBXShift = cms.int32(-6)
+
+process.caloStage2Params.hiMode = cms.uint32(1)
+process.caloStage2Params.jetPUSType = cms.string('PhiRing2')
+process.caloStage2Params.jetPUSUseChunkySandwich = cms.uint32(False)
+
+process.caloStage2Params.etSumCentralityLower = cms.vdouble(0.0, 1.35, 7.15, 71.0, 219.5, 583.4, 1310.6, 65535.0)
+process.caloStage2Params.etSumCentralityUpper = cms.vdouble(4.15, 13.6, 110.95, 302.1, 713.35, 1464.35, 2664.05, 65535.0)
 process.caloStage2Params.egEtaCut = cms.int32(24)
 process.GlobalTag.toGet = cms.VPSet(                                                                            
     cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'),
