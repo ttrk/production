@@ -61,6 +61,9 @@ echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $config_l1Ntuple  # 
 # https://github.com/cms-sw/cmssw/blob/master/SimCalorimetry/EcalTrigPrimAlgos/src/EcalFenixTcpFormat.cc#L72-L75
 # https://github.com/cms-sw/cmssw/blob/edb9f982c877bb0c568704d3383ede9ea099ec3a/SimCalorimetry/EcalTrigPrimAlgos/src/EcalFenixTcpFormat.cc#L72-L75
 # change Spike Killer WP
+# WP 12_12 : EcalTPGFineGrainStrip_12, EcalTPGSpike_12
+# WP 12_7  : EcalTPGFineGrainStrip_7 , EcalTPGSpike_12
+# WP 16_16 : EcalTPGFineGrainStrip_16, EcalTPGSpike_16
 echo "process.GlobalTag.toGet = cms.VPSet(                                                                            
     cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'),
              tag = cms.string('EcalTPGFineGrainStrip_12'),                                                                                   \
