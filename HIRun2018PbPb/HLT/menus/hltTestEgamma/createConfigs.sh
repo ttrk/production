@@ -15,7 +15,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 ## sample with DIGI made with or after 103Xpre4
 inputFile="/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V68"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V69"
 configFile="hltConfig.py"
 GLOBALTAG="103X_upgrade2018_realistic_HI_v6"
 SETUP="/dev/CMSSW_10_3_0/GRun"
