@@ -16,7 +16,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 inputFile="/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root"
 
 # menu V9 was used in the first jira ticket for PbPb 2018 photon paths : https://its.cern.ch/jira/browse/CMSHLT-2008
-menu="/users/katatar/HI2018PbPb/hltPbPb2018Photons/V20"
+menu="/users/katatar/HI2018PbPb/hltPbPb2018Photons/V21"
 configFile="hltConfig.py"
 GLOBALTAG="103X_upgrade2018_realistic_HI_v6"
 SETUP="/dev/CMSSW_10_3_0/GRun"

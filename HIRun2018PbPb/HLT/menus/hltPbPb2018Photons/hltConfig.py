@@ -1,6 +1,6 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltPbPb2018Photons/V20 --globaltag 103X_upgrade2018_realistic_HI_v6 --input /store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root --setup /dev/CMSSW_10_3_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --l1Xml L1Menu_CollisionsHeavyIons2018_v4.xml --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltPbPb2018Photons/V21 --globaltag 103X_upgrade2018_realistic_HI_v6 --input /store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root --setup /dev/CMSSW_10_3_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --l1Xml L1Menu_CollisionsHeavyIons2018_v4.xml --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --max-events 100
 
-# /users/katatar/HI2018PbPb/hltPbPb2018Photons/V20 (CMSSW_10_3_0_pre6)
+# /users/katatar/HI2018PbPb/hltPbPb2018Photons/V21 (CMSSW_10_3_0_pre6)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -8,7 +8,7 @@ process = cms.Process( "MyHLT" )
 process.load("setup_dev_CMSSW_10_3_0_GRun_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/HI2018PbPb/hltPbPb2018Photons/V20')
+  tableName = cms.string('/users/katatar/HI2018PbPb/hltPbPb2018Photons/V21')
 )
 
 process.ThroughputService = cms.Service( "ThroughputService",
