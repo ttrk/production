@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltPbPb2018Photons/V18')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltPbPb2018Photons/V19')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -7718,7 +7718,7 @@ process.hltHIIslandPhoton60Eta3p1 = cms.EDFilter("HLT1Photon",
 )
 
 
-process.hltL1sL1MinimumBiasHF1AND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sMinimumBiasHF1ANDBptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7731,7 +7731,7 @@ process.hltL1sL1MinimumBiasHF1AND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG21BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG21BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7744,7 +7744,7 @@ process.hltL1sL1SingleEG21BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG21Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG21Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7757,7 +7757,7 @@ process.hltL1sL1SingleEG21Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG21Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG21Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7770,7 +7770,7 @@ process.hltL1sL1SingleEG21Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG30BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG30BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7783,7 +7783,7 @@ process.hltL1sL1SingleEG30BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG3Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG3Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7796,7 +7796,7 @@ process.hltL1sL1SingleEG3Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG3Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG3Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7809,7 +7809,7 @@ process.hltL1sL1SingleEG3Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG7BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG7BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7822,7 +7822,7 @@ process.hltL1sL1SingleEG7BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG7Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG7Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -7835,7 +7835,7 @@ process.hltL1sL1SingleEG7Cent30100BptxAND = cms.EDFilter("HLTL1TSeed",
 )
 
 
-process.hltL1sL1SingleEG7Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
+process.hltL1sSingleEG7Cent50100BptxAND = cms.EDFilter("HLTL1TSeed",
     L1EGammaInputTag = cms.InputTag("hltGtStage2Digis","EGamma"),
     L1EtSumInputTag = cms.InputTag("hltGtStage2Digis","EtSum"),
     L1GlobalInputTag = cms.InputTag("hltGtStage2Digis"),
@@ -8232,42 +8232,36 @@ process.hltobject = cms.EDAnalyzer("TriggerObjectAnalyzer",
     triggerEvent = cms.InputTag("hltTriggerSummaryAOD","","MyHLT"),
     triggerNames = cms.vstring(
         'HLT_HIGEDPhoton10', 
-        'HLT_HIGEDPhoton15', 
         'HLT_HIGEDPhoton20', 
         'HLT_HIGEDPhoton30', 
         'HLT_HIGEDPhoton40', 
         'HLT_HIGEDPhoton50', 
         'HLT_HIGEDPhoton60', 
         'HLT_HIGEDPhoton10_HECut', 
-        'HLT_HIGEDPhoton15_HECut', 
         'HLT_HIGEDPhoton20_HECut', 
         'HLT_HIGEDPhoton30_HECut', 
         'HLT_HIGEDPhoton40_HECut', 
         'HLT_HIGEDPhoton50_HECut', 
         'HLT_HIGEDPhoton60_HECut', 
         'HLT_HIGEDPhoton10_EB', 
-        'HLT_HIGEDPhoton15_EB', 
         'HLT_HIGEDPhoton20_EB', 
         'HLT_HIGEDPhoton30_EB', 
         'HLT_HIGEDPhoton40_EB', 
         'HLT_HIGEDPhoton50_EB', 
         'HLT_HIGEDPhoton60_EB', 
         'HLT_HIGEDPhoton10_EB_HECut', 
-        'HLT_HIGEDPhoton15_EB_HECut', 
         'HLT_HIGEDPhoton20_EB_HECut', 
         'HLT_HIGEDPhoton30_EB_HECut', 
         'HLT_HIGEDPhoton40_EB_HECut', 
         'HLT_HIGEDPhoton50_EB_HECut', 
         'HLT_HIGEDPhoton60_EB_HECut', 
         'HLT_HIIslandPhoton10_Eta3p1', 
-        'HLT_HIIslandPhoton15_Eta3p1', 
         'HLT_HIIslandPhoton20_Eta3p1', 
         'HLT_HIIslandPhoton30_Eta3p1', 
         'HLT_HIIslandPhoton40_Eta3p1', 
         'HLT_HIIslandPhoton50_Eta3p1', 
         'HLT_HIIslandPhoton60_Eta3p1', 
         'HLT_HIIslandPhoton10_Eta1p5', 
-        'HLT_HIIslandPhoton15_Eta1p5', 
         'HLT_HIIslandPhoton20_Eta1p5', 
         'HLT_HIIslandPhoton30_Eta1p5', 
         'HLT_HIIslandPhoton40_Eta1p5', 
@@ -11904,160 +11898,160 @@ process.HLTriggerFirstPath = cms.Path(process.SimL1Emulator+process.hltGetCondit
 process.HLTriggerFinalPath = cms.Path(process.SimL1Emulator+process.hltGtStage2Digis+process.hltScalersRawToDigi+process.hltFEDSelector+process.hltTriggerSummaryAOD+process.hltTriggerSummaryRAW+process.hltBoolFalse)
 
 
-process.HLT_HIIslandPhoton10_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIIslandPhoton10Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton10_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIIslandPhoton10Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton10_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIIslandPhoton10Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton10_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIIslandPhoton10Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta1p5+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton20_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIIslandPhoton20Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton20_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIIslandPhoton20Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton20_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIIslandPhoton20Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton20_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIIslandPhoton20Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta1p5+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton30_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHIIslandPhoton30Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton30_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIIslandPhoton30Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton30_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHIIslandPhoton30Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton30_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIIslandPhoton30Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta1p5+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton40_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIIslandPhoton40Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton40_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIIslandPhoton40Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton40_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIIslandPhoton40Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton40_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIIslandPhoton40Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta1p5+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton50_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIIslandPhoton50Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton50Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton50_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIIslandPhoton50Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton50Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton50_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIIslandPhoton50Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton50Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton50_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIIslandPhoton50Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton50Eta1p5+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton60_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIIslandPhoton60Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton60Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton60_Eta3p1_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG30BptxAND+process.hltPreHIIslandPhoton60Eta3p1+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton60Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton60_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIIslandPhoton60Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton60Eta1p5+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton60_Eta1p5_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG30BptxAND+process.hltPreHIIslandPhoton60Eta1p5+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton60Eta1p5+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton10_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent30100BptxAND+process.hltPreHIIslandPhoton10Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton10_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent30100BptxAND+process.hltPreHIIslandPhoton10Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton20_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent30100BptxAND+process.hltPreHIIslandPhoton20Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton20_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent30100BptxAND+process.hltPreHIIslandPhoton20Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton30_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7Cent30100BptxAND+process.hltPreHIIslandPhoton30Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton30_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7Cent30100BptxAND+process.hltPreHIIslandPhoton30Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton40_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21Cent30100BptxAND+process.hltPreHIIslandPhoton40Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton40_Eta3p1_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21Cent30100BptxAND+process.hltPreHIIslandPhoton40Eta3p1Cent30100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton10_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent50100BptxAND+process.hltPreHIIslandPhoton10Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton10_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent50100BptxAND+process.hltPreHIIslandPhoton10Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton10Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton20_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent50100BptxAND+process.hltPreHIIslandPhoton20Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton20_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent50100BptxAND+process.hltPreHIIslandPhoton20Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton20Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton30_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7Cent50100BptxAND+process.hltPreHIIslandPhoton30Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton30_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7Cent50100BptxAND+process.hltPreHIIslandPhoton30Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton30Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIIslandPhoton40_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21Cent50100BptxAND+process.hltPreHIIslandPhoton40Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta3p1+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIIslandPhoton40_Eta3p1_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21Cent50100BptxAND+process.hltPreHIIslandPhoton40Eta3p1Cent50100+process.HLTDoCaloSequence+process.HLTDoHIEcalClusWithCleaningSequence+process.hltHIIslandPhoton40Eta3p1+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton10_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton10+process.HLTHIGEDPhoton10PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton10_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton10+process.HLTHIGEDPhoton10PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton20_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton20+process.HLTHIGEDPhoton20PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton20_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton20+process.HLTHIGEDPhoton20PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHIGEDPhoton30+process.HLTHIGEDPhoton30PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton30_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIGEDPhoton30+process.HLTHIGEDPhoton30PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton40_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton40+process.HLTHIGEDPhoton40PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton40_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton40+process.HLTHIGEDPhoton40PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton50_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton50+process.HLTHIGEDPhoton50PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton50_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton50+process.HLTHIGEDPhoton50PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton60_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton60+process.HLTHIGEDPhoton60PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton60_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG30BptxAND+process.hltPreHIGEDPhoton60+process.HLTHIGEDPhoton60PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton10_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton10EB+process.HLTHIGEDPhoton10EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton10_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton10EB+process.HLTHIGEDPhoton10EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton20_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton20EB+process.HLTHIGEDPhoton20EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton20_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton20EB+process.HLTHIGEDPhoton20EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton30_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHIGEDPhoton30EB+process.HLTHIGEDPhoton30EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton30_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIGEDPhoton30EB+process.HLTHIGEDPhoton30EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton40_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton40EB+process.HLTHIGEDPhoton40EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton40_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton40EB+process.HLTHIGEDPhoton40EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton50_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton50EB+process.HLTHIGEDPhoton50EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton50_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton50EB+process.HLTHIGEDPhoton50EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton60_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton60EB+process.HLTHIGEDPhoton60EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton60_EB_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG30BptxAND+process.hltPreHIGEDPhoton60EB+process.HLTHIGEDPhoton60EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton10_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent30100BptxAND+process.hltPreHIGEDPhoton10Cent30100+process.HLTHIGEDPhoton10PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton10_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent30100BptxAND+process.hltPreHIGEDPhoton10Cent30100+process.HLTHIGEDPhoton10PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton20_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent30100BptxAND+process.hltPreHIGEDPhoton20Cent30100+process.HLTHIGEDPhoton20PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton20_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent30100BptxAND+process.hltPreHIGEDPhoton20Cent30100+process.HLTHIGEDPhoton20PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton30_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7Cent30100BptxAND+process.hltPreHIGEDPhoton30Cent30100+process.HLTHIGEDPhoton30PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton30_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7Cent30100BptxAND+process.hltPreHIGEDPhoton30Cent30100+process.HLTHIGEDPhoton30PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton40_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21Cent30100BptxAND+process.hltPreHIGEDPhoton40Cent30100+process.HLTHIGEDPhoton40PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton40_Cent30_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21Cent30100BptxAND+process.hltPreHIGEDPhoton40Cent30100+process.HLTHIGEDPhoton40PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton10_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent50100BptxAND+process.hltPreHIGEDPhoton10Cent50100+process.HLTHIGEDPhoton10PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton10_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent50100BptxAND+process.hltPreHIGEDPhoton10Cent50100+process.HLTHIGEDPhoton10PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton20_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG3Cent50100BptxAND+process.hltPreHIGEDPhoton20Cent50100+process.HLTHIGEDPhoton20PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton20_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG3Cent50100BptxAND+process.hltPreHIGEDPhoton20Cent50100+process.HLTHIGEDPhoton20PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton30_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7Cent50100BptxAND+process.hltPreHIGEDPhoton30Cent50100+process.HLTHIGEDPhoton30PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton30_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7Cent50100BptxAND+process.hltPreHIGEDPhoton30Cent50100+process.HLTHIGEDPhoton30PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton40_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21Cent50100BptxAND+process.hltPreHIGEDPhoton40Cent50100+process.HLTHIGEDPhoton40PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton40_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21Cent50100BptxAND+process.hltPreHIGEDPhoton40Cent50100+process.HLTHIGEDPhoton40PPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton10_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton10HECut+process.HLTHIGEDPhoton10HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton10_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton10HECut+process.HLTHIGEDPhoton10HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton20_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton20HECut+process.HLTHIGEDPhoton20HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton20_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton20HECut+process.HLTHIGEDPhoton20HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton30_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHIGEDPhoton30HECut+process.HLTHIGEDPhoton30HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton30_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIGEDPhoton30HECut+process.HLTHIGEDPhoton30HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton40_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton40HECut+process.HLTHIGEDPhoton40HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton40_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton40HECut+process.HLTHIGEDPhoton40HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton50_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton50HECut+process.HLTHIGEDPhoton50HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton50_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton50HECut+process.HLTHIGEDPhoton50HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton60_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton60HECut+process.HLTHIGEDPhoton60HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton60_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG30BptxAND+process.hltPreHIGEDPhoton60HECut+process.HLTHIGEDPhoton60HECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton10_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton10EBHECut+process.HLTHIGEDPhoton10EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton10_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton10EBHECut+process.HLTHIGEDPhoton10EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton20_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1MinimumBiasHF1AND+process.hltPreHIGEDPhoton20EBHECut+process.HLTHIGEDPhoton20EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton20_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sMinimumBiasHF1ANDBptxAND+process.hltPreHIGEDPhoton20EBHECut+process.HLTHIGEDPhoton20EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton30_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG7BptxAND+process.hltPreHIGEDPhoton30EBHECut+process.HLTHIGEDPhoton30EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton30_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIGEDPhoton30EBHECut+process.HLTHIGEDPhoton30EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton40_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton40EBHECut+process.HLTHIGEDPhoton40EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton40_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton40EBHECut+process.HLTHIGEDPhoton40EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton50_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG21BptxAND+process.hltPreHIGEDPhoton50EBHECut+process.HLTHIGEDPhoton50EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton50_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton50EBHECut+process.HLTHIGEDPhoton50EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
-process.HLT_HIGEDPhoton60_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sL1SingleEG30BptxAND+process.hltPreHIGEDPhoton60EBHECut+process.HLTHIGEDPhoton60EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
+process.HLT_HIGEDPhoton60_EB_HECut_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG30BptxAND+process.hltPreHIGEDPhoton60EBHECut+process.HLTHIGEDPhoton60EBHECutPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
 
 
 process.HLTAnalyzerEndpath = cms.EndPath(process.SimL1Emulator+process.hltGtStage2Digis+process.hltPreHLTAnalyzerEndpath+process.hltL1TGlobalSummary+process.hltTrigReport)
