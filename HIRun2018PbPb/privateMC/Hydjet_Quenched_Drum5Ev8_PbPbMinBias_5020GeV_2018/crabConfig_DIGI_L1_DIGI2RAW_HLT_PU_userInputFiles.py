@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018_DIGI_L1_DIGI2RAW_HLT_PU_userInputFiles"
+config.General.requestName = "Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018_DIGI_L1_DIGI2RAW_HLT_PU_userInputFiles_v2"
 config.General.transferLogs = False
 
 config.section_("JobType")
@@ -20,7 +20,7 @@ config.section_("Data")
 ## When this job was first submitted using the "inputDataset" option above, the dataset was still being transferred from tape to disk at T2_US_MIT (~50% complete). This option did not work, crab complained that the dataset has no copy on disk.
 ## My workaround was to explicitly give the input as a file list (see below) instead of giving dataset path.
 ## The script ./dasQueryInput.sh dumps the input file list
-config.Data.userInputFiles = open('inputFiles_das.txt').readlines()
+config.Data.userInputFiles = open('inputFiles_das_v2_new.txt').readlines() # process files that became available after the 1st job, run ./grepNewInput.sh to get the list of new files wrt previous job.
 config.Data.splitting = "FileBased"
 config.Data.unitsPerJob = 1
 config.Data.totalUnits = -1
@@ -32,7 +32,7 @@ config.Data.publication = True
 
 config.section_("Site")
 config.Site.storageSite = "T2_US_MIT"
-#config.Site.whitelist = ["T2_US_MIT"]
+config.Site.whitelist = ["T2_US_MIT"]
 
 #config.section_("Debug")
 #config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
