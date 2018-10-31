@@ -1,28 +1,39 @@
 #!/bin/bash
 
-# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=15
-# software : CMSSW_10_3_0_pre5
-# L1 tag : no L1 tag for CMSSW_10_3_0_pre5 yet
+# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=47#Instructions_as_of_2018_10_26_in
+## obsolete instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26
+# software : CMSSW_10_3_0
+# no L1 tag
 
 ## Download the L1T Calo calibration and LUT files via
 # git clone https://github.com/cms-l1t-offline/L1Trigger-L1TCalorimeter.git L1Trigger/L1TCalorimeter/data
 
+## All settings for L1 EGs are taken from L1TSettingsToCaloParams_2018_v1_4
+# https://github.com/cms-sw/cmssw/blob/master/L1Trigger/L1TCalorimeter/python/caloParams_2018_v1_4_cfi.py#L22-L36
+# obsolete instructions for L1 EG : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT#How_to_run_L1_EGs
+
 runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
-inputFile="/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FEB4B973-66AB-E811-8D5F-00010100097F.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCC55639-81AB-E811-BC64-0242AC1C0501.root,/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FCE2A01E-71AB-E811-822C-D4856445E5A4.root"
+## sample with DIGI earlier than 103Xpre4
+#inputFile="root://xrootd.cmsaf.mit.edu//store/user/clindsey/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/RAWSIM_20180630/180630_163544/0000/step1_DIGI_L1_DIGI2RAW_HLT_PU_1.root"
+## sample with DIGI made with or after 103Xpre4, but with GT 103X_upgrade2018_realistic_HI_v4
+##inputFile="/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root"
+## sample with DIGI made with 10_3_0 and GT 103X_upgrade2018_realistic_HI_v7
+inputFile="/store/user/katatar/HIRun2018PbPb/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/HINPbPbSpring18GS_103X_upgrade2018_realistic_HI_v7_DIGI_L1_DIGI2RAW_HLT_PU/181027_093754/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_574.root,/store/user/katatar/HIRun2018PbPb/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/HINPbPbSpring18GS_103X_upgrade2018_realistic_HI_v7_DIGI_L1_DIGI2RAW_HLT_PU/181027_093754/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_572.root,/store/user/katatar/HIRun2018PbPb/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/HINPbPbSpring18GS_103X_upgrade2018_realistic_HI_v7_DIGI_L1_DIGI2RAW_HLT_PU/181027_093754/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_542.root,/store/user/katatar/HIRun2018PbPb/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/HINPbPbSpring18GS_103X_upgrade2018_realistic_HI_v7_DIGI_L1_DIGI2RAW_HLT_PU/181027_093754/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_406.root,/store/user/katatar/HIRun2018PbPb/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/HINPbPbSpring18GS_103X_upgrade2018_realistic_HI_v7_DIGI_L1_DIGI2RAW_HLT_PU/181027_093754/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_16.root"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V57"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V70"
 configFile="hltConfig.py"
-GLOBALTAG="auto:run2_mc_GRun"
-SETUP="/dev/CMSSW_10_1_0/GRun"
+GLOBALTAG="103X_upgrade2018_realistic_HI_v7"
+SETUP="/dev/CMSSW_10_3_0/GRun"
 PROCESS="MyHLT"
 nEvents="500"
 DATAMC="--mc"
-CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
+CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
 L1EMU="--l1-emulator FullMC"
+## L1 menu v4 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5380/2/1/1.html
+L1XML="L1Menu_CollisionsHeavyIons2018_v4.xml"
 ## L1 menu v3 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5290.html
 #L1XML="L1Menu_CollisionsHeavyIons2018_v3.xml"
-L1XML="L1Menu_CollisionsHeavyIons2018_v3_rmAsyCent.xml"
 
 isXeXeData=0
 if [ $isXeXeData -gt 0 ]; then
@@ -30,19 +41,55 @@ if [ $isXeXeData -gt 0 ]; then
   GLOBALTAG="auto:run2_data_GRun"
   nEvents="500"
   DATAMC="--data"
-  CUSTOMISE="--customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseFor2017DtUnpacking,FWCore/ParameterSet/MassReplace.massReplaceInputTag,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
+  CUSTOMISE="--customise FWCore/ParameterSet/MassReplace.massReplaceInputTag,L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
   L1EMU="--l1-emulator Full"
 fi
 
-## https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26#Testing_new_paths_with_PbPb_MC
+## https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=47#Instructions_as_of_2018_10_26_in
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
---full --offline $DATAMC --unprescale $L1EMU $CUSTOMISE --l1Xml $L1XML \
+--full --offline $DATAMC --unprescale $L1EMU --l1Xml $L1XML $CUSTOMISE \
 --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
-## L1TSettingsToCaloParams_2018_v1_4 is now available in CMSSW_10_3_0_pre5
-## settings for L1 EG : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT#How_to_run_L1_EGs
-echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $configFile  # ignore all the EGs with ieta > 24
+#beamspot customization
+echo "" >> $configFile
+echo "import CalibTracker.Configuration.Common.PoolDBESSource_cfi" >> $configFile
+echo "process.newBS = CalibTracker.Configuration.Common.PoolDBESSource_cfi.poolDBESSource.clone(connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), toGet = cms.VPSet(cms.PSet(record = cms.string('BeamSpotObjectsRcd'), tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc'))))" >> $configFile
+echo "process.prefer_PreferNewBS = cms.ESPrefer('PoolDBESSource', 'newBS')" >> $configFile
+
+#muon customization (via Emilien), to be addedonly if working w/ digi/raw from pre4 or earlier
+echo "" >> $configFile
+echo "process.simEmtfDigis.CSCInputBXShift = cms.int32(-6)" >> $configFile
+
+#Jet customization (via Chris)
+echo "" >> $configFile
+echo "process.caloStage2Params.hiMode = cms.uint32(1)" >> $configFile
+#Temporary LUT override until correct LUT is uploaded
+echo "process.caloStage2Params.jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC.txt')" >> $configFile
+
+#EG Spike killer customization (via Chris/Kaya)
+echo "" >> $configFile
+echo "process.simEcalTriggerPrimitiveDigis = cms.EDProducer('EcalTrigPrimProducer', BarrelOnly = cms.bool(False), Debug = cms.bool(False), Famos = cms.bool(False), InstanceEB = cms.string('ebDigis'), InstanceEE = cms.string('eeDigis'), Label = cms.string('unpackEcal'), TcpOutput = cms.bool(False), binOfMaximum = cms.int32(6))" >> $configFile
+echo "" >> $configFile
+echo "process.simCaloStage2Layer1Digis.ecalToken = cms.InputTag('simEcalTriggerPrimitiveDigis')" >> $configFile
+echo "" >> $configFile
+echo "process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+process.simEcalTriggerPrimitiveDigis+((process.simCaloStage2Layer1Digis+process.simCaloStage2Digis)+((process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis)+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis)+(process.simGtExtFakeStage2Digis)+process.SimL1TGlobal)+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)" >> $configFile
+strGTtoGet1="cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'), tag = cms.string('EcalTPGFineGrainStrip_12'), connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')), cms.PSet(record = cms.string('EcalTPGSpikeRcd'), tag = cms.string('EcalTPGSpike_12'), connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS'))"
+strGTtoGet=$strGTtoGet1
+
+#Fix for hcal electroics map running on old digi
+#believe this is related to issues running pre5 reco on digi from pre4 or earlier
+#see twiki here: https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtRecoValidation2018#Starting_from_other_CMSSW_10_3_p
+#DO NOT DO THE NEXT TWO LINES IF YOUR RAW/DIGI is 1030pre5 OR LATER
+#strGTtoGet2="cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4'))" #IF YOU FAIL PROCESSING RAW/DIGI 1030pre5 OR LATER THIS IS THE LIKELY CAUSE
+#strGTtoGet=$strGTtoGet1", "$strGTtoGet2
+
+## custom GT for Spike Killer and/or Hcal electronics map
+echo "" >> $configFile
+echo "process.GlobalTag.toGet = cms.VPSet(${strGTtoGet})" >> $configFile
+
+#Remove dQMIO output
+sed -i -e "s@process.DQMOutput @#process.DQMOutput @g" $configFile
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 
