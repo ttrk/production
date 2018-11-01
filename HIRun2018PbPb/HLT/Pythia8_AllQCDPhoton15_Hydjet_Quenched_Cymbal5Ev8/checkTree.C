@@ -1,5 +1,21 @@
 TTree* tree = (TTree*)gFile->Get("hltbitanalysis/HltTree")
 
+tree->GetEntries("L1_SingleEG3_BptxAND > 0")
+tree->GetEntries("L1_SingleEG5_BptxAND > 0")
+tree->GetEntries("L1_SingleEG7_BptxAND > 0")
+tree->GetEntries("L1_SingleEG12_BptxAND > 0")
+tree->GetEntries("L1_SingleEG15_BptxAND > 0")
+tree->GetEntries("L1_SingleEG21_BptxAND > 0")
+tree->GetEntries("L1_SingleEG30_BptxAND > 0")
+
+tree->GetEntries("L1_SingleIsoEG3_BptxAND > 0")
+tree->GetEntries("L1_SingleIsoEG5_BptxAND > 0")
+tree->GetEntries("L1_SingleIsoEG7_BptxAND > 0")
+tree->GetEntries("L1_SingleIsoEG12_BptxAND > 0")
+tree->GetEntries("L1_SingleIsoEG15_BptxAND > 0")
+tree->GetEntries("L1_SingleIsoEG21_BptxAND > 0")
+tree->GetEntries("L1_SingleIsoEG30_BptxAND > 0")
+
 tree->GetEntries("HLT_HIGEDPhoton10_L1Seeded_v1 > 0")
 tree->GetEntries("HLT_HIGEDPhoton15_L1Seeded_v1 > 0")
 tree->GetEntries("HLT_HIGEDPhoton20_L1Seeded_v1 > 0")
