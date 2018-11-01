@@ -19,6 +19,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 ## sample with DIGI made with or after 103Xpre4, but with GT 103X_upgrade2018_realistic_HI_v4
 ##inputFile="/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root"
 ## sample with DIGI made with 10_3_0 and GT 103X_upgrade2018_realistic_HI_v7
+# https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=56#To_be_produced
 inputFile="root://xrootd.cmsaf.mit.edu//store/user/rbi/Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV/crab_Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV_DIGI2RAW_PU_1030_v1/181030_234244/0001/step1_DIGI_L1_DIGI2RAW_HLT_PU_1652.root"
 
 menu="/users/katatar/HI2018PbPb/hltTestEgamma/V70"
