@@ -908,7 +908,7 @@ process.HLTPSetDetachedQuadStepTrajectoryFilterPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(0.9),
+    minPt = cms.double(3.0),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -1077,7 +1077,7 @@ process.HLTPSetDetachedTripletStepTrajectoryFilterPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(0.9),
+    minPt = cms.double(3.0),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -1857,7 +1857,7 @@ process.HLTPSetLowPtTripletStepTrajectoryFilterPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(0.49),
+    minPt = cms.double(2.0),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -2044,7 +2044,7 @@ process.HLTPSetMixedTripletStepTrajectoryFilterPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(0.4),
+    minPt = cms.double(1.0),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -2650,7 +2650,7 @@ process.HLTPSetPixelPairStepTrajectoryFilterPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(0.1),
+    minPt = cms.double(3.5),
     minimumNumberOfHits = cms.int32(4),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -10374,12 +10374,6 @@ process.hltPreHIIslandPhoton60Eta3p1 = cms.EDFilter("HLTPrescaler",
 )
 
 
-process.hltPreHLTAnalyzerEndpath = cms.EDFilter("HLTPrescaler",
-    L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
-    offset = cms.uint32(0)
-)
-
-
 process.hltPrePhoton10 = cms.EDFilter("HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
     offset = cms.uint32(0)
@@ -10431,30 +10425,6 @@ process.hltGetConditions = cms.EDAnalyzer("EventSetupRecordDataGetter",
 
 process.hltGetRaw = cms.EDAnalyzer("HLTGetRaw",
     RawDataCollection = cms.InputTag("rawDataCollector")
-)
-
-
-process.hltL1TGlobalSummary = cms.EDAnalyzer("L1TGlobalSummary",
-    AlgInputTag = cms.InputTag("hltGtStage2Digis"),
-    DumpRecord = cms.bool(False),
-    DumpTrigResults = cms.bool(False),
-    DumpTrigSummary = cms.bool(True),
-    ExtInputTag = cms.InputTag("hltGtStage2Digis"),
-    MaxBx = cms.int32(0),
-    MinBx = cms.int32(0),
-    ReadPrescalesFromFile = cms.bool(False),
-    psColumn = cms.int32(0),
-    psFileName = cms.string('prescale_L1TGlobal.csv')
-)
-
-
-process.hltTrigReport = cms.EDAnalyzer("HLTrigReport",
-    HLTriggerResults = cms.InputTag("TriggerResults","","@currentProcess"),
-    ReferencePath = cms.untracked.string('HLTriggerFinalPath'),
-    ReferenceRate = cms.untracked.double(100.0),
-    reportBy = cms.untracked.string('job'),
-    resetBy = cms.untracked.string('never'),
-    serviceBy = cms.untracked.string('never')
 )
 
 
@@ -10576,28 +10546,29 @@ process.DQMStore = cms.Service("DQMStore",
 
 process.FastTimerService = cms.Service("FastTimerService",
     dqmLumiSectionsRange = cms.untracked.uint32(2500),
-    dqmMemoryRange = cms.untracked.double(1000000.0),
-    dqmMemoryResolution = cms.untracked.double(5000.0),
-    dqmModuleMemoryRange = cms.untracked.double(100000.0),
-    dqmModuleMemoryResolution = cms.untracked.double(500.0),
-    dqmModuleTimeRange = cms.untracked.double(40.0),
-    dqmModuleTimeResolution = cms.untracked.double(0.2),
+    dqmMemoryRange = cms.untracked.double(1000000),
+    dqmMemoryResolution = cms.untracked.double(5000),
+    dqmModuleMemoryRange = cms.untracked.double(100000),
+    dqmModuleMemoryResolution = cms.untracked.double(500),
+    dqmModuleTimeRange = cms.untracked.double(200.0),
+    dqmModuleTimeResolution = cms.untracked.double(1.0),
     dqmPath = cms.untracked.string('HLT/TimerService'),
-    dqmPathMemoryRange = cms.untracked.double(1000000.0),
-    dqmPathMemoryResolution = cms.untracked.double(5000.0),
-    dqmPathTimeRange = cms.untracked.double(100.0),
-    dqmPathTimeResolution = cms.untracked.double(0.5),
+    dqmPathMemoryRange = cms.untracked.double(1000000),
+    dqmPathMemoryResolution = cms.untracked.double(5000),
+    dqmPathTimeRange = cms.untracked.double(1000.0),
+    dqmPathTimeResolution = cms.untracked.double(5.0),
     dqmTimeRange = cms.untracked.double(2000.0),
-    dqmTimeResolution = cms.untracked.double(5.0),
+    dqmTimeResolution = cms.untracked.double(10.0),
     enableDQM = cms.untracked.bool(True),
     enableDQMTransitions = cms.untracked.bool(False),
     enableDQMbyLumiSection = cms.untracked.bool(True),
-    enableDQMbyModule = cms.untracked.bool(False),
-    enableDQMbyPath = cms.untracked.bool(False),
-    enableDQMbyProcesses = cms.untracked.bool(True),
+    enableDQMbyModule = cms.untracked.bool(True),
+    enableDQMbyPath = cms.untracked.bool(True),
+    enableDQMbyProcesses = cms.untracked.bool(False),
+    highlightModules = cms.untracked.VPSet(),
     printEventSummary = cms.untracked.bool(False),
     printJobSummary = cms.untracked.bool(True),
-    printRunSummary = cms.untracked.bool(True)
+    printRunSummary = cms.untracked.bool(False)
 )
 
 
@@ -14932,9 +14903,6 @@ process.HLT_HIGEDPhoton30_EB_Cent50_100_v1 = cms.Path(process.SimL1Emulator+proc
 
 
 process.HLT_HIGEDPhoton40_EB_Cent50_100_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21Cent50100BptxAND+process.hltPreHIGEDPhoton40EBCent50100+process.HLTHIGEDPhoton40EBPPOnAASequence+process.HLTEndSequenceWithZeroSuppression)
-
-
-process.HLTAnalyzerEndpath = cms.EndPath(process.SimL1Emulator+process.hltGtStage2Digis+process.hltPreHLTAnalyzerEndpath+process.hltL1TGlobalSummary+process.hltTrigReport)
 
 
 process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)

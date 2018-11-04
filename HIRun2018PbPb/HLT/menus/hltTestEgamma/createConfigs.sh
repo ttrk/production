@@ -49,7 +49,7 @@ fi
 ## https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=47#Instructions_as_of_2018_10_26_in
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
 --full --offline $DATAMC --unprescale $L1EMU --l1Xml $L1XML $CUSTOMISE \
---max-events $nEvents > $configFile
+--timing --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 #beamspot customization
