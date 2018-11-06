@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step3 --mc --eventcontent AODSIM --datatier GEN-SIM-RECO --conditions 103X_upgrade2018_realistic_HI_v7 --step RAW2DIGI,L1Reco,RECO --geometry DB:Extended --era Run2_2018_pp_on_AA --filein file:step2_DIGI_L1_DIGI2RAW_HLT_PU.root --fileout file:step3_RAW2DIGI_L1Reco_RECO.root -n 50 --no_exec --python_filename step3_RAW2DIGI_L1Reco_RECO.py
+# with command line options: step3 --mc --eventcontent AODSIM --datatier GEN-SIM-RECO --conditions 103X_upgrade2018_realistic_HI_v7 --step RAW2DIGI,L1Reco,RECO --geometry DB:Extended --era Run2_2018_pp_on_AA --filein file:/afs/cern.ch/work/k/katatar/public/EGamma/CMSSW_10_3_0/src/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/step2_DIGI_L1_DIGI2RAW_HLT_PU.root --fileout file:step3_RAW2DIGI_L1Reco_RECO.root -n 50 --no_exec --python_filename step3_RAW2DIGI_L1Reco_RECO.py
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -29,7 +29,7 @@ process.maxEvents = cms.untracked.PSet(
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:step2_DIGI_L1_DIGI2RAW_HLT_PU.root'),
+    fileNames = cms.untracked.vstring('file:/afs/cern.ch/work/k/katatar/public/EGamma/CMSSW_10_3_0/src/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/step2_DIGI_L1_DIGI2RAW_HLT_PU.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 

@@ -12,7 +12,7 @@ config.JobType.psetName = "step3_RAW2DIGI_L1Reco_RECO.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 
-## software : CMSSW_10_3_0
+## software : CMSSW_10_3_1
 
 config.section_("Data")
 config.Data.inputDataset = "/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/katatar-HINPbPbSpring18GS_103X_upgrade2018_realistic_HI_v7_DIGI_L1_DIGI2RAW_HLT_PU-1c389861083a146d75ac332e7b4016f6/USER"

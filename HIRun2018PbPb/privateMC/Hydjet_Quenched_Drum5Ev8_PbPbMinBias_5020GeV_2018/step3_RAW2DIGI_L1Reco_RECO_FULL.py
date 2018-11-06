@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("RECO")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:step2_DIGI_L1_DIGI2RAW_HLT_PU.root'),
+    fileNames = cms.untracked.vstring('file:/afs/cern.ch/work/k/katatar/public/EGamma/CMSSW_10_3_0/src/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/step2_DIGI_L1_DIGI2RAW_HLT_PU.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 process.AODEventContent = cms.PSet(
@@ -24650,15 +24650,6 @@ process.PixelLayerTriplets = cms.EDProducer("SeedingLayersEDProducer",
 )
 
 
-process.RPCTwinMuxRawToDigi = cms.EDProducer("RPCTwinMuxRawToDigi",
-    bxMax = cms.int32(2),
-    bxMin = cms.int32(-2),
-    calculateCRC = cms.bool(True),
-    fillCounters = cms.bool(True),
-    inputTag = cms.InputTag("rawDataCollector")
-)
-
-
 process.RecoTauCleaner = cms.EDProducer("RecoTauCleaner",
     cleaners = cms.VPSet(
         cms.PSet(
@@ -45116,7 +45107,7 @@ process.hiCentrality = cms.EDProducer("CentralityProducer",
     produceEcalhits = cms.bool(True),
     produceHFhits = cms.bool(True),
     produceHFtowers = cms.bool(True),
-    producePixelTracks = cms.bool(False),
+    producePixelTracks = cms.bool(True),
     producePixelhits = cms.bool(True),
     produceTracks = cms.bool(True),
     produceZDChits = cms.bool(True),
@@ -45124,7 +45115,7 @@ process.hiCentrality = cms.EDProducer("CentralityProducer",
     srcEBhits = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
     srcEEhits = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
     srcHFhits = cms.InputTag("hfreco"),
-    srcPixelTracks = cms.InputTag("hiPixel3PrimTracks"),
+    srcPixelTracks = cms.InputTag("hiConformalPixelTracks"),
     srcPixelhits = cms.InputTag("siPixelRecHits"),
     srcReUse = cms.InputTag("hiCentrality"),
     srcTowers = cms.InputTag("towerMaker"),
@@ -53686,6 +53677,7 @@ process.logErrorHarvester = cms.EDProducer("LogErrorHarvester",
         'earlyMuons', 
         'electronMergedSeeds', 
         'initialStep', 
+        'rpcNewRecHits', 
         'egmElectronIsolationCITK', 
         'uncleanedOnlyElectronGsfTracks', 
         'preDuplicateMergingDisplacedTracks', 
@@ -53827,7 +53819,7 @@ process.logErrorHarvester = cms.EDProducer("LogErrorHarvester",
         'glbTrackQual', 
         'muonSeededSeedsOutIn', 
         'muidTMLastStationTight', 
-        'generalConversionStepConversionTrackMerger', 
+        'uncleanedOnlyPfTrackElec', 
         'muonSeededTracksOutInDisplaced', 
         'uncleanedOnlyElectronSeeds', 
         'muPFIsoValueNeutral04', 
@@ -53909,7 +53901,7 @@ process.logErrorHarvester = cms.EDProducer("LogErrorHarvester",
         'ootPhotonHcalPFClusterIsolationProducer', 
         'interestingGedEleIsoDetIdEE', 
         'dedxPixelAndStripHarmonic2T085', 
-        'uncleanedOnlyPfTrackElec', 
+        'generalConversionStepConversionTrackMerger', 
         'siPixelClusterShapeCachePreSplitting', 
         'generalConversionTrackProducer', 
         'initialStepTrackRefsForJets', 
@@ -54280,6 +54272,7 @@ process.logErrorHarvester = cms.EDProducer("LogErrorHarvester",
         'dedxHitInfo', 
         'electronMergedSeeds', 
         'initialStep', 
+        'rpcNewRecHits', 
         'hfRecoEcalCandidate', 
         'egmElectronIsolationCITK', 
         'uncleanedOnlyElectronGsfTracks', 
@@ -58066,6 +58059,13 @@ process.muonMETValueMapProducer = cms.EDProducer("MuonMETValueMapProducer",
 process.muonRPCDigis = cms.EDProducer("RPCUnpackingModule",
     InputLabel = cms.InputTag("rawDataCollector"),
     doSynchro = cms.bool(True)
+)
+
+
+process.muonRPCNewDigis = cms.EDProducer("RPCDigiMerger",
+    inputTagCPPFDigis = cms.InputTag("rpcCPPFRawToDigi"),
+    inputTagOMTFDigis = cms.InputTag("omtfStage2Digis"),
+    inputTagTwinMuxDigis = cms.InputTag("rpcTwinMuxRawToDigi")
 )
 
 
@@ -69257,6 +69257,32 @@ process.regionalCosmicTracks = cms.EDProducer("TrackProducer",
 )
 
 
+process.rpcCPPFRawToDigi = cms.EDProducer("RPCAMCRawToDigi",
+    RPCAMCUnpacker = cms.string('RPCCPPFUnpacker'),
+    RPCAMCUnpackerSettings = cms.PSet(
+        bxMax = cms.int32(2),
+        bxMin = cms.int32(-2),
+        fillAMCCounters = cms.bool(True)
+    ),
+    calculateCRC = cms.bool(True),
+    fillCounters = cms.bool(True),
+    inputTag = cms.InputTag("rawDataCollector")
+)
+
+
+process.rpcNewRecHits = cms.EDProducer("RPCRecHitProducer",
+    deadSource = cms.string('File'),
+    deadvecfile = cms.FileInPath('RecoLocalMuon/RPCRecHit/data/RPCDeadVec.dat'),
+    maskSource = cms.string('File'),
+    maskvecfile = cms.FileInPath('RecoLocalMuon/RPCRecHit/data/RPCMaskVec.dat'),
+    recAlgo = cms.string('RPCRecHitStandardAlgo'),
+    recAlgoConfig = cms.PSet(
+
+    ),
+    rpcDigiLabel = cms.InputTag("muonRPCNewDigis")
+)
+
+
 process.rpcRecHits = cms.EDProducer("RPCRecHitProducer",
     deadSource = cms.string('File'),
     deadvecfile = cms.FileInPath('RecoLocalMuon/RPCRecHit/data/RPCDeadVec.dat'),
@@ -69267,6 +69293,15 @@ process.rpcRecHits = cms.EDProducer("RPCRecHitProducer",
 
     ),
     rpcDigiLabel = cms.InputTag("muonRPCDigis")
+)
+
+
+process.rpcTwinMuxRawToDigi = cms.EDProducer("RPCTwinMuxRawToDigi",
+    bxMax = cms.int32(2),
+    bxMin = cms.int32(-2),
+    calculateCRC = cms.bool(True),
+    fillCounters = cms.bool(True),
+    inputTag = cms.InputTag("rawDataCollector")
 )
 
 
@@ -82563,7 +82598,7 @@ process.uncleanedOnlyPfTracking = cms.Sequence(process.uncleanedOnlyPfTrackingTa
 process.L1TRawToDigi_Stage1 = cms.Sequence(process.csctfDigis+process.dttfDigis+process.gtDigis+process.caloStage1Digis+process.caloStage1FinalDigis+process.caloStage1LegacyFormatDigis+process.gctDigis)
 
 
-process.L1TRawToDigi_Stage2 = cms.Sequence(process.RPCTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.emtfStage2Digis+process.caloLayer1Digis+process.caloStage2Digis+process.gmtStage2Digis+process.gtStage2Digis)
+process.L1TRawToDigi_Stage2 = cms.Sequence(process.rpcTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.rpcCPPFRawToDigi+process.emtfStage2Digis+process.caloLayer1Digis+process.caloStage2Digis+process.gmtStage2Digis+process.gtStage2Digis)
 
 
 process.gsfEcalDrivenElectronSequence = cms.Sequence(process.gsfEcalDrivenElectronTask)
@@ -82791,7 +82826,7 @@ process.caloglobalreco = cms.Sequence(process.hcalGlobalRecoSequence)
 process.muoncosmicreco2legsHighLevel = cms.Sequence(process.muoncosmicreco2legsHighLevelTask)
 
 
-process.muonlocalreco = cms.Sequence(process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.gemLocalReco)
+process.muonlocalreco = cms.Sequence(process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.gemLocalReco+process.rpcNewRecHits)
 
 
 process.displacedGlobalMuonTracking = cms.Sequence(process.displacedGlobalMuonTrackingTask)
@@ -83073,7 +83108,7 @@ process.egammareco_withElectronID = cms.Sequence(process.egammareco+process.eIdS
 process.pfElectronTranslatorSequence = cms.Sequence(process.pfBasedElectronPhotonIsoSequence+process.pfElectronTranslator+process.pfElectronInterestingEcalDetIdEB+process.pfElectronInterestingEcalDetIdEE)
 
 
-process.muonlocalreco_with_2DSegments = cms.Sequence(process.dtlocalreco_with_2DSegments+process.csclocalreco+process.rpcRecHits)
+process.muonlocalreco_with_2DSegments = cms.Sequence(process.dtlocalreco_with_2DSegments+process.csclocalreco+process.rpcRecHits+process.rpcNewRecHits)
 
 
 process.ckftracks_woBH = cms.Sequence(process.iterTracking+process.electronSeedsSeq+process.doAlldEdXEstimators)
@@ -83088,7 +83123,7 @@ process.egammareco_withIsolation_woConvPhotons = cms.Sequence(process.egammareco
 process.ecalClustersNoPFBox = cms.Sequence(process.hybridClusteringSequence+process.multi5x5ClusteringSequence+process.multi5x5PreshowerClusteringSequence)
 
 
-process.RawToDigi = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi)
+process.RawToDigi = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi+process.muonRPCNewDigis)
 
 
 process.reconstruction_pixelTrackingOnly = cms.Sequence(process.pixeltrackerlocalreco+process.offlineBeamSpot+process.siPixelClusterShapeCachePreSplitting+process.recopixelvertexing)
@@ -83124,7 +83159,7 @@ process.reducedRecHits = cms.Sequence(process.reducedEcalRecHitsSequence+process
 process.calolocalrecoNZS = cms.Sequence(process.ecalLocalRecoSequence+process.hcalLocalRecoSequence+process.hcalLocalRecoSequenceNZS)
 
 
-process.RawToDigi_noTk = cms.Sequence(process.L1TRawToDigi+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.ctppsRawToDigi)
+process.RawToDigi_noTk = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi+process.muonRPCNewDigis)
 
 
 process.egammaHighLevelRecoPostPF = cms.Sequence(process.interestingEgammaIsoDetIds+process.egmIsolationSequence+process.photonIDSequence+process.photonIDSequenceGED+process.eIdSequence+process.hfEMClusteringSequence+process.photonIsolationHIProducerpp+process.photonIsolationHIProducerppGED+process.photonIsolationHIProducerppIsland)
@@ -83169,7 +83204,7 @@ process.ecalClusters = cms.Sequence(process.ecalClustersNoPFBox+process.particle
 process.jetHighLevelReco = cms.Sequence(process.recoPFJetsHI+process.jetCorrectorsForReco+process.recoJetAssociations)
 
 
-process.reconstruction_fromRECO_noTrackingTest = cms.Sequence(process.bunchSpacingProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.gemSegments+process.hfprereco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.trackExtrapolator+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.egammaGlobalReco+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metreco+process.btagging+process.recoPFMET+process.reducedHcalRecHitsSequence+process.cosmicDCTracksSeq+process.hiCentrality+process.hiClusterCompatibility+process.hiConformalPixelTracksSequencePhase1+process.logErrorHarvester, cms.Task(process.interestingEcalDetIdEB, process.interestingEcalDetIdEBU, process.interestingEcalDetIdEE, process.interestingEcalDetIdPFEB, process.interestingEcalDetIdPFEE, process.interestingEcalDetIdPFES, process.interestingEcalDetIdRefinedEB, process.interestingEcalDetIdRefinedEE, process.interestingEcalDetIdRefinedES, process.interestingTrackEcalDetIds, process.reducedEcalRecHitsEB, process.reducedEcalRecHitsEE, process.reducedEcalRecHitsES))
+process.reconstruction_fromRECO_noTrackingTest = cms.Sequence(process.bunchSpacingProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.gemSegments+process.rpcNewRecHits+process.hfprereco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.trackExtrapolator+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.egammaGlobalReco+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metreco+process.btagging+process.recoPFMET+process.reducedHcalRecHitsSequence+process.cosmicDCTracksSeq+process.hiConformalPixelTracksSequencePhase1+process.hiCentrality+process.hiClusterCompatibility+process.logErrorHarvester, cms.Task(process.interestingEcalDetIdEB, process.interestingEcalDetIdEBU, process.interestingEcalDetIdEE, process.interestingEcalDetIdPFEB, process.interestingEcalDetIdPFEE, process.interestingEcalDetIdPFES, process.interestingEcalDetIdRefinedEB, process.interestingEcalDetIdRefinedEE, process.interestingEcalDetIdRefinedES, process.interestingTrackEcalDetIds, process.reducedEcalRecHitsEB, process.reducedEcalRecHitsEE, process.reducedEcalRecHitsES))
 
 
 process.trackingGlobalReco = cms.Sequence(process.ckftracks+process.trackExtrapolator)
@@ -83178,10 +83213,10 @@ process.trackingGlobalReco = cms.Sequence(process.ckftracks+process.trackExtrapo
 process.metrecoPlusHCALNoise = cms.Sequence(process.metreco+process.hcalnoise)
 
 
-process.reconstruction_noTracking = cms.Sequence(process.bunchSpacingProducer+process.muonlocalreco+process.calolocalreco+process.castorreco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.trackExtrapolator+process.hcalGlobalRecoSequence+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metrecoPlusHCALNoise+process.btagging+process.recoPFMET+process.reducedRecHits+process.cosmicDCTracksSeq+process.hiCentrality+process.hiClusterCompatibility+process.hiConformalPixelTracksSequencePhase1+process.logErrorHarvester, cms.Task(process.ckfTracksFromConversionsTask, process.conversionStepConversionTrackProducer, process.generalConversionStepConversionTrackMerger, process.inOutConversionTrackProducer, process.inOutOutInConversionTrackMerger, process.outInConversionTrackProducer), cms.Task(process.ecalDrivenGsfElectronCores), cms.Task(process.uncleanedOnlyCkfTracksFromConversionsTask, process.uncleanedOnlyInOutConversionTrackProducer, process.uncleanedOnlyInOutOutInConversionTrackMerger, process.uncleanedOnlyOutInConversionTrackProducer, process.uncleanedOnlyPfConversions))
+process.reconstruction_noTracking = cms.Sequence(process.bunchSpacingProducer+process.muonlocalreco+process.calolocalreco+process.castorreco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.trackExtrapolator+process.hcalGlobalRecoSequence+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metrecoPlusHCALNoise+process.btagging+process.recoPFMET+process.reducedRecHits+process.cosmicDCTracksSeq+process.hiConformalPixelTracksSequencePhase1+process.hiCentrality+process.hiClusterCompatibility+process.logErrorHarvester, cms.Task(process.ckfTracksFromConversionsTask, process.conversionStepConversionTrackProducer, process.generalConversionStepConversionTrackMerger, process.inOutConversionTrackProducer, process.inOutOutInConversionTrackMerger, process.outInConversionTrackProducer), cms.Task(process.ecalDrivenGsfElectronCores), cms.Task(process.uncleanedOnlyCkfTracksFromConversionsTask, process.uncleanedOnlyInOutConversionTrackProducer, process.uncleanedOnlyInOutOutInConversionTrackMerger, process.uncleanedOnlyOutInConversionTrackProducer, process.uncleanedOnlyPfConversions))
 
 
-process.highlevelreco = cms.Sequence((process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metrecoPlusHCALNoise+process.btagging+process.recoPFMET+process.reducedRecHits+process.cosmicDCTracksSeq+process.hiCentrality+process.hiClusterCompatibility)+process.hiConformalPixelTracksSequencePhase1)
+process.highlevelreco = cms.Sequence(process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metrecoPlusHCALNoise+process.btagging+process.recoPFMET+process.reducedRecHits+process.cosmicDCTracksSeq+process.hiConformalPixelTracksSequencePhase1+process.hiCentrality+process.hiClusterCompatibility)
 
 
 process.globalreco_tracking = cms.Sequence(process.offlineBeamSpot+process.MeasurementTrackerEventPreSplitting+process.siPixelClusterShapeCachePreSplitting+process.standalonemuontracking+process.trackingGlobalReco+process.hcalGlobalRecoSequence+process.vertexreco)
@@ -83190,10 +83225,10 @@ process.globalreco_tracking = cms.Sequence(process.offlineBeamSpot+process.Measu
 process.reconstruction_trackingOnly = cms.Sequence(process.localreco+process.globalreco_tracking)
 
 
-process.reconstruction_fromRECO = cms.Sequence(process.bunchSpacingProducer+process.siStripMatchedRecHits+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.gemSegments+process.hfprereco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.electronSeedsSeq+process.doAlldEdXEstimators+process.trackExtrapolator+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.egammaGlobalReco+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metreco+process.btagging+process.recoPFMET+process.reducedHcalRecHitsSequence+process.cosmicDCTracksSeq+process.hiCentrality+process.hiClusterCompatibility+process.hiConformalPixelTracksSequencePhase1+process.logErrorHarvester, cms.Task(process.ConvStepTask, process.MeasurementTrackerEvent, process.conversionStepTracks, process.earlyGeneralTracks, process.generalTracksTask, process.initialStepHitQuadrupletsPreSplitting, process.iterTrackingEarlyTask, process.muonSeededStepTask, process.preDuplicateMergingGeneralTracks, process.siPixelClusterShapeCache, process.siPixelRecHits, process.trackerClusterCheck), cms.Task(process.interestingEcalDetIdEB, process.interestingEcalDetIdEBU, process.interestingEcalDetIdEE, process.interestingEcalDetIdPFEB, process.interestingEcalDetIdPFEE, process.interestingEcalDetIdPFES, process.interestingEcalDetIdRefinedEB, process.interestingEcalDetIdRefinedEE, process.interestingEcalDetIdRefinedES, process.interestingTrackEcalDetIds, process.reducedEcalRecHitsEB, process.reducedEcalRecHitsEE, process.reducedEcalRecHitsES))
+process.reconstruction_fromRECO = cms.Sequence(process.bunchSpacingProducer+process.siStripMatchedRecHits+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.gemSegments+process.rpcNewRecHits+process.hfprereco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.electronSeedsSeq+process.doAlldEdXEstimators+process.trackExtrapolator+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.egammaGlobalReco+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metreco+process.btagging+process.recoPFMET+process.reducedHcalRecHitsSequence+process.cosmicDCTracksSeq+process.hiConformalPixelTracksSequencePhase1+process.hiCentrality+process.hiClusterCompatibility+process.logErrorHarvester, cms.Task(process.ConvStepTask, process.MeasurementTrackerEvent, process.conversionStepTracks, process.earlyGeneralTracks, process.generalTracksTask, process.initialStepHitQuadrupletsPreSplitting, process.iterTrackingEarlyTask, process.muonSeededStepTask, process.preDuplicateMergingGeneralTracks, process.siPixelClusterShapeCache, process.siPixelRecHits, process.trackerClusterCheck), cms.Task(process.interestingEcalDetIdEB, process.interestingEcalDetIdEBU, process.interestingEcalDetIdEE, process.interestingEcalDetIdPFEB, process.interestingEcalDetIdPFEE, process.interestingEcalDetIdPFES, process.interestingEcalDetIdRefinedEB, process.interestingEcalDetIdRefinedEE, process.interestingEcalDetIdRefinedES, process.interestingTrackEcalDetIds, process.reducedEcalRecHitsEB, process.reducedEcalRecHitsEE, process.reducedEcalRecHitsES))
 
 
-process.reconstruction_fromRECO_noTracking = cms.Sequence(process.bunchSpacingProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.gemSegments+process.hfprereco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.trackExtrapolator+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metreco+process.btagging+process.recoPFMET+process.reducedHcalRecHitsSequence+process.cosmicDCTracksSeq+process.hiCentrality+process.hiClusterCompatibility+process.hiConformalPixelTracksSequencePhase1+process.logErrorHarvester, cms.Task(process.ckfTracksFromConversionsTask, process.conversionStepConversionTrackProducer, process.generalConversionStepConversionTrackMerger, process.inOutConversionTrackProducer, process.inOutOutInConversionTrackMerger, process.outInConversionTrackProducer), cms.Task(process.ecalDrivenGsfElectronCores), cms.Task(process.interestingEcalDetIdEB, process.interestingEcalDetIdEBU, process.interestingEcalDetIdEE, process.interestingEcalDetIdPFEB, process.interestingEcalDetIdPFEE, process.interestingEcalDetIdPFES, process.interestingEcalDetIdRefinedEB, process.interestingEcalDetIdRefinedEE, process.interestingEcalDetIdRefinedES, process.interestingTrackEcalDetIds, process.reducedEcalRecHitsEB, process.reducedEcalRecHitsEE, process.reducedEcalRecHitsES), cms.Task(process.uncleanedOnlyCkfTracksFromConversionsTask, process.uncleanedOnlyInOutConversionTrackProducer, process.uncleanedOnlyInOutOutInConversionTrackMerger, process.uncleanedOnlyOutInConversionTrackProducer, process.uncleanedOnlyPfConversions))
+process.reconstruction_fromRECO_noTracking = cms.Sequence(process.bunchSpacingProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.gemSegments+process.rpcNewRecHits+process.hfprereco+process.recoCTPPS+process.offlineBeamSpot+process.standalonemuontracking+process.trackExtrapolator+process.vertexreco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.metreco+process.btagging+process.recoPFMET+process.reducedHcalRecHitsSequence+process.cosmicDCTracksSeq+process.hiConformalPixelTracksSequencePhase1+process.hiCentrality+process.hiClusterCompatibility+process.logErrorHarvester, cms.Task(process.ckfTracksFromConversionsTask, process.conversionStepConversionTrackProducer, process.generalConversionStepConversionTrackMerger, process.inOutConversionTrackProducer, process.inOutOutInConversionTrackMerger, process.outInConversionTrackProducer), cms.Task(process.ecalDrivenGsfElectronCores), cms.Task(process.interestingEcalDetIdEB, process.interestingEcalDetIdEBU, process.interestingEcalDetIdEE, process.interestingEcalDetIdPFEB, process.interestingEcalDetIdPFEE, process.interestingEcalDetIdPFES, process.interestingEcalDetIdRefinedEB, process.interestingEcalDetIdRefinedEE, process.interestingEcalDetIdRefinedES, process.interestingTrackEcalDetIds, process.reducedEcalRecHitsEB, process.reducedEcalRecHitsEE, process.reducedEcalRecHitsES), cms.Task(process.uncleanedOnlyCkfTracksFromConversionsTask, process.uncleanedOnlyInOutConversionTrackProducer, process.uncleanedOnlyInOutOutInConversionTrackMerger, process.uncleanedOnlyOutInConversionTrackProducer, process.uncleanedOnlyPfConversions))
 
 
 process.globalreco = cms.Sequence(process.globalreco_tracking+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.egammaGlobalReco+process.jetGlobalReco+process.muonGlobalReco+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco)

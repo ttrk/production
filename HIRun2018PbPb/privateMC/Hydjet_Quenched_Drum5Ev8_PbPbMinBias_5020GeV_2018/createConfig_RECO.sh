@@ -3,9 +3,9 @@
 runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
 # instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=44#Commands_to_generate_private_MC
-# software : CMSSW_10_3_0
+# software : CMSSW_10_3_1
 
-inputFile="file:step2_DIGI_L1_DIGI2RAW_HLT_PU.root"
+inputFile="file:/afs/cern.ch/work/k/katatar/public/EGamma/CMSSW_10_3_0/src/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/step2_DIGI_L1_DIGI2RAW_HLT_PU.root"
 globalTag="103X_upgrade2018_realistic_HI_v7"
 era="Run2_2018_pp_on_AA"
 step="RAW2DIGI,L1Reco,RECO"
