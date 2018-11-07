@@ -1,4 +1,4 @@
-# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V72 --globaltag 103X_upgrade2018_realistic_HI_v7 --input root://xrootd.cmsaf.mit.edu//store/user/rbi/Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV/crab_Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV_DIGI2RAW_PU_1030_v1/181030_234244/0001/step1_DIGI_L1_DIGI2RAW_HLT_PU_1652.root --setup /dev/CMSSW_10_3_0/GRun --process MyHLT --full --offline --mc --unprescale --l1-emulator FullMC --l1Xml L1Menu_CollisionsHeavyIons2018_v4.xml --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --timing --max-events 100
+# hltGetConfiguration /users/katatar/HI2018PbPb/hltTestEgamma/V72 --globaltag 103X_upgrade2018_realistic_HI_v7 --input root://xrootd.cmsaf.mit.edu//store/user/rbi/Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV/crab_Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV_DIGI2RAW_PU_1030_v1/181030_234244/0001/step1_DIGI_L1_DIGI2RAW_HLT_PU_1652.root --setup /dev/CMSSW_10_3_0/GRun --process MyHLT --full --offline --mc --no-output --unprescale --l1-emulator FullMC --l1Xml L1Menu_CollisionsHeavyIons2018_v4.xml --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4 --timing --max-events 100
 
 # /users/katatar/HI2018PbPb/hltTestEgamma/V72 (CMSSW_10_3_0)
 
@@ -4524,10 +4524,7 @@ import CalibTracker.Configuration.Common.PoolDBESSource_cfi
 process.newBS = CalibTracker.Configuration.Common.PoolDBESSource_cfi.poolDBESSource.clone(connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), toGet = cms.VPSet(cms.PSet(record = cms.string('BeamSpotObjectsRcd'), tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc'))))
 process.prefer_PreferNewBS = cms.ESPrefer('PoolDBESSource', 'newBS')
 
-process.simEmtfDigis.CSCInputBXShift = cms.int32(-6)
-
 process.caloStage2Params.hiMode = cms.uint32(1)
-process.caloStage2Params.jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC.txt')
 
 process.simEcalTriggerPrimitiveDigis = cms.EDProducer('EcalTrigPrimProducer', BarrelOnly = cms.bool(False), Debug = cms.bool(False), Famos = cms.bool(False), InstanceEB = cms.string('ebDigis'), InstanceEE = cms.string('eeDigis'), Label = cms.string('unpackEcal'), TcpOutput = cms.bool(False), binOfMaximum = cms.int32(6))
 
@@ -4543,11 +4540,9 @@ process.hltbitanalysis.HLTProcessName = cms.string("MyHLT")
 process.hltbitanalysis.hltresults = cms.InputTag("TriggerResults", "", "MyHLT")
 process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis", "", "MyHLT")
 process.hltbitanalysis.UseTFileService = cms.untracked.bool(True)
-process.hltbitanalysis.RunParameters = cms.PSet(
-   isData = cms.untracked.bool(True))
+process.hltbitanalysis.RunParameters = cms.PSet(isData = cms.untracked.bool(True))
 process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)
-process.TFileService = cms.Service("TFileService",
-   fileName=cms.string("openHLT.root"))
+process.TFileService = cms.Service("TFileService", fileName=cms.string("openHLT.root"))
 process.load("HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi")
 process.hltobject.processName = cms.string("MyHLT")
 process.hltobject.triggerResults = cms.InputTag("TriggerResults", "", "MyHLT")

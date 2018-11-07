@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=47#Instructions_as_of_2018_10_26_in
+# instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=79#Instructions%20as%20of%202018.11.02%20in
 ## obsolete instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2018HLT?rev=26
-# software : CMSSW_10_3_0
+# software : CMSSW_10_3_1
 # no L1 tag
 
 ## Download the L1T Calo calibration and LUT files via
@@ -48,7 +48,7 @@ fi
 
 ## https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=47#Instructions_as_of_2018_10_26_in
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
---full --offline $DATAMC --unprescale $L1EMU --l1Xml $L1XML $CUSTOMISE \
+--full --offline $DATAMC --no-output --unprescale $L1EMU --l1Xml $L1XML $CUSTOMISE \
 --timing --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
@@ -58,15 +58,9 @@ echo "import CalibTracker.Configuration.Common.PoolDBESSource_cfi" >> $configFil
 echo "process.newBS = CalibTracker.Configuration.Common.PoolDBESSource_cfi.poolDBESSource.clone(connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), toGet = cms.VPSet(cms.PSet(record = cms.string('BeamSpotObjectsRcd'), tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc'))))" >> $configFile
 echo "process.prefer_PreferNewBS = cms.ESPrefer('PoolDBESSource', 'newBS')" >> $configFile
 
-#muon customization (via Emilien), to be addedonly if working w/ digi/raw from pre4 or earlier
-echo "" >> $configFile
-echo "process.simEmtfDigis.CSCInputBXShift = cms.int32(-6)" >> $configFile
-
 #Jet customization (via Chris)
 echo "" >> $configFile
 echo "process.caloStage2Params.hiMode = cms.uint32(1)" >> $configFile
-#Temporary LUT override until correct LUT is uploaded
-echo "process.caloStage2Params.jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC.txt')" >> $configFile
 
 #EG Spike killer customization (via Chris/Kaya)
 echo "" >> $configFile
@@ -78,18 +72,11 @@ echo "process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+pr
 strGTtoGet1="cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'), tag = cms.string('EcalTPGFineGrainStrip_12'), connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')), cms.PSet(record = cms.string('EcalTPGSpikeRcd'), tag = cms.string('EcalTPGSpike_12'), connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS'))"
 strGTtoGet=$strGTtoGet1
 
-#Fix for hcal electroics map running on old digi
-#believe this is related to issues running pre5 reco on digi from pre4 or earlier
-#see twiki here: https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtRecoValidation2018#Starting_from_other_CMSSW_10_3_p
-#DO NOT DO THE NEXT TWO LINES IF YOUR RAW/DIGI is 1030pre5 OR LATER
-#strGTtoGet2="cms.PSet(record = cms.string('HcalElectronicsMapRcd'), tag = cms.string('HcalElectronicsMap_2018_v3.0_mc'), connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'), globaltag=cms.string('103X_upgrade2018_realistic_v4'))" #IF YOU FAIL PROCESSING RAW/DIGI 1030pre5 OR LATER THIS IS THE LIKELY CAUSE
-#strGTtoGet=$strGTtoGet1", "$strGTtoGet2
-
 ## custom GT for Spike Killer and/or Hcal electronics map
 echo "" >> $configFile
 echo "process.GlobalTag.toGet = cms.VPSet(${strGTtoGet})" >> $configFile
 
-#Remove dQMIO output
+#Remove DQMIO output
 sed -i -e "s@process.DQMOutput @#process.DQMOutput @g" $configFile
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
@@ -124,11 +111,9 @@ echo 'process.hltbitanalysis.HLTProcessName = cms.string("'${PROCESS}'")' >> $co
 echo 'process.hltbitanalysis.hltresults = cms.InputTag("TriggerResults", "", "'${PROCESS}'")' >> $configFile
 echo 'process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis", "", "'${PROCESS}'")' >> $configFile
 echo 'process.hltbitanalysis.UseTFileService = cms.untracked.bool(True)' >> $configFile
-echo 'process.hltbitanalysis.RunParameters = cms.PSet(' >> $configFile
-echo '   isData = cms.untracked.bool(True))' >> $configFile
+echo 'process.hltbitanalysis.RunParameters = cms.PSet(isData = cms.untracked.bool(True))' >> $configFile
 echo 'process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)' >> $configFile
-echo 'process.TFileService = cms.Service("TFileService",' >> $configFile
-echo '   fileName=cms.string("openHLT.root"))' >> $configFile
+echo 'process.TFileService = cms.Service("TFileService", fileName=cms.string("openHLT.root"))' >> $configFile
 
 # Add hltobject
 echo 'process.load("HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi")' >> $configFile
