@@ -22,7 +22,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 # https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=56#To_be_produced
 inputFile="root://xrootd.cmsaf.mit.edu//store/user/rbi/Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV/crab_Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV_DIGI2RAW_PU_1030_v1/181030_234244/0001/step1_DIGI_L1_DIGI2RAW_HLT_PU_1652.root"
 
-menu="/users/katatar/HI2018PbPb/hltTestEgamma/V72"
+menu="/users/katatar/HI2018PbPb/hltTestEgamma/V73"
 configFile="hltConfig.py"
 GLOBALTAG="103X_upgrade2018_realistic_HI_v7"
 SETUP="/dev/CMSSW_10_3_0/GRun"
@@ -184,6 +184,12 @@ echo 'process.hltobject.triggerNames = cms.vstring(
 "HLT_HIIslandPhoton40_Eta3p1",
 "HLT_HIIslandPhoton50_Eta3p1",
 "HLT_HIIslandPhoton60_Eta3p1",
+"HLT_HIIslandPhoton10_Eta2p4",
+"HLT_HIIslandPhoton20_Eta2p4",
+"HLT_HIIslandPhoton30_Eta2p4",
+"HLT_HIIslandPhoton40_Eta2p4",
+"HLT_HIIslandPhoton50_Eta2p4",
+"HLT_HIIslandPhoton60_Eta2p4",
 "HLT_HIIslandPhoton10_Eta1p5",
 "HLT_HIIslandPhoton15_Eta1p5",
 "HLT_HIIslandPhoton20_Eta1p5",
