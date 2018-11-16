@@ -7,7 +7,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("RAW2DIGI")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('/store/user/mnguyen/AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/Pythia8_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8/crab_AllQCDPhoton30_Hydjet_Quenched_Cymbal5Ev8_5020GeV_DIGI2RAW_103X_upgrade2018_realistic_HI_v4/181013_203555/0000/step1_private_DIGI_L1_DIGI2RAW_HLT_PU_99.root'),
+    fileNames = cms.untracked.vstring('root://xrootd.cmsaf.mit.edu//store/user/rbi/Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV/crab_Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV_DIGI2RAW_PU_1030_v1/181030_234244/0001/step1_DIGI_L1_DIGI2RAW_HLT_PU_1652.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 process.AODEventContent = cms.PSet(
@@ -16446,15 +16446,6 @@ process.MEtoEDMConverter = cms.EDProducer("MEtoEDMConverter",
 )
 
 
-process.RPCTwinMuxRawToDigi = cms.EDProducer("RPCTwinMuxRawToDigi",
-    bxMax = cms.int32(2),
-    bxMin = cms.int32(-2),
-    calculateCRC = cms.bool(True),
-    fillCounters = cms.bool(True),
-    inputTag = cms.InputTag("rawDataCollector")
-)
-
-
 process.bmtfDigis = cms.EDProducer("L1TRawToDigi",
     FWId = cms.uint32(1),
     FedIds = cms.vint32(1376, 1377),
@@ -17783,6 +17774,13 @@ process.muonRPCDigis = cms.EDProducer("RPCUnpackingModule",
 )
 
 
+process.muonRPCNewDigis = cms.EDProducer("RPCDigiMerger",
+    inputTagCPPFDigis = cms.InputTag("rpcCPPFRawToDigi"),
+    inputTagOMTFDigis = cms.InputTag("omtfStage2Digis"),
+    inputTagTwinMuxDigis = cms.InputTag("rpcTwinMuxRawToDigi")
+)
+
+
 process.omtfStage2Digis = cms.EDProducer("OmtfUnpacker",
     inputLabel = cms.InputTag("rawDataCollector"),
     skipRpc = cms.bool(False)
@@ -17800,6 +17798,28 @@ process.onlineMetaDataRawToDigi = cms.EDProducer("OnlineMetaDataRawToDigi",
 
 
 process.randomEngineStateProducer = cms.EDProducer("RandomEngineStateProducer")
+
+
+process.rpcCPPFRawToDigi = cms.EDProducer("RPCAMCRawToDigi",
+    RPCAMCUnpacker = cms.string('RPCCPPFUnpacker'),
+    RPCAMCUnpackerSettings = cms.PSet(
+        bxMax = cms.int32(2),
+        bxMin = cms.int32(-2),
+        fillAMCCounters = cms.bool(True)
+    ),
+    calculateCRC = cms.bool(True),
+    fillCounters = cms.bool(True),
+    inputTag = cms.InputTag("rawDataCollector")
+)
+
+
+process.rpcTwinMuxRawToDigi = cms.EDProducer("RPCTwinMuxRawToDigi",
+    bxMax = cms.int32(2),
+    bxMin = cms.int32(-2),
+    calculateCRC = cms.bool(True),
+    fillCounters = cms.bool(True),
+    inputTag = cms.InputTag("rawDataCollector")
+)
 
 
 process.scalersRawToDigi = cms.EDProducer("ScalersRawToDigi",
@@ -18062,7 +18082,7 @@ process.simEmtfDigis = cms.EDProducer("L1TMuonEndCapTrackProducer",
     CPPFInput = cms.InputTag("simCPPFDigis"),
     CSCEnable = cms.bool(True),
     CSCInput = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED"),
-    CSCInputBXShift = cms.int32(-6),
+    CSCInputBXShift = cms.int32(-8),
     Era = cms.string('Run2_2018'),
     FWConfig = cms.bool(True),
     GEMEnable = cms.bool(False),
@@ -18461,9 +18481,9 @@ process.simRpcTechTrigDigis = cms.EDProducer("RPCTechnicalTrigger",
 
 
 process.simTwinMuxDigis = cms.EDProducer("L1TTwinMuxProducer",
-    DTDigi_Source = cms.InputTag("twinMuxStage2Digis","PhIn"),
-    DTThetaDigi_Source = cms.InputTag("twinMuxStage2Digis","ThIn"),
-    RPC_Source = cms.InputTag("RPCTwinMuxRawToDigi")
+    DTDigi_Source = cms.InputTag("bmtfDigis"),
+    DTThetaDigi_Source = cms.InputTag("bmtfDigis"),
+    RPC_Source = cms.InputTag("muonRPCDigis")
 )
 
 
@@ -19603,44 +19623,42 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
     etSumBypassEttPUS = cms.uint32(1),
     etSumBypassMetPUS = cms.uint32(0),
     etSumCentralityLower = cms.vdouble(
-        0.0, 1.35, 7.15, 71.0, 219.5, 
-        583.4, 1310.6, 65535.0
+        0.5, 1.5, 7.0, 71.0, 219.5, 
+        583.5, 1310.5, 65535.0
     ),
     etSumCentralityUpper = cms.vdouble(
-        4.15, 13.6, 110.95, 302.1, 713.35, 
-        1464.35, 2664.05, 65535.0
+        4.0, 13.5, 111.0, 302.0, 713.5, 
+        1464.5, 2664.0, 65535.0
     ),
-    etSumEcalSumCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
+    etSumEcalSumCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
     etSumEcalSumCalibrationType = cms.string('None'),
     etSumEcalSumPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_dummy.txt'),
     etSumEcalSumPUSType = cms.string('None'),
     etSumEtThreshold = cms.vdouble(0.0, 30.0, 0.0, 30.0, 0.0),
     etSumEtaMax = cms.vint32(28, 26, 28, 26, 28),
     etSumEtaMin = cms.vint32(1, 1, 1, 1, 1),
-    etSumEttCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
+    etSumEttCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
     etSumEttCalibrationType = cms.string('None'),
     etSumEttPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_dummy.txt'),
     etSumEttPUSType = cms.string('None'),
     etSumLsb = cms.double(0.5),
     etSumMetPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_2017v7.txt'),
     etSumMetPUSType = cms.string('LUT'),
-    etSumXCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
     etSumXCalibrationType = cms.string('None'),
-    etSumYCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
     etSumYCalibrationType = cms.string('None'),
     hiMode = cms.uint32(1),
     isoTauEtaMax = cms.int32(25),
     isoTauEtaMin = cms.int32(0),
     jetBypassPUS = cms.uint32(0),
-    jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC.txt'),
+    jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC_HI.txt'),
     jetCalibrationParams = cms.vdouble(),
     jetCalibrationType = cms.string('LUT'),
     jetCompressEtaLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_eta_compress_2017v1.txt'),
     jetCompressPtLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_pt_compress_2017v1.txt'),
     jetLsb = cms.double(0.5),
     jetNeighbourThreshold = cms.double(0.0),
-    jetPUSType = cms.string('PhiRing2'),
-    jetPUSUseChunkySandwich = cms.uint32(False),
+    jetPUSType = cms.string('PhiRing1'),
+    jetPUSUsePhiRing = cms.uint32(True),
     jetRegionMask = cms.int32(0),
     jetSeedThreshold = cms.double(4.0),
     layer1ECalScaleETBins = cms.vint32(
@@ -19848,6 +19866,12 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
         0.900315, 0.917568, 0.952193, 0.984897, 1.097738, 
         1.285041
     ),
+    metCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metCalibrationType = cms.string('None'),
+    metHFCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metHFCalibrationType = cms.string('None'),
+    metHFPhiCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metPhiCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
     minimumBiasThresholds = cms.vint32(0, 0, 0, 0),
     pileUpTowerThreshold = cms.int32(0),
     q2LUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/q2LUT_stage1.txt'),
@@ -20140,7 +20164,7 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     RefreshEachRun = cms.untracked.bool(False),
     RefreshOpenIOVs = cms.untracked.bool(False),
     connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-    globaltag = cms.string('103X_upgrade2018_realistic_HI_v6'),
+    globaltag = cms.string('103X_upgrade2018_realistic_HI_v7'),
     pfnPostfix = cms.untracked.string(''),
     pfnPrefix = cms.untracked.string(''),
     snapshotTime = cms.string(''),
@@ -20481,6 +20505,23 @@ process.l1ugmtdb = cms.ESSource("PoolDBESSource",
 )
 
 
+process.newBS = cms.ESSource("PoolDBESSource",
+    BlobStreamerName = cms.untracked.string('TBufferBlobStreamingService'),
+    DBParameters = cms.PSet(
+        authenticationPath = cms.untracked.string(''),
+        authenticationSystem = cms.untracked.int32(0),
+        messageLevel = cms.untracked.int32(0),
+        security = cms.untracked.string('')
+    ),
+    appendToDataLabel = cms.string(''),
+    connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
+    toGet = cms.VPSet(cms.PSet(
+        record = cms.string('BeamSpotObjectsRcd'),
+        tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc')
+    ))
+)
+
+
 process.totemDAQMappingESSourceXML_TimingDiamond = cms.ESSource("TotemDAQMappingESSourceXML",
     configuration = cms.VPSet(
         cms.PSet(
@@ -20569,6 +20610,8 @@ process.twinmuxParamsSource = cms.ESSource("EmptyESSource",
 
 process.prefer("es_hardcode")
 
+process.prefer("newBS")
+
 process.patAlgosToolsTask = cms.Task()
 
 
@@ -20593,7 +20636,7 @@ process.endOfProcess = cms.Sequence(process.MEtoEDMConverter)
 process.L1TRawToDigi_Stage1 = cms.Sequence(process.csctfDigis+process.dttfDigis+process.gtDigis+process.caloStage1Digis+process.caloStage1FinalDigis+process.caloStage1LegacyFormatDigis+process.gctDigis)
 
 
-process.L1TRawToDigi_Stage2 = cms.Sequence(process.RPCTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.emtfStage2Digis+process.caloLayer1Digis+process.caloStage2Digis+process.gmtStage2Digis+process.gtStage2Digis)
+process.L1TRawToDigi_Stage2 = cms.Sequence(process.rpcTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.rpcCPPFRawToDigi+process.emtfStage2Digis+process.caloLayer1Digis+process.caloStage2Digis+process.gmtStage2Digis+process.gtStage2Digis)
 
 
 process.RawToDigi_pixelOnly = cms.Sequence(process.siPixelDigis)
@@ -20626,13 +20669,13 @@ process.SimL1TCalorimeter = cms.Sequence(process.simCaloStage2Layer1Digis+proces
 process.SimL1EmulatorCore = cms.Sequence(process.SimL1TCalorimeter+process.SimL1TMuon+process.SimL1TechnicalTriggers+process.SimL1TGlobal)
 
 
-process.L1TRawToDigi = cms.Sequence(process.L1TRawToDigi_Stage1+process.RPCTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.emtfStage2Digis+process.caloLayer1Digis)
+process.L1TRawToDigi = cms.Sequence(process.L1TRawToDigi_Stage1+process.rpcTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.rpcCPPFRawToDigi+process.emtfStage2Digis+process.caloLayer1Digis)
 
 
-process.RawToDigi_noTk = cms.Sequence(process.L1TRawToDigi+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.ctppsRawToDigi)
+process.RawToDigi_noTk = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi+process.muonRPCNewDigis)
 
 
-process.RawToDigi = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi)
+process.RawToDigi = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi+process.muonRPCNewDigis)
 
 
 process.SimL1Emulator = cms.Sequence(process.SimL1EmulatorCore)

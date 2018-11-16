@@ -7,7 +7,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("RAW2DIGI")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('/store/himc/HINPbPbSpring18DR/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/GEN-SIM-RAW/NoPU_100X_upgrade2018_realistic_v10_ext1-v1/00001/FE243EFA-6DAB-E811-BFDE-9CB654AD72EC.root'),
+    fileNames = cms.untracked.vstring('root://xrootd.cmsaf.mit.edu//store/user/katatar/HIRun2018PbPb/Hydjet_Quenched_Drum5Ev8_PbPbMinBias_5020GeV_2018/HINPbPbSpring18GS_103X_upgrade2018_realistic_HI_v7_DIGI_L1_DIGI2RAW_HLT_PU/181027_093754/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_574.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 process.AODEventContent = cms.PSet(
@@ -2775,12 +2775,19 @@ process.FEVTDEBUGHLTEventContent = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -4743,12 +4750,19 @@ process.HLTDEBUGEventContent = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -5076,12 +5090,19 @@ process.HLTDebugFEVT = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -5408,12 +5429,19 @@ process.HLTDebugRAW = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -6321,61 +6349,29 @@ process.OnlineMetaDataContent = cms.PSet(
 process.PREMIXEventContent = cms.PSet(
     outputCommands = cms.untracked.vstring(
         'drop *', 
-        'drop *', 
-        'keep  FEDRawDataCollection_rawDataCollector_*_*', 
-        'keep  FEDRawDataCollection_source_*_*', 
-        'keep  FEDRawDataCollection_rawDataCollector_*_*', 
-        'keep  FEDRawDataCollection_source_*_*', 
-        'drop *_hlt*_*_*', 
-        'keep FEDRawDataCollection_rawDataCollector_*_*', 
-        'keep FEDRawDataCollection_source_*_*', 
-        'keep GlobalObjectMapRecord_hltGtStage2ObjectMap_*_*', 
-        'keep edmTriggerResults_*_*_*', 
-        'keep triggerTriggerEvent_*_*_*', 
-        'keep *_hltFEDSelectorL1_*_*', 
-        'keep *_hltScoutingCaloPacker_*_*', 
-        'keep *_hltScoutingEgammaPacker_*_*', 
-        'keep *_hltScoutingMuonPackerCalo_*_*', 
-        'keep *_hltScoutingMuonPacker_*_*', 
-        'keep *_hltScoutingPFPacker_*_*', 
-        'keep *_hltScoutingPrimaryVertexPackerCaloMuon_*_*', 
-        'keep *_hltScoutingPrimaryVertexPacker_*_*', 
-        'keep *_hltScoutingTrackPacker_*_*', 
-        'keep edmTriggerResults_*_*_*', 
-        'keep LHERunInfoProduct_*_*_*', 
-        'keep LHEEventProduct_*_*_*', 
-        'keep GenRunInfoProduct_generator_*_*', 
-        'keep GenLumiInfoHeader_generator_*_*', 
-        'keep GenLumiInfoProduct_generator_*_*', 
-        'keep GenEventInfoProduct_generator_*_*', 
-        'keep edmHepMCProduct_generatorSmeared_*_*', 
-        'keep GenFilterInfo_*_*_*', 
-        'keep *_genParticles_*_*', 
-        'keep edmHepMCProduct_source_*_*', 
-        'keep SimTracks_g4SimHits_*_*', 
-        'keep SimVertexs_g4SimHits_*_*', 
-        'keep *_allTrackMCMatch_*_*', 
         'keep CrossingFramePlaybackInfoNew_*_*_*', 
         'keep PileupSummaryInfos_*_*_*', 
         'keep int6stdbitsetstdpairs_*_AffectedAPVList_*', 
         'keep int_*_bunchSpacing_*', 
         'keep *_genPUProtons_*_*', 
         'keep *_mix_MergedTrackTruth_*', 
-        'keep recoGenMETs_*_*_*', 
-        'keep recoGenJets_*_*_*', 
-        'keep *_genParticle_*_*', 
-        'keep *_MEtoEDMConverter_*_*', 
         'keep *_randomEngineStateProducer_*_*', 
-        'keep FEDRawDataCollection_source_*_*', 
-        'keep FEDRawDataCollection_rawDataCollector_*_*', 
         'keep *_logErrorHarvester_*_*', 
-        'keep RPCDetIdRPCDigiMuonDigiCollection_simMuonRPCDigis_*_*', 
-        'keep *_mix_MergedTrackTruth_*', 
+        'keep *_simSiPixelDigis_*_*', 
+        'keep *_simSiStripDigis_ZeroSuppressed_*', 
         'keep StripDigiSimLinkedmDetSetVector_simSiStripDigis_*_*', 
-        'keep PixelDigiSimLinkedmDetSetVector_simSiPixelDigis_*_*', 
-        'keep StripDigiSimLinkedmDetSetVector_simMuonCSCDigis_*_*', 
-        'keep RPCDigiSimLinkedmDetSetVector_*_*_*', 
-        'keep DTLayerIdDTDigiSimLinkMuonDigiCollection_*_*_*'
+        'keep *_mix_AffectedAPVList_*', 
+        'keep EBDigiCollection_simEcalDigis_*_*', 
+        'keep EEDigiCollection_simEcalDigis_*_*', 
+        'keep ESDigiCollection_simEcalUnsuppressedDigis_*_*', 
+        'keep *_simHcalDigis_*_*', 
+        'keep *_simMuonDTDigis_*_*', 
+        'keep *_simMuonCSCDigis_*_*', 
+        'keep *_simMuonCscTriggerPrimitiveDigis_*_*', 
+        'keep *_simMuonRPCDigis_*_*', 
+        'keep *_simMuonGEMDigis_*_*', 
+        'keep *_*_GEMDigiSimLink_*', 
+        'keep *_*_GEMStripDigiSimLink_*'
     ),
     splitLevel = cms.untracked.int32(0)
 )
@@ -7517,12 +7513,19 @@ process.RAWDEBUGHLTEventContent = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -8570,12 +8573,19 @@ process.RAWRECODEBUGHLTEventContent = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -9858,12 +9868,19 @@ process.RAWRECOSIMHLTEventContent = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -10062,7 +10079,7 @@ process.RAWRECOSIMHLTEventContent = cms.PSet(
 
 process.RAWSIMEventContent = cms.PSet(
     compressionAlgorithm = cms.untracked.string('LZMA'),
-    compressionLevel = cms.untracked.int32(9),
+    compressionLevel = cms.untracked.int32(1),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
     outputCommands = cms.untracked.vstring(
         'drop *', 
@@ -10317,12 +10334,19 @@ process.RAWSIMHLTEventContent = cms.PSet(
         'keep *_hltIter1PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter2HighPtTkMuMerged_*_*', 
         'keep *_hltIter2HighPtTkMuTrackSelectionHighPurity_*_*', 
+        'keep *_hltIter2IterL3FromL1MuonMerged_*_*', 
+        'keep *_hltIter2IterL3MuonMerged_*_*', 
         'keep *_hltIter2MergedForBTag_*_*', 
         'keep *_hltIter2MergedForElectrons_*_*', 
         'keep *_hltIter2Merged_*_*', 
         'keep *_hltIter2PFlowTrackSelectionHighPurity_*_*', 
         'keep *_hltIter3Merged_*_*', 
         'keep *_hltIter4Merged_*_*', 
+        'keep *_hltIterL3GlbMuon_*_*', 
+        'keep *_hltIterL3MuonMerged_*_*', 
+        'keep *_hltIterL3MuonsNoID_*_*', 
+        'keep *_hltIterL3Muons_*_*', 
+        'keep *_hltIterL3OIMuonTrackSelectionHighPurity_*_*', 
         'keep *_hltIterativeCone5PileupSubtractionCaloJets_*_*', 
         'keep *_hltL1HLTSingleIsoPFTau35Trk20Met60JetsMatch_*_*', 
         'keep *_hltL1IsoElectronTrackIsol_*_*', 
@@ -13487,7 +13511,6 @@ process.SectCollParametersBlock = cms.PSet(
 
 process.SiPixelSimBlock = cms.PSet(
     AdcFullScale = cms.int32(255),
-    AdcFullScaleStack = cms.int32(255),
     AddNoise = cms.bool(True),
     AddNoisyPixels = cms.bool(True),
     AddPixelInefficiency = cms.bool(True),
@@ -13509,7 +13532,6 @@ process.SiPixelSimBlock = cms.PSet(
     FPix_SignalResponse_p1 = cms.double(0.711),
     FPix_SignalResponse_p2 = cms.double(203.0),
     FPix_SignalResponse_p3 = cms.double(148.0),
-    FirstStackLayer = cms.int32(5),
     GainSmearing = cms.double(0.0),
     LorentzAngle_DB = cms.bool(True),
     MissCalibrate = cms.bool(True),
@@ -13670,6 +13692,15 @@ process.SimCalorimetryFEVTDEBUG = cms.PSet(
     )
 )
 
+process.SimCalorimetryPREMIX = cms.PSet(
+    outputCommands = cms.untracked.vstring(
+        'keep EBDigiCollection_simEcalDigis_*_*', 
+        'keep EEDigiCollection_simEcalDigis_*_*', 
+        'keep ESDigiCollection_simEcalUnsuppressedDigis_*_*', 
+        'keep *_simHcalDigis_*_*'
+    )
+)
+
 process.SimCalorimetryRAW = cms.PSet(
     outputCommands = cms.untracked.vstring(
         'keep EBSrFlagsSorted_simEcalDigis_*_*', 
@@ -13722,6 +13753,10 @@ process.SimGeneralFEVTDEBUG = cms.PSet(
     )
 )
 
+process.SimGeneralPREMIX = cms.PSet(
+    outputCommands = cms.untracked.vstring()
+)
+
 process.SimGeneralRAW = cms.PSet(
     outputCommands = cms.untracked.vstring(
         'keep CrossingFramePlaybackInfoNew_*_*_*', 
@@ -13753,6 +13788,18 @@ process.SimMuonFEVTDEBUG = cms.PSet(
         'keep *_simMuonGEMDigis_*_*', 
         'keep *_simMuonGEMPadDigis_*_*', 
         'keep *_simMuonGEMPadDigiClusters_*_*'
+    )
+)
+
+process.SimMuonPREMIX = cms.PSet(
+    outputCommands = cms.untracked.vstring(
+        'keep *_simMuonDTDigis_*_*', 
+        'keep *_simMuonCSCDigis_*_*', 
+        'keep *_simMuonCscTriggerPrimitiveDigis_*_*', 
+        'keep *_simMuonRPCDigis_*_*', 
+        'keep *_simMuonGEMDigis_*_*', 
+        'keep *_*_GEMDigiSimLink_*', 
+        'keep *_*_GEMStripDigiSimLink_*'
     )
 )
 
@@ -13807,6 +13854,15 @@ process.SimTrackerFEVTDEBUG = cms.PSet(
         'keep *_assocInOutConversionTracks_*_*', 
         'keep *_TTClusterAssociatorFromPixelDigis_*_*', 
         'keep *_TTStubAssociatorFromPixelDigis_*_*'
+    )
+)
+
+process.SimTrackerPREMIX = cms.PSet(
+    outputCommands = cms.untracked.vstring(
+        'keep *_simSiPixelDigis_*_*', 
+        'keep *_simSiStripDigis_ZeroSuppressed_*', 
+        'keep StripDigiSimLinkedmDetSetVector_simSiStripDigis_*_*', 
+        'keep *_mix_AffectedAPVList_*'
     )
 )
 
@@ -14131,7 +14187,7 @@ process.cluster_algo = cms.PSet(
 )
 
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('l1Ntuple nevts:500'),
+    annotation = cms.untracked.string('l1Ntuple nevts:100'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -14755,6 +14811,63 @@ process.hcalSimBlock = cms.PSet(
     )
 )
 
+process.hfnoseDigitizer = cms.PSet(
+    accumulatorType = cms.string('HGCDigiProducer'),
+    bxTime = cms.double(25),
+    digiCfg = cms.PSet(
+        chargeCollectionEfficiencies = cms.PSet(
+            refToPSet_ = cms.string('HGCAL_chargeCollectionEfficiencies')
+        ),
+        doTimeSamples = cms.bool(False),
+        feCfg = cms.PSet(
+            adcNbits = cms.uint32(10),
+            adcPulse = cms.vdouble(
+                0.0, 0.017, 0.817, 0.163, 0.003, 
+                0.0
+            ),
+            adcSaturation_fC = cms.double(100),
+            adcThreshold_fC = cms.double(0.672),
+            fwVersion = cms.uint32(2),
+            jitterConstant_ns = cms.vdouble(0.0004, 0.0004, 0.0004),
+            jitterNoise_ns = cms.vdouble(25.0, 25.0, 25.0),
+            pulseAvgT = cms.vdouble(
+                0.0, 23.42298, 13.16733, 6.41062, 5.03946, 
+                4.532
+            ),
+            tdcChargeDrainParameterisation = cms.vdouble(
+                -919.13, 365.36, -14.1, 0.2, -21.85, 
+                49.39, 22.21, 0.8, -0.28, 27.14, 
+                43.95, 3.89048
+            ),
+            tdcForToAOnset_fC = cms.vdouble(12.0, 12.0, 12.0),
+            tdcNbits = cms.uint32(12),
+            tdcOnset_fC = cms.double(60),
+            tdcResolutionInPs = cms.double(0.001),
+            tdcSaturation_fC = cms.double(10000),
+            thresholdFollowsMIP = cms.bool(False),
+            toaLSB_ns = cms.double(0.0244),
+            toaMode = cms.uint32(1)
+        ),
+        keV2fC = cms.double(0.044259),
+        noise_fC = cms.PSet(
+            refToPSet_ = cms.string('HGCAL_noise_fC')
+        )
+    ),
+    digiCollection = cms.string('HFNoseDigis'),
+    digitizationType = cms.uint32(0),
+    eVPerEleHolePair = cms.double(3.62),
+    geometryType = cms.uint32(0),
+    hitCollection = cms.string('HFNoseHits'),
+    makeDigiSimLinks = cms.bool(False),
+    maxSimHitsAccTime = cms.uint32(100),
+    premixStage1 = cms.bool(False),
+    premixStage1MaxCharge = cms.double(1000000.0),
+    premixStage1MinCharge = cms.double(0),
+    tofDelay = cms.double(5),
+    useAllChannels = cms.bool(True),
+    verbosity = cms.untracked.uint32(0)
+)
+
 process.hgceeDigitizer = cms.PSet(
     accumulatorType = cms.string('HGCDigiProducer'),
     bxTime = cms.double(25),
@@ -14904,7 +15017,7 @@ process.hgchefrontDigitizer = cms.PSet(
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(500)
+    input = cms.untracked.int32(100)
 )
 
 process.mtdDigitizer = cms.PSet(
@@ -14920,6 +15033,7 @@ process.mtdDigitizer = cms.PSet(
         ),
         ElectronicsSimulation = cms.PSet(
             ChannelTimeOffset = cms.double(0.0),
+            CorrelationCoefficient = cms.double(1.0),
             DarkCountRate = cms.double(10.0),
             EnergyThreshold = cms.double(4.0),
             Npe_to_V = cms.double(0.0064),
@@ -14935,6 +15049,7 @@ process.mtdDigitizer = cms.PSet(
             adcNbits = cms.uint32(10),
             adcSaturation_MIP = cms.double(600.0),
             adcThreshold_MIP = cms.double(0.064),
+            bxTime = cms.double(25),
             smearChannelTimeOffset = cms.double(0.0),
             tdcNbits = cms.uint32(10),
             toaLSB_ns = cms.double(0.02)
@@ -14954,6 +15069,8 @@ process.mtdDigitizer = cms.PSet(
             adcNbits = cms.uint32(12),
             adcSaturation_MIP = cms.double(102),
             adcThreshold_MIP = cms.double(0.025),
+            bxTime = cms.double(25),
+            etaResolution = cms.string('0.03+0.0025*x'),
             tdcNbits = cms.uint32(12),
             toaLSB_ns = cms.double(0.005)
         ),
@@ -14981,7 +15098,6 @@ process.pileupVtxDigitizer = cms.PSet(
 
 process.pixelDigitizer = cms.PSet(
     AdcFullScale = cms.int32(255),
-    AdcFullScaleStack = cms.int32(255),
     AddNoise = cms.bool(True),
     AddNoisyPixels = cms.bool(True),
     AddPixelInefficiency = cms.bool(True),
@@ -15003,7 +15119,6 @@ process.pixelDigitizer = cms.PSet(
     FPix_SignalResponse_p1 = cms.double(0.711),
     FPix_SignalResponse_p2 = cms.double(203.0),
     FPix_SignalResponse_p3 = cms.double(148.0),
-    FirstStackLayer = cms.int32(5),
     GainSmearing = cms.double(0.0),
     LorentzAngle_DB = cms.bool(True),
     MissCalibrate = cms.bool(True),
@@ -15461,7 +15576,6 @@ process.theDigitizers = cms.PSet(
     ),
     pixel = cms.PSet(
         AdcFullScale = cms.int32(255),
-        AdcFullScaleStack = cms.int32(255),
         AddNoise = cms.bool(True),
         AddNoisyPixels = cms.bool(True),
         AddPixelInefficiency = cms.bool(True),
@@ -15483,7 +15597,6 @@ process.theDigitizers = cms.PSet(
         FPix_SignalResponse_p1 = cms.double(0.711),
         FPix_SignalResponse_p2 = cms.double(203.0),
         FPix_SignalResponse_p3 = cms.double(148.0),
-        FirstStackLayer = cms.int32(5),
         GainSmearing = cms.double(0.0),
         LorentzAngle_DB = cms.bool(True),
         MissCalibrate = cms.bool(True),
@@ -15941,7 +16054,6 @@ process.theDigitizersValid = cms.PSet(
     ),
     pixel = cms.PSet(
         AdcFullScale = cms.int32(255),
-        AdcFullScaleStack = cms.int32(255),
         AddNoise = cms.bool(True),
         AddNoisyPixels = cms.bool(True),
         AddPixelInefficiency = cms.bool(True),
@@ -15963,7 +16075,6 @@ process.theDigitizersValid = cms.PSet(
         FPix_SignalResponse_p1 = cms.double(0.711),
         FPix_SignalResponse_p2 = cms.double(203.0),
         FPix_SignalResponse_p3 = cms.double(148.0),
-        FirstStackLayer = cms.int32(5),
         GainSmearing = cms.double(0.0),
         LorentzAngle_DB = cms.bool(True),
         MissCalibrate = cms.bool(True),
@@ -16332,15 +16443,6 @@ process.MEtoEDMConverter = cms.EDProducer("MEtoEDMConverter",
     Name = cms.untracked.string('MEtoEDMConverter'),
     Verbosity = cms.untracked.int32(0),
     deleteAfterCopy = cms.untracked.bool(True)
-)
-
-
-process.RPCTwinMuxRawToDigi = cms.EDProducer("RPCTwinMuxRawToDigi",
-    bxMax = cms.int32(2),
-    bxMin = cms.int32(-2),
-    calculateCRC = cms.bool(True),
-    fillCounters = cms.bool(True),
-    inputTag = cms.InputTag("rawDataCollector")
 )
 
 
@@ -17388,7 +17490,6 @@ process.mix = cms.EDProducer("MixingModule",
         ),
         pixel = cms.PSet(
             AdcFullScale = cms.int32(255),
-            AdcFullScaleStack = cms.int32(255),
             AddNoise = cms.bool(True),
             AddNoisyPixels = cms.bool(True),
             AddPixelInefficiency = cms.bool(True),
@@ -17410,7 +17511,6 @@ process.mix = cms.EDProducer("MixingModule",
             FPix_SignalResponse_p1 = cms.double(0.711),
             FPix_SignalResponse_p2 = cms.double(203.0),
             FPix_SignalResponse_p3 = cms.double(148.0),
-            FirstStackLayer = cms.int32(5),
             GainSmearing = cms.double(0.0),
             LorentzAngle_DB = cms.bool(True),
             MissCalibrate = cms.bool(True),
@@ -17640,7 +17740,7 @@ process.mix = cms.EDProducer("MixingModule",
 process.muonCSCDigis = cms.EDProducer("CSCDCCUnpacker",
     Debug = cms.untracked.bool(False),
     ErrorMask = cms.uint32(0),
-    ExaminerMask = cms.uint32(535557110),
+    ExaminerMask = cms.uint32(535558134),
     FormatedEventDump = cms.untracked.bool(False),
     InputObjects = cms.InputTag("rawDataCollector"),
     PrintEventNumber = cms.untracked.bool(False),
@@ -17674,6 +17774,13 @@ process.muonRPCDigis = cms.EDProducer("RPCUnpackingModule",
 )
 
 
+process.muonRPCNewDigis = cms.EDProducer("RPCDigiMerger",
+    inputTagCPPFDigis = cms.InputTag("rpcCPPFRawToDigi"),
+    inputTagOMTFDigis = cms.InputTag("omtfStage2Digis"),
+    inputTagTwinMuxDigis = cms.InputTag("rpcTwinMuxRawToDigi")
+)
+
+
 process.omtfStage2Digis = cms.EDProducer("OmtfUnpacker",
     inputLabel = cms.InputTag("rawDataCollector"),
     skipRpc = cms.bool(False)
@@ -17691,6 +17798,28 @@ process.onlineMetaDataRawToDigi = cms.EDProducer("OnlineMetaDataRawToDigi",
 
 
 process.randomEngineStateProducer = cms.EDProducer("RandomEngineStateProducer")
+
+
+process.rpcCPPFRawToDigi = cms.EDProducer("RPCAMCRawToDigi",
+    RPCAMCUnpacker = cms.string('RPCCPPFUnpacker'),
+    RPCAMCUnpackerSettings = cms.PSet(
+        bxMax = cms.int32(2),
+        bxMin = cms.int32(-2),
+        fillAMCCounters = cms.bool(True)
+    ),
+    calculateCRC = cms.bool(True),
+    fillCounters = cms.bool(True),
+    inputTag = cms.InputTag("rawDataCollector")
+)
+
+
+process.rpcTwinMuxRawToDigi = cms.EDProducer("RPCTwinMuxRawToDigi",
+    bxMax = cms.int32(2),
+    bxMin = cms.int32(-2),
+    calculateCRC = cms.bool(True),
+    fillCounters = cms.bool(True),
+    inputTag = cms.InputTag("rawDataCollector")
+)
 
 
 process.scalersRawToDigi = cms.EDProducer("ScalersRawToDigi",
@@ -17827,32 +17956,6 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
         alctUseCorrectedBx = cms.bool(False),
         verbosity = cms.int32(0)
     ),
-    alctParamMTCC = cms.PSet(
-        alctAccelMode = cms.uint32(0),
-        alctDriftDelay = cms.uint32(3),
-        alctFifoPretrig = cms.uint32(10),
-        alctFifoTbins = cms.uint32(16),
-        alctL1aWindowWidth = cms.uint32(3),
-        alctNplanesHitAccelPattern = cms.uint32(4),
-        alctNplanesHitAccelPretrig = cms.uint32(2),
-        alctNplanesHitPattern = cms.uint32(4),
-        alctNplanesHitPretrig = cms.uint32(2),
-        alctTrigMode = cms.uint32(2),
-        verbosity = cms.int32(0)
-    ),
-    alctParamOldMC = cms.PSet(
-        alctAccelMode = cms.uint32(1),
-        alctDriftDelay = cms.uint32(3),
-        alctFifoPretrig = cms.uint32(10),
-        alctFifoTbins = cms.uint32(16),
-        alctL1aWindowWidth = cms.uint32(5),
-        alctNplanesHitAccelPattern = cms.uint32(4),
-        alctNplanesHitAccelPretrig = cms.uint32(2),
-        alctNplanesHitPattern = cms.uint32(4),
-        alctNplanesHitPretrig = cms.uint32(2),
-        alctTrigMode = cms.uint32(3),
-        verbosity = cms.int32(0)
-    ),
     alctSLHC = cms.PSet(
         alctAccelMode = cms.uint32(0),
         alctDriftDelay = cms.uint32(2),
@@ -17886,28 +17989,6 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
         clctStartBxShift = cms.int32(0),
         verbosity = cms.int32(0)
     ),
-    clctParamMTCC = cms.PSet(
-        clctDriftDelay = cms.uint32(2),
-        clctFifoPretrig = cms.uint32(7),
-        clctFifoTbins = cms.uint32(12),
-        clctHitPersist = cms.uint32(6),
-        clctMinSeparation = cms.uint32(10),
-        clctNplanesHitPattern = cms.uint32(1),
-        clctNplanesHitPretrig = cms.uint32(4),
-        clctPidThreshPretrig = cms.uint32(2),
-        verbosity = cms.int32(0)
-    ),
-    clctParamOldMC = cms.PSet(
-        clctDriftDelay = cms.uint32(2),
-        clctFifoPretrig = cms.uint32(7),
-        clctFifoTbins = cms.uint32(12),
-        clctHitPersist = cms.uint32(6),
-        clctMinSeparation = cms.uint32(10),
-        clctNplanesHitPattern = cms.uint32(4),
-        clctNplanesHitPretrig = cms.uint32(2),
-        clctPidThreshPretrig = cms.uint32(2),
-        verbosity = cms.int32(0)
-    ),
     clctSLHC = cms.PSet(
         clctDriftDelay = cms.uint32(2),
         clctFifoPretrig = cms.uint32(7),
@@ -17930,9 +18011,7 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
         disableME1a = cms.bool(False),
         disableME42 = cms.bool(False),
         gangedME1a = cms.bool(False),
-        isMTCC = cms.bool(False),
         isSLHC = cms.bool(False),
-        isTMB07 = cms.bool(True),
         smartME1aME1b = cms.bool(False)
     ),
     debugParameters = cms.bool(True),
@@ -17943,7 +18022,7 @@ process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProduc
     ),
     tmbParam = cms.PSet(
         alctTrigEnable = cms.uint32(0),
-        clctToAlct = cms.bool(True),
+        clctToAlct = cms.bool(False),
         clctTrigEnable = cms.uint32(0),
         matchTrigEnable = cms.uint32(1),
         matchTrigWindowSize = cms.uint32(7),
@@ -17999,6 +18078,8 @@ process.simEcalTriggerPrimitiveDigis = cms.EDProducer("EcalTrigPrimProducer",
 
 process.simEmtfDigis = cms.EDProducer("L1TMuonEndCapTrackProducer",
     BXWindow = cms.int32(2),
+    CPPFEnable = cms.bool(False),
+    CPPFInput = cms.InputTag("simCPPFDigis"),
     CSCEnable = cms.bool(True),
     CSCInput = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED"),
     CSCInputBXShift = cms.int32(-8),
@@ -18074,6 +18155,8 @@ process.simEmtfDigis = cms.EDProducer("L1TMuonEndCapTrackProducer",
 
 process.simEmtfDigisData = cms.EDProducer("L1TMuonEndCapTrackProducer",
     BXWindow = cms.int32(2),
+    CPPFEnable = cms.bool(True),
+    CPPFInput = cms.InputTag("emtfStage2Digis"),
     CSCEnable = cms.bool(True),
     CSCInput = cms.InputTag("emtfStage2Digis"),
     CSCInputBXShift = cms.int32(-8),
@@ -18149,6 +18232,8 @@ process.simEmtfDigisData = cms.EDProducer("L1TMuonEndCapTrackProducer",
 
 process.simEmtfDigisMC = cms.EDProducer("L1TMuonEndCapTrackProducer",
     BXWindow = cms.int32(2),
+    CPPFEnable = cms.bool(False),
+    CPPFInput = cms.InputTag("simCPPFDigis"),
     CSCEnable = cms.bool(True),
     CSCInput = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED"),
     CSCInputBXShift = cms.int32(-8),
@@ -18276,7 +18361,7 @@ process.simHcalTechTrigDigis = cms.EDProducer("HcalTTPTriggerRecord",
 
 
 process.simHcalTriggerPrimitiveDigis = cms.EDProducer("HcalTrigPrimDigiProducer",
-    FG_HF_threshold = cms.uint32(17),
+    FG_HF_thresholds = cms.vuint32(17, 255),
     FG_threshold = cms.uint32(12),
     FrontEndFormatError = cms.bool(False),
     InputTagFEDRaw = cms.InputTag("rawDataCollector"),
@@ -18314,6 +18399,7 @@ process.simHcalTriggerPrimitiveDigis = cms.EDProducer("HcalTrigPrimDigiProducer"
     upgradeHB = cms.bool(False),
     upgradeHE = cms.bool(True),
     upgradeHF = cms.bool(True),
+    useTDCInMinBiasBits = cms.bool(False),
     weights = cms.vdouble(1.0, 1.0)
 )
 
@@ -18395,9 +18481,9 @@ process.simRpcTechTrigDigis = cms.EDProducer("RPCTechnicalTrigger",
 
 
 process.simTwinMuxDigis = cms.EDProducer("L1TTwinMuxProducer",
-    DTDigi_Source = cms.InputTag("twinMuxStage2Digis","PhIn"),
-    DTThetaDigi_Source = cms.InputTag("twinMuxStage2Digis","ThIn"),
-    RPC_Source = cms.InputTag("RPCTwinMuxRawToDigi")
+    DTDigi_Source = cms.InputTag("bmtfDigis"),
+    DTThetaDigi_Source = cms.InputTag("bmtfDigis"),
+    RPC_Source = cms.InputTag("muonRPCDigis")
 )
 
 
@@ -18936,7 +19022,7 @@ process.HcalGeometryFromDBEP = cms.ESProducer("HcalGeometryFromDBEP",
 
 process.HcalTPGCoderULUT = cms.ESProducer("HcalTPGCoderULUT",
     FGLUTs = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/HBHE_FG_LUT.dat'),
-    FG_HF_threshold = cms.uint32(17),
+    FG_HF_thresholds = cms.vuint32(17, 255),
     LUTGenerationMode = cms.bool(True),
     MaskBit = cms.int32(32768),
     RCalibFile = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/RecHit-TPG-calib.dat'),
@@ -19536,35 +19622,43 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
     etSumBypassEcalSumPUS = cms.uint32(1),
     etSumBypassEttPUS = cms.uint32(1),
     etSumBypassMetPUS = cms.uint32(0),
-    etSumEcalSumCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
+    etSumCentralityLower = cms.vdouble(
+        0.5, 1.5, 7.0, 71.0, 219.5, 
+        583.5, 1310.5, 65535.0
+    ),
+    etSumCentralityUpper = cms.vdouble(
+        4.0, 13.5, 111.0, 302.0, 713.5, 
+        1464.5, 2664.0, 65535.0
+    ),
+    etSumEcalSumCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
     etSumEcalSumCalibrationType = cms.string('None'),
     etSumEcalSumPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_dummy.txt'),
     etSumEcalSumPUSType = cms.string('None'),
     etSumEtThreshold = cms.vdouble(0.0, 30.0, 0.0, 30.0, 0.0),
     etSumEtaMax = cms.vint32(28, 26, 28, 26, 28),
     etSumEtaMin = cms.vint32(1, 1, 1, 1, 1),
-    etSumEttCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
+    etSumEttCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
     etSumEttCalibrationType = cms.string('None'),
     etSumEttPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_dummy.txt'),
     etSumEttPUSType = cms.string('None'),
     etSumLsb = cms.double(0.5),
     etSumMetPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_2017v7.txt'),
     etSumMetPUSType = cms.string('LUT'),
-    etSumXCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
     etSumXCalibrationType = cms.string('None'),
-    etSumYCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumPUS_dummy.txt'),
     etSumYCalibrationType = cms.string('None'),
+    hiMode = cms.uint32(1),
     isoTauEtaMax = cms.int32(25),
     isoTauEtaMin = cms.int32(0),
     jetBypassPUS = cms.uint32(0),
-    jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC.txt'),
+    jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC_HI.txt'),
     jetCalibrationParams = cms.vdouble(),
     jetCalibrationType = cms.string('LUT'),
     jetCompressEtaLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_eta_compress_2017v1.txt'),
     jetCompressPtLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_pt_compress_2017v1.txt'),
     jetLsb = cms.double(0.5),
     jetNeighbourThreshold = cms.double(0.0),
-    jetPUSType = cms.string('ChunkyDonut'),
+    jetPUSType = cms.string('PhiRing1'),
+    jetPUSUsePhiRing = cms.uint32(True),
     jetRegionMask = cms.int32(0),
     jetSeedThreshold = cms.double(4.0),
     layer1ECalScaleETBins = cms.vint32(
@@ -19772,6 +19866,12 @@ process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
         0.900315, 0.917568, 0.952193, 0.984897, 1.097738, 
         1.285041
     ),
+    metCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metCalibrationType = cms.string('None'),
+    metHFCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metHFCalibrationType = cms.string('None'),
+    metHFPhiCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metPhiCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
     minimumBiasThresholds = cms.vint32(0, 0, 0, 0),
     pileUpTowerThreshold = cms.int32(0),
     q2LUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/q2LUT_stage1.txt'),
@@ -20064,7 +20164,7 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     RefreshEachRun = cms.untracked.bool(False),
     RefreshOpenIOVs = cms.untracked.bool(False),
     connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
-    globaltag = cms.string('101X_upgrade2018_realistic_v7'),
+    globaltag = cms.string('103X_upgrade2018_realistic_HI_v7'),
     pfnPostfix = cms.untracked.string(''),
     pfnPrefix = cms.untracked.string(''),
     snapshotTime = cms.string(''),
@@ -20405,6 +20505,23 @@ process.l1ugmtdb = cms.ESSource("PoolDBESSource",
 )
 
 
+process.newBS = cms.ESSource("PoolDBESSource",
+    BlobStreamerName = cms.untracked.string('TBufferBlobStreamingService'),
+    DBParameters = cms.PSet(
+        authenticationPath = cms.untracked.string(''),
+        authenticationSystem = cms.untracked.int32(0),
+        messageLevel = cms.untracked.int32(0),
+        security = cms.untracked.string('')
+    ),
+    appendToDataLabel = cms.string(''),
+    connect = cms.string('frontier://FrontierProd/CMS_CONDITIONS'),
+    toGet = cms.VPSet(cms.PSet(
+        record = cms.string('BeamSpotObjectsRcd'),
+        tag = cms.string('BeamSpotObjects_Realistic25ns_13TeVCollisions_Early2017_v1_mc')
+    ))
+)
+
+
 process.totemDAQMappingESSourceXML_TimingDiamond = cms.ESSource("TotemDAQMappingESSourceXML",
     configuration = cms.VPSet(
         cms.PSet(
@@ -20493,6 +20610,8 @@ process.twinmuxParamsSource = cms.ESSource("EmptyESSource",
 
 process.prefer("es_hardcode")
 
+process.prefer("newBS")
+
 process.patAlgosToolsTask = cms.Task()
 
 
@@ -20517,7 +20636,7 @@ process.endOfProcess = cms.Sequence(process.MEtoEDMConverter)
 process.L1TRawToDigi_Stage1 = cms.Sequence(process.csctfDigis+process.dttfDigis+process.gtDigis+process.caloStage1Digis+process.caloStage1FinalDigis+process.caloStage1LegacyFormatDigis+process.gctDigis)
 
 
-process.L1TRawToDigi_Stage2 = cms.Sequence(process.RPCTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.emtfStage2Digis+process.caloLayer1Digis+process.caloStage2Digis+process.gmtStage2Digis+process.gtStage2Digis)
+process.L1TRawToDigi_Stage2 = cms.Sequence(process.rpcTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.rpcCPPFRawToDigi+process.emtfStage2Digis+process.caloLayer1Digis+process.caloStage2Digis+process.gmtStage2Digis+process.gtStage2Digis)
 
 
 process.RawToDigi_pixelOnly = cms.Sequence(process.siPixelDigis)
@@ -20550,13 +20669,13 @@ process.SimL1TCalorimeter = cms.Sequence(process.simCaloStage2Layer1Digis+proces
 process.SimL1EmulatorCore = cms.Sequence(process.SimL1TCalorimeter+process.SimL1TMuon+process.SimL1TechnicalTriggers+process.SimL1TGlobal)
 
 
-process.L1TRawToDigi = cms.Sequence(process.L1TRawToDigi_Stage1+process.RPCTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.emtfStage2Digis+process.caloLayer1Digis)
+process.L1TRawToDigi = cms.Sequence(process.L1TRawToDigi_Stage1+process.rpcTwinMuxRawToDigi+process.twinMuxStage2Digis+process.bmtfDigis+process.omtfStage2Digis+process.rpcCPPFRawToDigi+process.emtfStage2Digis+process.caloLayer1Digis)
 
 
-process.RawToDigi_noTk = cms.Sequence(process.L1TRawToDigi+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.ctppsRawToDigi)
+process.RawToDigi_noTk = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi+process.muonRPCNewDigis)
 
 
-process.RawToDigi = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi)
+process.RawToDigi = cms.Sequence(process.L1TRawToDigi+process.siPixelDigis+process.siStripDigis+process.ecalDigis+process.ecalPreshowerDigis+process.hcalDigis+process.muonCSCDigis+process.muonDTDigis+process.muonRPCDigis+process.castorDigis+process.scalersRawToDigi+process.tcdsDigis+process.onlineMetaDataDigis+process.muonGEMDigis+process.ctppsRawToDigi+process.muonRPCNewDigis)
 
 
 process.SimL1Emulator = cms.Sequence(process.SimL1EmulatorCore)
