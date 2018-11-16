@@ -55,6 +55,29 @@ echo "process.caloStage2Params.hiMode = cms.uint32(1)" >> $config_l1Ntuple
 #echo "process.caloStage2Params.egHOverEcutEndcap = cms.int32(1)" >> $config_l1Ntuple
 echo "process.caloStage2Params.egEtaCut = cms.int32(24)" >> $config_l1Ntuple  # ignore all the EGs with ieta > 24
 
+# where Spike Killer is activated :
+# https://github.com/cms-sw/cmssw/blob/master/SimCalorimetry/EcalTrigPrimAlgos/src/EcalFenixTcpFormat.cc#L72-L75
+# https://github.com/cms-sw/cmssw/blob/edb9f982c877bb0c568704d3383ede9ea099ec3a/SimCalorimetry/EcalTrigPrimAlgos/src/EcalFenixTcpFormat.cc#L72-L75
+# change Spike Killer WP
+# WP 12_12 : EcalTPGFineGrainStrip_12, EcalTPGSpike_12
+# WP 12_7  : EcalTPGFineGrainStrip_7 , EcalTPGSpike_12
+# WP 16_16 : EcalTPGFineGrainStrip_16, EcalTPGSpike_16
+echo "process.GlobalTag.toGet = cms.VPSet(
+    cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'),
+             tag = cms.string('EcalTPGFineGrainStrip_7'),                                                                                   \
+
+             connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')                                                                   \
+                                                                 ),                                                                          \
+
+    cms.PSet(record = cms.string('EcalTPGSpikeRcd'),                                                                                         \
+
+             tag = cms.string('EcalTPGSpike_12'),                                                                                            \
+
+             connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')                                                                   \
+                                                                 )                                                                           \
+
+    )" >> $config_l1Ntuple
+
 config_l1Ntuple_LOG="${config_l1Ntuple/.py/.log}"
 echo "# run the config via"
 echo "myRun cmsRun $config_l1Ntuple &> $config_l1Ntuple_LOG &"

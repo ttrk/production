@@ -106,3 +106,11 @@ process.simTwinMuxDigis.RPC_Source = cms.InputTag('muonRPCDigis')
 
 process.caloStage2Params.hiMode = cms.uint32(1)
 process.caloStage2Params.egEtaCut = cms.int32(24)
+process.GlobalTag.toGet = cms.VPSet(
+    cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'),
+             tag = cms.string('EcalTPGFineGrainStrip_7'),                                                                                   
+             connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')                                                                                                                                    ),                                                                          
+    cms.PSet(record = cms.string('EcalTPGSpikeRcd'),                                                                                         
+             tag = cms.string('EcalTPGSpike_12'),                                                                                            
+             connect =cms.string('frontier://FrontierPrep/CMS_CONDITIONS')                                                                                                                                    )                                                                           
+    )

@@ -20168,7 +20168,18 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     pfnPostfix = cms.untracked.string(''),
     pfnPrefix = cms.untracked.string(''),
     snapshotTime = cms.string(''),
-    toGet = cms.VPSet()
+    toGet = cms.VPSet(
+        cms.PSet(
+            connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
+            record = cms.string('EcalTPGFineGrainStripEERcd'),
+            tag = cms.string('EcalTPGFineGrainStrip_7')
+        ), 
+        cms.PSet(
+            connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
+            record = cms.string('EcalTPGSpikeRcd'),
+            tag = cms.string('EcalTPGSpike_12')
+        )
+    )
 )
 
 
