@@ -8,7 +8,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V73')
+    tableName = cms.string('/users/katatar/HI2018PbPb/hltTestEgamma/V74')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(
@@ -931,7 +931,7 @@ process.HLTPSetDetachedQuadStepTrajectoryFilterForFullTrackingPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(3.0),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -1154,7 +1154,7 @@ process.HLTPSetDetachedTripletStepTrajectoryFilterForFullTrackingPPOnAA = cms.PS
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(3.0),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -1249,6 +1249,34 @@ process.HLTPSetHighPtTripletStepTrajectoryBuilder = cms.PSet(
     useSameTrajFilter = cms.bool(True)
 )
 
+process.HLTPSetHighPtTripletStepTrajectoryBuilderForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('GroupedCkfTrajectoryBuilder'),
+    TTRHBuilder = cms.string('hltESPTTRHBWithTrackAngle'),
+    alwaysUseInvalidHits = cms.bool(True),
+    bestHitOnly = cms.bool(True),
+    estimator = cms.string('hltESPHighPtTripletStepChi2ChargeMeasurementEstimator30'),
+    foundHitBonus = cms.double(10.0),
+    inOutTrajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetCkfBaseTrajectoryFilter_block')
+    ),
+    intermediateCleaning = cms.bool(True),
+    keepOriginalIfRebuildFails = cms.bool(False),
+    lockHits = cms.bool(True),
+    lostHitPenalty = cms.double(30.0),
+    maxCand = cms.int32(3),
+    maxDPhiForLooperReconstruction = cms.double(2.0),
+    maxPtForLooperReconstruction = cms.double(0.7),
+    minNrOfHitsForRebuild = cms.int32(5),
+    propagatorAlong = cms.string('PropagatorWithMaterialParabolicMf'),
+    propagatorOpposite = cms.string('PropagatorWithMaterialParabolicMfOpposite'),
+    requireSeedHitsInRebuild = cms.bool(True),
+    trajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetHighPtTripletStepTrajectoryFilterForDmesonPPOnAA')
+    ),
+    updator = cms.string('hltESPKFUpdator'),
+    useSameTrajFilter = cms.bool(True)
+)
+
 process.HLTPSetHighPtTripletStepTrajectoryBuilderForFullTrackingPPOnAA = cms.PSet(
     ComponentType = cms.string('GroupedCkfTrajectoryBuilder'),
     TTRHBuilder = cms.string('hltESPTTRHBWithTrackAngle'),
@@ -1328,6 +1356,31 @@ process.HLTPSetHighPtTripletStepTrajectoryFilter = cms.PSet(
     pixelSeedExtension = cms.bool(False),
     seedExtension = cms.int32(0),
     seedPairPenalty = cms.int32(5),
+    strictSeedExtension = cms.bool(False)
+)
+
+process.HLTPSetHighPtTripletStepTrajectoryFilterForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('CkfBaseTrajectoryFilter'),
+    chargeSignificance = cms.double(-1.0),
+    constantValueForLostHitsFractionFilter = cms.double(2.0),
+    extraNumberOfHitsBeforeTheFirstLoop = cms.int32(4),
+    maxCCCLostHits = cms.int32(0),
+    maxConsecLostHits = cms.int32(1),
+    maxLostHits = cms.int32(999),
+    maxLostHitsFraction = cms.double(0.1),
+    maxNumberOfHits = cms.int32(100),
+    minGoodStripCharge = cms.PSet(
+        refToPSet_ = cms.string('HLTSiStripClusterChargeCutLoose')
+    ),
+    minHitsMinPt = cms.int32(3),
+    minNumberOfHitsForLoopers = cms.int32(13),
+    minNumberOfHitsPerLoop = cms.int32(4),
+    minPt = cms.double(3.5),
+    minimumNumberOfHits = cms.int32(3),
+    nSigmaMinPt = cms.double(5.0),
+    pixelSeedExtension = cms.bool(False),
+    seedExtension = cms.int32(0),
+    seedPairPenalty = cms.int32(0),
     strictSeedExtension = cms.bool(False)
 )
 
@@ -1452,6 +1505,35 @@ process.HLTPSetInitialStepTrajectoryBuilder = cms.PSet(
     useSameTrajFilter = cms.bool(True)
 )
 
+process.HLTPSetInitialStepTrajectoryBuilderForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('GroupedCkfTrajectoryBuilder'),
+    MeasurementTrackerName = cms.string(''),
+    TTRHBuilder = cms.string('hltESPTTRHBWithTrackAngle'),
+    alwaysUseInvalidHits = cms.bool(True),
+    bestHitOnly = cms.bool(True),
+    estimator = cms.string('hltESPInitialStepChi2ChargeMeasurementEstimator30'),
+    foundHitBonus = cms.double(10.0),
+    inOutTrajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetCkfBaseTrajectoryFilter_block')
+    ),
+    intermediateCleaning = cms.bool(True),
+    keepOriginalIfRebuildFails = cms.bool(True),
+    lockHits = cms.bool(True),
+    lostHitPenalty = cms.double(30.0),
+    maxCand = cms.int32(3),
+    maxDPhiForLooperReconstruction = cms.double(2.0),
+    maxPtForLooperReconstruction = cms.double(0.7),
+    minNrOfHitsForRebuild = cms.int32(1),
+    propagatorAlong = cms.string('PropagatorWithMaterialParabolicMf'),
+    propagatorOpposite = cms.string('PropagatorWithMaterialParabolicMfOpposite'),
+    requireSeedHitsInRebuild = cms.bool(True),
+    trajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetInitialStepTrajectoryFilterForDmesonPPOnAA')
+    ),
+    updator = cms.string('hltESPKFUpdator'),
+    useSameTrajFilter = cms.bool(True)
+)
+
 process.HLTPSetInitialStepTrajectoryBuilderForFullTrackingPPOnAA = cms.PSet(
     ComponentType = cms.string('GroupedCkfTrajectoryBuilder'),
     MeasurementTrackerName = cms.string(''),
@@ -1505,6 +1587,35 @@ process.HLTPSetInitialStepTrajectoryBuilderPPOnAA = cms.PSet(
     requireSeedHitsInRebuild = cms.bool(True),
     trajectoryFilter = cms.PSet(
         refToPSet_ = cms.string('HLTPSetInitialStepTrajectoryFilterPPOnAA')
+    ),
+    updator = cms.string('hltESPKFUpdator'),
+    useSameTrajFilter = cms.bool(True)
+)
+
+process.HLTPSetInitialStepTrajectoryBuilderPreSplittingForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('GroupedCkfTrajectoryBuilder'),
+    MeasurementTrackerName = cms.string(''),
+    TTRHBuilder = cms.string('hltESPTTRHBWithTrackAngle'),
+    alwaysUseInvalidHits = cms.bool(True),
+    bestHitOnly = cms.bool(True),
+    estimator = cms.string('hltESPInitialStepChi2ChargeMeasurementEstimator30'),
+    foundHitBonus = cms.double(10.0),
+    inOutTrajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetCkfBaseTrajectoryFilter_block')
+    ),
+    intermediateCleaning = cms.bool(True),
+    keepOriginalIfRebuildFails = cms.bool(False),
+    lockHits = cms.bool(True),
+    lostHitPenalty = cms.double(30.0),
+    maxCand = cms.int32(3),
+    maxDPhiForLooperReconstruction = cms.double(2.0),
+    maxPtForLooperReconstruction = cms.double(0.7),
+    minNrOfHitsForRebuild = cms.int32(5),
+    propagatorAlong = cms.string('PropagatorWithMaterialParabolicMf'),
+    propagatorOpposite = cms.string('PropagatorWithMaterialParabolicMfOpposite'),
+    requireSeedHitsInRebuild = cms.bool(True),
+    trajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetInitialStepTrajectoryFilterPreSplittingForDmesonPPOnAA')
     ),
     updator = cms.string('hltESPKFUpdator'),
     useSameTrajFilter = cms.bool(True)
@@ -1618,6 +1729,31 @@ process.HLTPSetInitialStepTrajectoryFilterBase = cms.PSet(
     strictSeedExtension = cms.bool(False)
 )
 
+process.HLTPSetInitialStepTrajectoryFilterBasePreSplittingForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('CkfBaseTrajectoryFilter'),
+    chargeSignificance = cms.double(-1.0),
+    constantValueForLostHitsFractionFilter = cms.double(2.0),
+    extraNumberOfHitsBeforeTheFirstLoop = cms.int32(4),
+    maxCCCLostHits = cms.int32(0),
+    maxConsecLostHits = cms.int32(1),
+    maxLostHits = cms.int32(999),
+    maxLostHitsFraction = cms.double(0.1),
+    maxNumberOfHits = cms.int32(100),
+    minGoodStripCharge = cms.PSet(
+        refToPSet_ = cms.string('HLTSiStripClusterChargeCutLoose')
+    ),
+    minHitsMinPt = cms.int32(3),
+    minNumberOfHitsForLoopers = cms.int32(13),
+    minNumberOfHitsPerLoop = cms.int32(4),
+    minPt = cms.double(3.0),
+    minimumNumberOfHits = cms.int32(4),
+    nSigmaMinPt = cms.double(5.0),
+    pixelSeedExtension = cms.bool(False),
+    seedExtension = cms.int32(0),
+    seedPairPenalty = cms.int32(0),
+    strictSeedExtension = cms.bool(False)
+)
+
 process.HLTPSetInitialStepTrajectoryFilterBasePreSplittingForFullTrackingPPOnAA = cms.PSet(
     ComponentType = cms.string('CkfBaseTrajectoryFilter'),
     chargeSignificance = cms.double(-1.0),
@@ -1660,6 +1796,31 @@ process.HLTPSetInitialStepTrajectoryFilterBasePreSplittingPPOnAA = cms.PSet(
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
     minPt = cms.double(0.2),
+    minimumNumberOfHits = cms.int32(4),
+    nSigmaMinPt = cms.double(5.0),
+    pixelSeedExtension = cms.bool(False),
+    seedExtension = cms.int32(0),
+    seedPairPenalty = cms.int32(0),
+    strictSeedExtension = cms.bool(False)
+)
+
+process.HLTPSetInitialStepTrajectoryFilterForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('CkfBaseTrajectoryFilter'),
+    chargeSignificance = cms.double(-1.0),
+    constantValueForLostHitsFractionFilter = cms.double(2.0),
+    extraNumberOfHitsBeforeTheFirstLoop = cms.int32(4),
+    maxCCCLostHits = cms.int32(0),
+    maxConsecLostHits = cms.int32(1),
+    maxLostHits = cms.int32(999),
+    maxLostHitsFraction = cms.double(0.1),
+    maxNumberOfHits = cms.int32(100),
+    minGoodStripCharge = cms.PSet(
+        refToPSet_ = cms.string('HLTSiStripClusterChargeCutLoose')
+    ),
+    minHitsMinPt = cms.int32(3),
+    minNumberOfHitsForLoopers = cms.int32(13),
+    minNumberOfHitsPerLoop = cms.int32(4),
+    minPt = cms.double(3.0),
     minimumNumberOfHits = cms.int32(4),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -1716,6 +1877,18 @@ process.HLTPSetInitialStepTrajectoryFilterPPOnAA = cms.PSet(
     seedExtension = cms.int32(0),
     seedPairPenalty = cms.int32(0),
     strictSeedExtension = cms.bool(False)
+)
+
+process.HLTPSetInitialStepTrajectoryFilterPreSplittingForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('CompositeTrajectoryFilter'),
+    filters = cms.VPSet(
+        cms.PSet(
+            refToPSet_ = cms.string('HLTPSetInitialStepTrajectoryFilterBasePreSplittingForDmesonPPOnAA')
+        ), 
+        cms.PSet(
+            refToPSet_ = cms.string('HLTPSetInitialStepTrajectoryFilterShapePreSplittingPPOnAA')
+        )
+    )
 )
 
 process.HLTPSetInitialStepTrajectoryFilterPreSplittingForFullTrackingPPOnAA = cms.PSet(
@@ -1954,6 +2127,35 @@ process.HLTPSetLowPtQuadStepTrajectoryBuilder = cms.PSet(
     useSameTrajFilter = cms.bool(True)
 )
 
+process.HLTPSetLowPtQuadStepTrajectoryBuilderForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('GroupedCkfTrajectoryBuilder'),
+    MeasurementTrackerName = cms.string(''),
+    TTRHBuilder = cms.string('hltESPTTRHBWithTrackAngle'),
+    alwaysUseInvalidHits = cms.bool(True),
+    bestHitOnly = cms.bool(True),
+    estimator = cms.string('hltESPLowPtQuadStepChi2ChargeMeasurementEstimator9'),
+    foundHitBonus = cms.double(10.0),
+    inOutTrajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetCkfBaseTrajectoryFilter_block')
+    ),
+    intermediateCleaning = cms.bool(True),
+    keepOriginalIfRebuildFails = cms.bool(False),
+    lockHits = cms.bool(True),
+    lostHitPenalty = cms.double(30.0),
+    maxCand = cms.int32(4),
+    maxDPhiForLooperReconstruction = cms.double(2.0),
+    maxPtForLooperReconstruction = cms.double(0.7),
+    minNrOfHitsForRebuild = cms.int32(5),
+    propagatorAlong = cms.string('PropagatorWithMaterialParabolicMf'),
+    propagatorOpposite = cms.string('PropagatorWithMaterialParabolicMfOpposite'),
+    requireSeedHitsInRebuild = cms.bool(True),
+    trajectoryFilter = cms.PSet(
+        refToPSet_ = cms.string('HLTPSetLowPtQuadStepTrajectoryFilterForDmesonPPOnAA')
+    ),
+    updator = cms.string('hltESPKFUpdator'),
+    useSameTrajFilter = cms.bool(True)
+)
+
 process.HLTPSetLowPtQuadStepTrajectoryBuilderForFullTrackingPPOnAA = cms.PSet(
     ComponentType = cms.string('GroupedCkfTrajectoryBuilder'),
     MeasurementTrackerName = cms.string(''),
@@ -2029,6 +2231,31 @@ process.HLTPSetLowPtQuadStepTrajectoryFilter = cms.PSet(
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
     minPt = cms.double(0.075),
+    minimumNumberOfHits = cms.int32(3),
+    nSigmaMinPt = cms.double(5.0),
+    pixelSeedExtension = cms.bool(False),
+    seedExtension = cms.int32(0),
+    seedPairPenalty = cms.int32(0),
+    strictSeedExtension = cms.bool(False)
+)
+
+process.HLTPSetLowPtQuadStepTrajectoryFilterForDmesonPPOnAA = cms.PSet(
+    ComponentType = cms.string('CkfBaseTrajectoryFilter'),
+    chargeSignificance = cms.double(-1.0),
+    constantValueForLostHitsFractionFilter = cms.double(2.0),
+    extraNumberOfHitsBeforeTheFirstLoop = cms.int32(4),
+    maxCCCLostHits = cms.int32(0),
+    maxConsecLostHits = cms.int32(1),
+    maxLostHits = cms.int32(999),
+    maxLostHitsFraction = cms.double(0.1),
+    maxNumberOfHits = cms.int32(100),
+    minGoodStripCharge = cms.PSet(
+        refToPSet_ = cms.string('HLTSiStripClusterChargeCutLoose')
+    ),
+    minHitsMinPt = cms.int32(3),
+    minNumberOfHitsForLoopers = cms.int32(13),
+    minNumberOfHitsPerLoop = cms.int32(4),
+    minPt = cms.double(2.8),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -2269,7 +2496,7 @@ process.HLTPSetLowPtTripletStepTrajectoryFilterForFullTrackingPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(2.0),
+    minPt = cms.double(2.8),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -2510,7 +2737,7 @@ process.HLTPSetMixedTripletStepTrajectoryFilterForFullTrackingPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(1.0),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(3),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -2879,7 +3106,7 @@ process.HLTPSetPixelLessStepTrajectoryFilterForFullTrackingPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(2.0),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(4),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -3174,7 +3401,7 @@ process.HLTPSetPixelPairStepTrajectoryFilterForFullTrackingPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(3.5),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(4),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -3224,7 +3451,7 @@ process.HLTPSetPixelPairStepTrajectoryFilterInOutForFullTrackingPPOnAA = cms.PSe
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(1.0),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(4),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -3370,7 +3597,7 @@ process.HLTPSetTobTecStepInOutTrajectoryFilterForFullTrackingPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(2.0),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(4),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -3557,7 +3784,7 @@ process.HLTPSetTobTecStepTrajectoryFilterForFullTrackingPPOnAA = cms.PSet(
     minHitsMinPt = cms.int32(3),
     minNumberOfHitsForLoopers = cms.int32(13),
     minNumberOfHitsPerLoop = cms.int32(4),
-    minPt = cms.double(2.0),
+    minPt = cms.double(5.0),
     minimumNumberOfHits = cms.int32(5),
     nSigmaMinPt = cms.double(5.0),
     pixelSeedExtension = cms.bool(False),
@@ -8966,6 +9193,16 @@ process.hltEG30EBEtFilter = cms.EDFilter("HLTEgammaEtFilter",
 )
 
 
+process.hltEG30EBEtFilterL1EG15 = cms.EDFilter("HLTEgammaEtFilter",
+    etcutEB = cms.double(30.0),
+    etcutEE = cms.double(999999.0),
+    inputTag = cms.InputTag("hltEGL1SingleEG15BptxANDFilter"),
+    l1EGCand = cms.InputTag("hltEgammaCandidates"),
+    ncandcut = cms.int32(1),
+    saveTags = cms.bool(True)
+)
+
+
 process.hltEG30EBHEFilter = cms.EDFilter("HLTEgammaGenericFilter",
     absEtaLowEdges = cms.vdouble(0.0, 1.479),
     candTag = cms.InputTag("hltEG30EBEtFilter"),
@@ -9014,6 +9251,30 @@ process.hltEG30EBHEFilterHECut = cms.EDFilter("HLTEgammaGenericFilter",
 )
 
 
+process.hltEG30EBHEL1EG15Filter = cms.EDFilter("HLTEgammaGenericFilter",
+    absEtaLowEdges = cms.vdouble(0.0, 1.479),
+    candTag = cms.InputTag("hltEG30EBEtFilterL1EG15"),
+    doRhoCorrection = cms.bool(False),
+    effectiveAreas = cms.vdouble(0.0, 0.0),
+    energyLowEdges = cms.vdouble(0.0),
+    l1EGCand = cms.InputTag("hltEgammaCandidates"),
+    lessThan = cms.bool(True),
+    ncandcut = cms.int32(1),
+    rhoMax = cms.double(99999999.0),
+    rhoScale = cms.double(1.0),
+    rhoTag = cms.InputTag(""),
+    saveTags = cms.bool(True),
+    thrOverE2EB = cms.vdouble(-1.0),
+    thrOverE2EE = cms.vdouble(-1.0),
+    thrOverEEB = cms.vdouble(1.9999),
+    thrOverEEE = cms.vdouble(1.9999),
+    thrRegularEB = cms.vdouble(-1.0),
+    thrRegularEE = cms.vdouble(-1.0),
+    useEt = cms.bool(False),
+    varTag = cms.InputTag("hltEgammaHoverE")
+)
+
+
 process.hltEG30EtEBPPOnAAFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(30.0),
     etcutEE = cms.double(999999.0),
@@ -9028,6 +9289,16 @@ process.hltEG30EtFilter = cms.EDFilter("HLTEgammaEtFilter",
     etcutEB = cms.double(30.0),
     etcutEE = cms.double(30.0),
     inputTag = cms.InputTag("hltEGL1SingleEG7BptxANDFilter"),
+    l1EGCand = cms.InputTag("hltEgammaCandidates"),
+    ncandcut = cms.int32(1),
+    saveTags = cms.bool(True)
+)
+
+
+process.hltEG30EtFilterL1EG15 = cms.EDFilter("HLTEgammaEtFilter",
+    etcutEB = cms.double(30.0),
+    etcutEE = cms.double(30.0),
+    inputTag = cms.InputTag("hltEGL1SingleEG15BptxANDFilter"),
     l1EGCand = cms.InputTag("hltEgammaCandidates"),
     ncandcut = cms.int32(1),
     saveTags = cms.bool(True)
@@ -9085,6 +9356,30 @@ process.hltEG30HEFilterHECut = cms.EDFilter("HLTEgammaGenericFilter",
     thrOverE2EE = cms.vdouble(-1.0),
     thrOverEEB = cms.vdouble(0.2),
     thrOverEEE = cms.vdouble(0.2),
+    thrRegularEB = cms.vdouble(-1.0),
+    thrRegularEE = cms.vdouble(-1.0),
+    useEt = cms.bool(False),
+    varTag = cms.InputTag("hltEgammaHoverE")
+)
+
+
+process.hltEG30HEL1EG15Filter = cms.EDFilter("HLTEgammaGenericFilter",
+    absEtaLowEdges = cms.vdouble(0.0, 1.479),
+    candTag = cms.InputTag("hltEG30EtFilterL1EG15"),
+    doRhoCorrection = cms.bool(False),
+    effectiveAreas = cms.vdouble(0.0, 0.0),
+    energyLowEdges = cms.vdouble(0.0),
+    l1EGCand = cms.InputTag("hltEgammaCandidates"),
+    lessThan = cms.bool(True),
+    ncandcut = cms.int32(1),
+    rhoMax = cms.double(99999999.0),
+    rhoScale = cms.double(1.0),
+    rhoTag = cms.InputTag(""),
+    saveTags = cms.bool(True),
+    thrOverE2EB = cms.vdouble(-1.0),
+    thrOverE2EE = cms.vdouble(-1.0),
+    thrOverEEB = cms.vdouble(1.9999),
+    thrOverEEE = cms.vdouble(1.9999),
     thrRegularEB = cms.vdouble(-1.0),
     thrRegularEE = cms.vdouble(-1.0),
     useEt = cms.bool(False),
@@ -9881,6 +10176,25 @@ process.hltEG60HoverEPPOnAAFilter = cms.EDFilter("HLTEgammaGenericFilter",
     thrRegularEE = cms.vdouble(-1.0),
     useEt = cms.bool(False),
     varTag = cms.InputTag("hltEgammaHoverEPPOnAA")
+)
+
+
+process.hltEGL1SingleEG15BptxANDFilter = cms.EDFilter("HLTEgammaL1TMatchFilterRegional",
+    L1SeedFilterTag = cms.InputTag("hltL1sSingleEG15BptxAND"),
+    barrel_end = cms.double(1.4791),
+    candIsolatedTag = cms.InputTag("hltEgammaCandidates"),
+    candNonIsolatedTag = cms.InputTag(""),
+    doIsolated = cms.bool(False),
+    endcap_end = cms.double(2.65),
+    l1CenJetsTag = cms.InputTag("hltGtStage2Digis","Jet"),
+    l1IsolatedTag = cms.InputTag("hltGtStage2Digis","EGamma"),
+    l1NonIsolatedTag = cms.InputTag("hltGtStage2Digis","EGamma"),
+    l1TausTag = cms.InputTag("hltGtStage2Digis","Tau"),
+    ncandcut = cms.int32(1),
+    region_eta_size = cms.double(0.522),
+    region_eta_size_ecap = cms.double(1.0),
+    region_phi_size = cms.double(1.044),
+    saveTags = cms.bool(True)
 )
 
 
@@ -10765,6 +11079,12 @@ process.hltPreHIGEDPhoton30EBHECutL1Seeded = cms.EDFilter("HLTPrescaler",
 )
 
 
+process.hltPreHIGEDPhoton30EBL1EG15L1Seeded = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
+    offset = cms.uint32(0)
+)
+
+
 process.hltPreHIGEDPhoton30EBL1Seeded = cms.EDFilter("HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
     offset = cms.uint32(0)
@@ -10778,6 +11098,12 @@ process.hltPreHIGEDPhoton30HECut = cms.EDFilter("HLTPrescaler",
 
 
 process.hltPreHIGEDPhoton30HECutL1Seeded = cms.EDFilter("HLTPrescaler",
+    L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
+    offset = cms.uint32(0)
+)
+
+
+process.hltPreHIGEDPhoton30L1EG15L1Seeded = cms.EDFilter("HLTPrescaler",
     L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
     offset = cms.uint32(0)
 )
@@ -14967,6 +15293,9 @@ process.HLTHIGEDPhoton50HECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpa
 process.HLTFastJetForEgamma = cms.Sequence(process.hltTowerMakerForAll+process.hltFixedGridRhoFastjetAllCaloForMuons)
 
 
+process.HLTHIGEDPhoton30EBL1EG15L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG15BptxANDFilter+process.hltEG30EBEtFilterL1EG15+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG30EBHEL1EG15Filter)
+
+
 process.HLTHIGEDPhoton60HECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG30BptxANDFilter+process.hltEG60EtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG60HEFilterHECut)
 
 
@@ -14977,6 +15306,9 @@ process.HLTHIGEDPhoton20HECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpa
 
 
 process.HLTHIGEDPhoton50EBL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG21BptxANDFilter+process.hltEG50EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG50EBHEFilter)
+
+
+process.HLTHIGEDPhoton15PPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG15EtPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG15HoverELoosePPOnAAFilter)
 
 
 process.HLTHIGEDPhoton30EBHECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG30EtEBPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG30HoverEEBPPOnAAFilter)
@@ -15057,7 +15389,7 @@ process.HLTHIGEDPhoton40EBPPOnAASequence = cms.Sequence(process.HLTDoFullUnpacki
 process.HLTHIGEDPhoton40EBHECutL1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG21BptxANDFilter+process.hltEG40EBEtFilter+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG40EBHEFilterHECut)
 
 
-process.HLTHIGEDPhoton15PPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG15EtPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG15HoverELoosePPOnAAFilter)
+process.HLTHIGEDPhoton30L1EG15L1SeededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleEG15BptxANDFilter+process.hltEG30EtFilterL1EG15+process.HLTDoLocalHcalSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG30HEL1EG15Filter)
 
 
 process.HLTHIGEDPhoton20EBHECutPPOnAASequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaPPOnAA+process.hltEgammaCandidatesPPOnAA+process.hltEgammaCandidatesWrapperPPOnAA+process.hltEG20EtEBPPOnAAFilter+process.HLTDoLocalHcalWithTowerSequence+process.hltEgammaHoverEPPOnAA+process.hltEG20HoverEEBPPOnAAFilter)
@@ -15387,6 +15719,9 @@ process.HLT_HIGEDPhoton20_L1Seeded_v1 = cms.Path(process.SimL1Emulator+process.H
 process.HLT_HIGEDPhoton30_L1Seeded_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIGEDPhoton30L1Seeded+process.HLTHIGEDPhoton30L1SeededSequence+process.HLTEndSequenceWithZeroSuppression)
 
 
+process.HLT_HIGEDPhoton30_L1EG15_L1Seeded_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG15BptxAND+process.hltPreHIGEDPhoton30L1EG15L1Seeded+process.HLTHIGEDPhoton30L1EG15L1SeededSequence+process.HLTEndSequenceWithZeroSuppression)
+
+
 process.HLT_HIGEDPhoton40_L1Seeded_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton40L1Seeded+process.HLTHIGEDPhoton40L1SeededSequence+process.HLTEndSequenceWithZeroSuppression)
 
 
@@ -15406,6 +15741,9 @@ process.HLT_HIGEDPhoton20_EB_L1Seeded_v1 = cms.Path(process.SimL1Emulator+proces
 
 
 process.HLT_HIGEDPhoton30_EB_L1Seeded_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG7BptxAND+process.hltPreHIGEDPhoton30EBL1Seeded+process.HLTHIGEDPhoton30EBL1SeededSequence+process.HLTEndSequenceWithZeroSuppression)
+
+
+process.HLT_HIGEDPhoton30_EB_L1EG15_L1Seeded_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG15BptxAND+process.hltPreHIGEDPhoton30EBL1EG15L1Seeded+process.HLTHIGEDPhoton30EBL1EG15L1SeededSequence+process.HLTEndSequenceWithZeroSuppression)
 
 
 process.HLT_HIGEDPhoton40_EB_L1Seeded_v1 = cms.Path(process.SimL1Emulator+process.HLTBeginSequence+process.hltL1sSingleEG21BptxAND+process.hltPreHIGEDPhoton40EBL1Seeded+process.HLTHIGEDPhoton40EBL1SeededSequence+process.HLTEndSequenceWithZeroSuppression)
