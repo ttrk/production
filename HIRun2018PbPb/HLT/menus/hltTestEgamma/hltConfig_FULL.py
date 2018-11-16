@@ -15048,7 +15048,7 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
         cms.PSet(
             connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
             record = cms.string('EcalTPGFineGrainStripEERcd'),
-            tag = cms.string('EcalTPGFineGrainStrip_12')
+            tag = cms.string('EcalTPGFineGrainStrip_7')
         ), 
         cms.PSet(
             connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS'),
