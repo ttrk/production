@@ -16,6 +16,8 @@ PROCESS="MyHLT"
 nEvents="20"
 DATAMC="--data"
 CUSTOMISE=""
+PRESCALEOPT="--unprescale"
+#PRESCALEOPT="--prescale HI10kHz"
 L1EMU="--l1-emulator Full"
 ## L1 menu v4 : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5380/2/1/1.html
 #L1XML="L1Menu_CollisionsHeavyIons2018_v4.xml"
@@ -26,7 +28,7 @@ L1MENU="--l1 ${L1XML}" # search xml file in database
 
 ## https://twiki.cern.ch/twiki/bin/view/CMS/HiHighPtTrigger2018?rev=47#Instructions_as_of_2018_10_26_in
 hltGetConfiguration $menu --globaltag $GLOBALTAG --input $inputFile --setup $SETUP --process $PROCESS \
---full --offline $DATAMC --no-output --unprescale $L1EMU $L1MENU $CUSTOMISE \
+--full --offline $DATAMC --no-output $PRESCALEOPT $L1EMU $L1MENU $CUSTOMISE \
 --timing --max-events $nEvents > $configFile
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
