@@ -261,5 +261,9 @@ process.electronFilter = cms.EDFilter("PtMinGsfElectronCountFilter",
 process.electronFilterSequence = cms.Sequence(process.electronFilter
 )
 
+# needed to apply the filter on skimanalysis tree
+process.superFilterPath = cms.Path(process.electronFilterSequence)
+process.skimanalysis.superFilters = cms.vstring("superFilterPath")
+
 for path in process.paths:
   getattr(process,path)._seq = process.electronFilterSequence * getattr(process,path)._seq

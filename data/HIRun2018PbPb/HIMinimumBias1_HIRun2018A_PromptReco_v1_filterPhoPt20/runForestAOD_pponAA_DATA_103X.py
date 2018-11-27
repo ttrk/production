@@ -269,5 +269,9 @@ process.photonFilterSequence = cms.Sequence(process.selectedPhotons *
                                             process.photonFilter
 )
 
+# needed to apply the filter on skimanalysis tree
+process.superFilterPath = cms.Path(process.photonFilterSequence)
+process.skimanalysis.superFilters = cms.vstring("superFilterPath")
+
 for path in process.paths:
   getattr(process,path)._seq = process.photonFilterSequence * getattr(process,path)._seq
