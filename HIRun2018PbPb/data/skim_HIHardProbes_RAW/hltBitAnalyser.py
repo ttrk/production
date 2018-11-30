@@ -42,8 +42,9 @@ process.hltGtStage2Digis = cms.EDProducer("L1TRawToDigi",
 
 process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")
 process.hltbitanalysis.HLTProcessName = cms.string("HLT")
+process.hltbitanalysis.l1GtObjectMapRecord = cms.InputTag("hltGtStage2ObjectMap::HLT")
 process.hltbitanalysis.hltresults = cms.InputTag("TriggerResults", "", "HLT")
-process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis", "", "MyHLT")
+process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis")
 process.hltbitanalysis.UseTFileService = cms.untracked.bool(True)
 process.hltbitanalysis.RunParameters = cms.PSet(isData = cms.untracked.bool(True))
 process.hltBitAnalysis = cms.EndPath(process.hltGtStage2Digis+process.hltbitanalysis)
