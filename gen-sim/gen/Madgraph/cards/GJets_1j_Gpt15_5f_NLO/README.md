@@ -7,3 +7,7 @@ Dataset : /GJets_1j_Gpt15_5f_NLO_TuneCUETP8M1_5020GeV-amcatnloFXFX-pythia8/pp502
 ### Gridpack
 
 [gridpack](gridpack/) folder contains items from the generated gridpack. The cards in [Cards](gridpack/process/Cards/) folder are created from the ones in current directory.
+
+### Simulation
+
+See [this](../../../../sim/Madgraph/GJets_1j_Gpt15_5f_NLO/) folder for the simulation part.
