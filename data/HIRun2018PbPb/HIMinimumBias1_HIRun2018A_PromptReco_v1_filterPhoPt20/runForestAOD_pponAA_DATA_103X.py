@@ -93,6 +93,7 @@ process.akPu4PFJets.jetPtMin = 1
 
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
+process.pfcandAnalyzer.doTrackMatching  = cms.bool(True)
 
 ###############################################################################
 
@@ -152,26 +153,29 @@ process.CSVscikitTags.weightFile = cms.FileInPath(
 ###############################################################################
 
 #########################
-# ZDC RecHit Producer
+# RecHits & pfTowers (HF, Castor & ZDC)
 #########################
+# ZDC RecHit Producer
 process.load('RecoHI.ZDCRecHit.QWZDC2018Producer_cfi')
 process.load('RecoHI.ZDCRecHit.QWZDC2018RecHit_cfi')
 
-###############################################################################
-
-#########################
-# RecHits & pfTowers (HF, Castor & ZDC)
-#########################
 process.load('HeavyIonsAnalysis.JetAnalysis.rechitanalyzer_cfi')
-process.rechitanalyzerpp.zdcRecHitSrc = cms.untracked.InputTag("QWzdcreco")
+process.rechitanalyzerpp.doZDCRecHit = True
+process.rechitanalyzerpp.zdcRecHitSrc = cms.InputTag("QWzdcreco")
+process.pfTowerspp.doHF = False
 
 ###############################################################################
+#Recover peripheral primary vertices
+#https://twiki.cern.ch/twiki/bin/view/CMS/HITracking2018PbPb#Peripheral%20Vertex%20Recovery
+process.load("RecoVertex.PrimaryVertexProducer.OfflinePrimaryVerticesRecovery_cfi")
+
 
 #########################
 # Main analysis list
 #########################
 
 process.ana_step = cms.Path(
+    process.offlinePrimaryVerticesRecovery +
     process.HiForest +
     process.hltanalysis +
     process.hltobject +
@@ -247,6 +251,10 @@ process.HBHENoiseFilterResultRun2Tight = cms.Path(process.fHBHENoiseFilterResult
 process.HBHEIsoNoiseFilterResult = cms.Path(process.fHBHEIsoNoiseFilterResult)
 
 process.pAna = cms.EndPath(process.skimanalysis)
+
+from HLTrigger.Configuration.CustomConfigs import MassReplaceInputTag
+process = MassReplaceInputTag(process,"offlinePrimaryVertices","offlinePrimaryVerticesRecovery")
+process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
 
 ###############################################################################
 
