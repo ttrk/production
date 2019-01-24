@@ -11,10 +11,10 @@ config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "runForestAOD_pponAA_DATA_103X.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2750    # request longer runtime.
-# forest_CMSSW_10_3_1 + https://github.com/CmsHI/cmssw/pull/181
-# https://github.com/CmsHI/cmssw/commit/c7f3965701a3c003397ae76e6cfc8b6d4b2e13c8
-# runForestAOD_pponAA_DATA_103X.py commit + reco photon filter
-# https://github.com/CmsHI/cmssw/commit/2e95972ab40f47896de9c650f9e370b264c02319
+# forest_CMSSW_10_3_1
+# https://github.com/CmsHI/cmssw/commit/50a89ae749941e27ce6cb21ab64bd5d3a1e19224
+# runForestAOD_pponAA_DATA_103X.py commit + activate l1object + reco photon filter
+# https://github.com/CmsHI/cmssw/commit/50a89ae749941e27ce6cb21ab64bd5d3a1e19224
 # relevant DAS query : summary run between [326381, 327489] dataset=/HIMinimumBias1/HIRun2018A-PromptReco-v2/AOD
 #   output on 2019.01.18 : Number of blocks: 74 Number of events: 117183101 Number of files: 18218 Number of lumis: 20667 sum(file_size): 53536043144572 (53.5TB)
 
