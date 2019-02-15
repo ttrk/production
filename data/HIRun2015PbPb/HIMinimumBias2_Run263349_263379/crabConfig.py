@@ -4,7 +4,7 @@ config = Configuration()
 
 config.section_('General')
 config.General.requestName = 'HIMinimumBias2_Run263349_263379'
-config.General.transferLogs = True
+config.General.transferLogs = False
 
 config.section_('JobType')
 config.JobType.pluginName = 'Analysis'
