@@ -16,6 +16,7 @@ config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 # https://github.com/CmsHI/cmssw/commit/c5058c956d1bb5cc638843508c0911e3585d1f2f
 ## runForestAOD_pponAA_MIX_103X.py commit
 # https://github.com/CmsHI/cmssw/commit/b9ff187623bc36f16c23ac31de736b00e3130838
+## related : https://hypernews.cern.ch/HyperNews/CMS/get/hi-general/5731.html
 
 ## Sample is pp_on_AA reco and not embedded.
 config.section_("Data")
