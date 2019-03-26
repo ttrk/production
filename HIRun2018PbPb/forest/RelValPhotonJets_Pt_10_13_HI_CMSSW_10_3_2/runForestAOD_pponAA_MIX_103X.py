@@ -49,11 +49,12 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2018_realistic_hi', '')
 process.HiForest.GlobalTagLabel = process.GlobalTag.globaltag
 
-print('\n\033[31m~*~ USING CENTRALITY TABLE FOR Hydjet Drum5Ev8 ~*~\033[0m\n')
+print('\n\033[31m~*~ USING CENTRALITY TABLE FOR Hydjet Drum5F ~*~\033[0m\n')
 process.GlobalTag.snapshotTime = cms.string("9999-12-31 23:59:59.000")
 process.GlobalTag.toGet.extend([
     cms.PSet(record = cms.string("HeavyIonRcd"),
-        tag = cms.string("CentralityTable_HFtowers200_HydjetDrum5Ev8_v1030pre5x02_mc"),
+        # tag = cms.string("CentralityTable_HFtowers200_HydjetDrum5Ev8_v1030pre5x02_mc"),
+        tag = cms.string("CentralityTable_HFtowers200_HydjetDrum5F_v1020x01_mc"),
         connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
         label = cms.untracked.string("HFtowers")
         ),
@@ -81,15 +82,51 @@ process.TFileService = cms.Service("TFileService",
 # Jets
 #############################
 # jet reco sequence
+process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_MC_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pponAA_MIX_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4CaloJetSequence_pponpp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4PFJetSequence_pponpp_mc_cff')
+process.ak4PFJetAnalyzer.doGenTaus = False
+process.ak4CaloJetAnalyzer.doGenTaus = False
 # replace above with this one for JEC:
 # process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_JEC_cff')
+process.jetSequence = cms.Sequence(
+    process.rhoSequence +
+
+    process.highPurityTracks +
+
+    process.akPu3CaloJets +
+    process.akPu3PFJets +
+    process.akCs3PFJets +
+
+    process.akPu4CaloJets +
+    process.akPu4PFJets +
+    process.akCs4PFJets +
+
+    process.akPu3CaloJetSequence +
+    process.akPu3PFJetSequence +
+    process.akCs3PFJetSequence +
+
+    process.akPu4CaloJetSequence +
+    process.akPu4PFJetSequence +
+    process.akCs4PFJetSequence +
+
+    process.genCleanedSequence +
+    process.ak4PFJets +
+    process.ak4CaloJets +
+    process.ak4CaloJetSequence +
+    process.ak4PFJetSequence
+)
 
 # temporary
 process.akPu4Calocorr.payload = "AK4Calo"
 process.akPu4PFcorr.payload = "AK4PF"
 process.akCs4PFcorr.payload = "AK4PF"
 process.akPu4PFJets.jetPtMin = 1
+
+process.ak4Calocorr.payload = "AK4Calo"
+process.ak4PFcorr.payload = "AK4PF"
+process.ak4PFJets.jetPtMin = 1
 
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")

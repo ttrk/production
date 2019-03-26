@@ -13,9 +13,9 @@ config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 ## software : CMSSW_10_3_1
 ## forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/50a89ae749941e27ce6cb21ab64bd5d3a1e19224
+# https://github.com/CmsHI/cmssw/commit/c5058c956d1bb5cc638843508c0911e3585d1f2f
 ## runForestAOD_pponAA_MIX_103X.py commit
-# https://github.com/CmsHI/cmssw/commit/e0ad5e3c537741309ba367fc58992058257e851b
+# https://github.com/CmsHI/cmssw/commit/b9ff187623bc36f16c23ac31de736b00e3130838
 
 ## Sample is pp_on_AA reco and not embedded.
 config.section_("Data")
