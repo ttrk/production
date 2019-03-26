@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "RelValPhotonJets_Pt_10_13_HI_CMSSW_10_3_3-FOREST"
+config.General.requestName = "RelValPhotonJets_Pt_10_13_HI_CMSSW_10_3_3_FOREST"
 config.General.transferLogs = False
 
 config.section_("JobType")

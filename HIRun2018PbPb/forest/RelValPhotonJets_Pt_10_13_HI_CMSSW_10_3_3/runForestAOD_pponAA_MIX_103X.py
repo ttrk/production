@@ -82,15 +82,51 @@ process.TFileService = cms.Service("TFileService",
 # Jets
 #############################
 # jet reco sequence
+process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_MC_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pponAA_MIX_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4CaloJetSequence_pponpp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4PFJetSequence_pponpp_mc_cff')
+process.ak4PFJetAnalyzer.doGenTaus = False
+process.ak4CaloJetAnalyzer.doGenTaus = False
 # replace above with this one for JEC:
 # process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_JEC_cff')
+process.jetSequence = cms.Sequence(
+    process.rhoSequence +
+
+    process.highPurityTracks +
+
+    process.akPu3CaloJets +
+    process.akPu3PFJets +
+    process.akCs3PFJets +
+
+    process.akPu4CaloJets +
+    process.akPu4PFJets +
+    process.akCs4PFJets +
+
+    process.akPu3CaloJetSequence +
+    process.akPu3PFJetSequence +
+    process.akCs3PFJetSequence +
+
+    process.akPu4CaloJetSequence +
+    process.akPu4PFJetSequence +
+    process.akCs4PFJetSequence +
+
+    process.genCleanedSequence +
+    process.ak4PFJets +
+    process.ak4CaloJets +
+    process.ak4CaloJetSequence +
+    process.ak4PFJetSequence
+)
 
 # temporary
 process.akPu4Calocorr.payload = "AK4Calo"
 process.akPu4PFcorr.payload = "AK4PF"
 process.akCs4PFcorr.payload = "AK4PF"
 process.akPu4PFJets.jetPtMin = 1
+
+process.ak4Calocorr.payload = "AK4Calo"
+process.ak4PFcorr.payload = "AK4PF"
+process.ak4PFJets.jetPtMin = 1
 
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
