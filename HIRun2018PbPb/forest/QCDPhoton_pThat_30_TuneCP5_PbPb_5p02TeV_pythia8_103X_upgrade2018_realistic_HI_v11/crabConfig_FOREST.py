@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "RelValPyquen_GammaJet_pt20_2760GeV_CMSSW_10_3_2_HI_v11-FOREST"
+config.General.requestName = "QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8-FOREST"
 config.General.transferLogs = False
 
 config.section_("JobType")
