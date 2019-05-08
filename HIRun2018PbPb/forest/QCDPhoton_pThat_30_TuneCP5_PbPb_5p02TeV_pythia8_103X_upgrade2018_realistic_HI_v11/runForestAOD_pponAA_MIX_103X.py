@@ -26,7 +26,7 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
     fileNames = cms.untracked.vstring(
-        "/store/user/ikucher/QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_103X_upgrade2018_realistic_HI_v11_RECO/QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_103X_upgrade2018_realistic_HI_v11/crab_QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_103X_upgrade2018_realistic_HI_v11_RECO/190305_192301/0005/step2_RAW2DIGI_L1Reco_RECO_5906.root"
+        "/store/user/ikucher/QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_CMSSW1033patch1_RECO_v2/QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_103X_upgrade2018_realistic_HI_v11/crab_QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_CMSSW1033patch1_RECO_v2/190411_073419/0010/step2_RAW2DIGI_L1Reco_RECO_10000.root"
         ),
     )
 
@@ -92,6 +92,7 @@ process.akPu4PFcorr.payload = "AK4PF"
 process.akCs4PFcorr.payload = "AK4PF"
 process.akPu4PFJets.jetPtMin = 1
 
+
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
 process.pfcandAnalyzer.doTrackMatching  = cms.bool(True)
@@ -117,6 +118,11 @@ process.hiEvtAnalyzer.doMC = cms.bool(True) # general MC info
 process.hiEvtAnalyzer.doHiMC = cms.bool(True) # HI specific MC info
 process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cfi')
 process.load('HeavyIonsAnalysis.EventAnalysis.skimanalysis_cfi')
+process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
+process.load('HeavyIonsAnalysis.EventAnalysis.l1object_cfi')
+
+from HeavyIonsAnalysis.EventAnalysis.hltobject_cfi import trigger_list_mc
+process.hltobject.triggerNames = trigger_list_mc
 
 ###############################################################################
 
@@ -135,6 +141,7 @@ process.load('HeavyIonsAnalysis.TrackAnalysis.TrkAnalyzers_cff')
 # Photons
 #####################
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
+process.ggHiNtuplizerGED.doEffectiveAreas = cms.bool(True)
 
 ###############################################################################
 
@@ -182,6 +189,8 @@ process.ana_step = cms.Path(
     process.HiForest +
     process.runAnalyzer +
     process.hltanalysis +
+    process.hltobject +
+    # process.l1object +
     process.centralityBin +
     process.hiEvtAnalyzer +
     process.HiGenParticleAna +
@@ -190,6 +199,7 @@ process.ana_step = cms.Path(
     process.ggHiNtuplizer +
     process.ggHiNtuplizerGED +
     process.hiFJRhoAnalyzer +
+    process.hiFJRhoAnalyzerFinerBins +
     process.pfcandAnalyzer +
     process.pfcandAnalyzerCS +
     process.trackSequencesPP +
