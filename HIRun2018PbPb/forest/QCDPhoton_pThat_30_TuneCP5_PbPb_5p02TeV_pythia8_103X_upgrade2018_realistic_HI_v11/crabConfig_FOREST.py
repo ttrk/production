@@ -17,7 +17,6 @@ config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 ## runForestAOD_pponAA_MIX_103X.py commit + ggHi.doEffectiveAreas
 # https://github.com/CmsHI/cmssw/commit/a7368e9ee00017993af087b6265f97023d98c14b
 
-## Sample is pp_on_AA reco and not embedded.
 config.section_("Data")
 config.Data.inputDataset = "/QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_103X_upgrade2018_realistic_HI_v11/ikucher-crab_QCDPhoton_pThat-30_TuneCP5_PbPb_5p02TeV_pythia8_CMSSW1033patch1_RECO_v2-0734d2cedcdb448045aea7690e4fbf8b/USER"
 config.Data.inputDBS = "phys03"
