@@ -92,6 +92,7 @@ process.akPu4PFcorr.payload = "AK4PF"
 process.akCs4PFcorr.payload = "AK4PF"
 process.akPu4PFJets.jetPtMin = 1
 
+
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
 process.pfcandAnalyzer.doTrackMatching  = cms.bool(True)
@@ -117,6 +118,11 @@ process.hiEvtAnalyzer.doMC = cms.bool(True) # general MC info
 process.hiEvtAnalyzer.doHiMC = cms.bool(True) # HI specific MC info
 process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cfi')
 process.load('HeavyIonsAnalysis.EventAnalysis.skimanalysis_cfi')
+process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
+process.load('HeavyIonsAnalysis.EventAnalysis.l1object_cfi')
+
+from HeavyIonsAnalysis.EventAnalysis.hltobject_cfi import trigger_list_mc
+process.hltobject.triggerNames = trigger_list_mc
 
 ###############################################################################
 
@@ -136,6 +142,10 @@ process.load('HeavyIonsAnalysis.TrackAnalysis.TrkAnalyzers_cff')
 #####################
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
 process.ggHiNtuplizerGED.doEffectiveAreas = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
+process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
+process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
 
 ###############################################################################
 
@@ -183,6 +193,8 @@ process.ana_step = cms.Path(
     process.HiForest +
     process.runAnalyzer +
     process.hltanalysis +
+    process.hltobject +
+    # process.l1object +
     process.centralityBin +
     process.hiEvtAnalyzer +
     process.HiGenParticleAna +
@@ -191,6 +203,7 @@ process.ana_step = cms.Path(
     process.ggHiNtuplizer +
     process.ggHiNtuplizerGED +
     process.hiFJRhoAnalyzer +
+    process.hiFJRhoAnalyzerFinerBins +
     process.pfcandAnalyzer +
     process.pfcandAnalyzerCS +
     process.trackSequencesPP +

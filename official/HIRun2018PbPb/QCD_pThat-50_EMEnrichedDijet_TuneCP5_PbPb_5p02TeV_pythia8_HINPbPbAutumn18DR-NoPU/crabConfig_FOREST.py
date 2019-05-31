@@ -13,11 +13,10 @@ config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 ## software : CMSSW_10_3_1
 ## forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/2a535687ab6f7dc031360cb15f8782782a0124a3
-## runForestAOD_pponAA_MIX_103X.py commit + enable ggHiNtuplizerGED.doEffectiveAreas
-# https://github.com/CmsHI/cmssw/commit/2a535687ab6f7dc031360cb15f8782782a0124a3
+# https://github.com/CmsHI/cmssw/commit/ba8faf19f2c60adc8318182a386eb8ffa3dea9b2
+## runForestAOD_pponAA_MIX_103X.py commit + enable ggHiNtuplizerGED.doEffectiveAreas + enable ggHiNtuplizerGED.doRecHits
+# https://github.com/CmsHI/cmssw/commit/a7368e9ee00017993af087b6265f97023d98c14b
 
-## Sample is pp_on_AA reco and not embedded.
 config.section_("Data")
 config.Data.inputDataset = "/QCD_pThat-50_EMEnrichedDijet_TuneCP5_PbPb_5p02TeV_pythia8/HINPbPbAutumn18DR-NoPU_103X_upgrade2018_realistic_HI_v11-v1/AODSIM"
 config.Data.inputDBS = "global"
