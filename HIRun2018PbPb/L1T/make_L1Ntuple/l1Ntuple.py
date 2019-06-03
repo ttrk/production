@@ -2,8 +2,6 @@
 
 import FWCore.ParameterSet.Config as cms
 
-from Configuration.StandardSequences.Eras import eras
-
 process = cms.Process('MyL1Ntuple')
 
 # import of standard configurations
@@ -28,15 +26,6 @@ process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring()
 )
 
-#process.options = cms.untracked.PSet(
-#)
-
-# Production Info
-
-# Output definition
-
-# Additional output definition
-
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2018_realistic_hi', '')
@@ -44,14 +33,10 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2018_realistic_hi'
 process.schedule = cms.Schedule()
 
 # Automatic addition of the customisation function from L1Trigger.L1TNtuples.customiseL1Ntuple
-#from L1Trigger.L1TNtuples.customiseL1Ntuple import L1NtupleEMU,L1NtupleGEN
 from L1Trigger.L1TNtuples.customiseL1Ntuple import L1NtupleEMU 
 
 #call to customisation function L1NtupleEMU imported from L1Trigger.L1TNtuples.customiseL1Ntuple
 process = L1NtupleEMU(process)
-
-#call to customisation function L1NtupleGEN imported from L1Trigger.L1TNtuples.customiseL1Ntuple
-#process = L1NtupleGEN(process)
 
 process.l1UpgradeEmuTree.egToken = cms.untracked.InputTag("caloStage2Digis","EGamma")
 process.l1UpgradeEmuTree.jetToken = cms.untracked.InputTag("caloStage2Digis","Jet")
@@ -60,13 +45,8 @@ process.l1UpgradeEmuTree.muonToken = muonToken = cms.untracked.InputTag("gmtStag
 process.l1UpgradeEmuTree.sumToken = cms.untracked.InputTag("caloStage2Digis","EtSum")
 process.l1UpgradeEmuTree.tauTokens = cms.untracked.VInputTag(cms.InputTag("caloStage2Digis","Tau"))
 
-# Schedule definition
-#process.endjob_step = cms.EndPath(process.L1NtupleEMU+process.L1NtupleGEN)
+process.TFileService = cms.Service(
+        "TFileService",
+        fileName = cms.string('L1Ntuple.root')
+)
 
-# End of customisation functions
-
-# Customisation from command line
-
-# Add early deletion of temporary data products to reduce peak memory need
-
-# End adding early deletion
