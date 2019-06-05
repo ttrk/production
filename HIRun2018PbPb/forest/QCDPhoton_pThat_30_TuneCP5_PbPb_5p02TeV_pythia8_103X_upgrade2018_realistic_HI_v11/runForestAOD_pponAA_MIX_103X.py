@@ -194,7 +194,7 @@ process.ana_step = cms.Path(
     process.runAnalyzer +
     process.hltanalysis +
     process.hltobject +
-    # process.l1object +
+    process.l1object +
     process.centralityBin +
     process.hiEvtAnalyzer +
     process.HiGenParticleAna +
