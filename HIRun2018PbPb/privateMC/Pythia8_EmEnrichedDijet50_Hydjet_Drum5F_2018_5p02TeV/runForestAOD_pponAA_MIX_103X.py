@@ -142,6 +142,12 @@ process.load('HeavyIonsAnalysis.TrackAnalysis.TrkAnalyzers_cff')
 #####################
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
 process.ggHiNtuplizerGED.doEffectiveAreas = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
+process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
+process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
+process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
 
 ###############################################################################
 
@@ -190,7 +196,7 @@ process.ana_step = cms.Path(
     process.runAnalyzer +
     process.hltanalysis +
     process.hltobject +
-    # process.l1object +
+    process.l1object +
     process.centralityBin +
     process.hiEvtAnalyzer +
     process.HiGenParticleAna +

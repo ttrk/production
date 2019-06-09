@@ -146,6 +146,8 @@ process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
 process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
 process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
 process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
+process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
 
 ###############################################################################
 

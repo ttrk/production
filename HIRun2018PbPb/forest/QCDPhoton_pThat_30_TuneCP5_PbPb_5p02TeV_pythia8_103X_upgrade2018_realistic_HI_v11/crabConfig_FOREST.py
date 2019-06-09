@@ -13,8 +13,8 @@ config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 ## software : CMSSW_10_3_1
 ## forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/00d27df6ce1ac62c3390c782e5af64f731dfc27e
-## runForestAOD_pponAA_MIX_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED.doRecHits + activate l1object
+# https://github.com/CmsHI/cmssw/commit/b735edde38d20a2fe614e8ba2233f149b2774461
+## runForestAOD_pponAA_MIX_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object
 # https://github.com/CmsHI/cmssw/commit/a7368e9ee00017993af087b6265f97023d98c14b
 
 config.section_("Data")
