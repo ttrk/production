@@ -128,6 +128,13 @@ process.load('HeavyIonsAnalysis.TrackAnalysis.TrkAnalyzers_cff')
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
 process.ggHiNtuplizer.doGenParticles = False
 process.ggHiNtuplizerGED.doGenParticles = False
+process.ggHiNtuplizerGED.doEffectiveAreas = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
+process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
+process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
+process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
 
 ###############################################################################
 
@@ -152,7 +159,7 @@ process.akPu4CaloCombinedSecondaryVertexV2BJetTags.tagInfos = cms.VInputTag(
 
 # trained on CS jets
 process.CSVscikitTags.weightFile = cms.FileInPath(
-    'HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb_BDTG.weights.xml')
+    'HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb2018_BDTG.weights.xml')
 
 ###############################################################################
 
@@ -183,7 +190,7 @@ process.ana_step = cms.Path(
     process.HiForest +
     process.hltanalysis +
     process.hltobject +
-    #process.l1object +
+    process.l1object +
     process.centralityBin +
     process.hiEvtAnalyzer +
     process.jetSequence +
@@ -265,7 +272,40 @@ process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
 ###############################################################################
 
 # Customization
-# KT : filter events on Z->mu+mu candidates
+## KT : add event plane info
+# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=40#CMSSW_10_3_X_Instructions_2018_P
+process.load("RecoHI.HiEvtPlaneAlgos.HiEvtPlane_cfi")
+process.load("RecoHI.HiEvtPlaneAlgos.hiEvtPlaneFlat_cfi")
+process.load("CondCore.CondDB.CondDB_cfi")
+process.CondDB.connect = "sqlite_file:HeavyIonRPRcd_PbPb2018_offline.db"
+process.PoolDBESSource = cms.ESSource("PoolDBESSource",
+                                       process.CondDB,
+                                       toGet = cms.VPSet(cms.PSet(record = cms.string('HeavyIonRPRcd'),
+                                                                  tag = cms.string('HeavyIonRPRcd_PbPb2018_offline')
+                                                                  )
+                                                         )
+                                      )
+process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
+#process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring(),
+#                             inputCommands=cms.untracked.vstring(
+#        'keep *',
+#        'drop *_hiEvtPlane_*_*'
+#        )
+#)
+process.hiEvtPlane.trackTag = cms.InputTag("generalTracks")
+process.hiEvtPlane.vertexTag = cms.InputTag("offlinePrimaryVertices")
+process.hiEvtPlane.loadDB = cms.bool(True)
+process.hiEvtPlane.useNtrk = cms.untracked.bool(False)
+process.hiEvtPlane.caloCentRef = cms.double(-1)
+process.hiEvtPlane.caloCentRefWidth = cms.double(-1)
+process.hiEvtPlaneFlat.caloCentRef = cms.double(-1)
+process.hiEvtPlaneFlat.caloCentRefWidth = cms.double(-1)
+process.hiEvtPlaneFlat.vertexTag = cms.InputTag("offlinePrimaryVertices")
+process.hiEvtPlaneFlat.useNtrk = cms.untracked.bool(False)
+process.p = cms.Path(process.hiEvtPlane * process.hiEvtPlaneFlat)
+## KT : add event plane info - END
+
+## KT : filter events on Z->mu+mu candidates
 process.selectedMuons = cms.EDFilter("MuonSelector",
     src = cms.InputTag("muons"),
     cut = cms.string("(isTrackerMuon && isGlobalMuon) && pt > 5."),
@@ -301,3 +341,4 @@ process.skimanalysis.superFilters = cms.vstring("superFilterPath")
 
 for path in process.paths:
   getattr(process,path)._seq = process.zMMFilterSequence * getattr(process,path)._seq
+## KT : filter events on Z->mu+mu candidates - END

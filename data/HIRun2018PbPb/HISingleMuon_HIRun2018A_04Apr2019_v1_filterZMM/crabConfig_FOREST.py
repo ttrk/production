@@ -10,13 +10,15 @@ config.section_("JobType")
 config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "runForestAOD_pponAA_DATA_103X.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
-config.JobType.maxJobRuntimeMin = 2750    # request longer runtime.
-# forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/ba8faf19f2c60adc8318182a386eb8ffa3dea9b2
-# runForestAOD_pponAA_DATA_103X.py commit + Z->mu+mu filter
-# https://github.com/CmsHI/cmssw/commit/a7368e9ee00017993af087b6265f97023d98c14b
+#config.JobType.maxJobRuntimeMin = 2750    # request longer runtime.
+## software : CMSSW_10_3_1
+## forest_CMSSW_10_3_1
+# https://github.com/CmsHI/cmssw/commit/027aac74d5dc19779d2738d9930a54b94e79d531
+# runForestAOD_pponAA_DATA_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object + add event plane info + Z->mu+mu filter
+# https://github.com/CmsHI/cmssw/commit/027aac74d5dc19779d2738d9930a54b94e79d531
 # relevant DAS query : summary dataset=/HISingleMuon/HIRun2018A-04Apr2019-v1/AOD
 #   output on 2019.05.21 : Number of blocks: 112 Number of events: 56204863 Number of files: 10357 Number of lumis: 41725 sum(file_size): 58311315642652 (58.3TB)
+config.JobType.inputFiles = ["HeavyIonRPRcd_PbPb2018_offline.db"]
 
 config.section_("Data")
 config.Data.inputDataset = "/HISingleMuon/HIRun2018A-04Apr2019-v1/AOD"

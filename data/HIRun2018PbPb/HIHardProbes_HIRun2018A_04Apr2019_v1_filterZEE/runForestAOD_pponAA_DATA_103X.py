@@ -159,7 +159,7 @@ process.akPu4CaloCombinedSecondaryVertexV2BJetTags.tagInfos = cms.VInputTag(
 
 # trained on CS jets
 process.CSVscikitTags.weightFile = cms.FileInPath(
-    'HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb_BDTG.weights.xml')
+    'HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb2018_BDTG.weights.xml')
 
 ###############################################################################
 
@@ -272,7 +272,40 @@ process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
 ###############################################################################
 
 # Customization
-# KT : filter events on dielectrons
+## KT : add event plane info
+# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=40#CMSSW_10_3_X_Instructions_2018_P
+process.load("RecoHI.HiEvtPlaneAlgos.HiEvtPlane_cfi")
+process.load("RecoHI.HiEvtPlaneAlgos.hiEvtPlaneFlat_cfi")
+process.load("CondCore.CondDB.CondDB_cfi")
+process.CondDB.connect = "sqlite_file:HeavyIonRPRcd_PbPb2018_offline.db"
+process.PoolDBESSource = cms.ESSource("PoolDBESSource",
+                                       process.CondDB,
+                                       toGet = cms.VPSet(cms.PSet(record = cms.string('HeavyIonRPRcd'),
+                                                                  tag = cms.string('HeavyIonRPRcd_PbPb2018_offline')
+                                                                  )
+                                                         )
+                                      )
+process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
+#process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring(),
+#                             inputCommands=cms.untracked.vstring(
+#        'keep *',
+#        'drop *_hiEvtPlane_*_*'
+#        )
+#)
+process.hiEvtPlane.trackTag = cms.InputTag("generalTracks")
+process.hiEvtPlane.vertexTag = cms.InputTag("offlinePrimaryVertices")
+process.hiEvtPlane.loadDB = cms.bool(True)
+process.hiEvtPlane.useNtrk = cms.untracked.bool(False)
+process.hiEvtPlane.caloCentRef = cms.double(-1)
+process.hiEvtPlane.caloCentRefWidth = cms.double(-1)
+process.hiEvtPlaneFlat.caloCentRef = cms.double(-1)
+process.hiEvtPlaneFlat.caloCentRefWidth = cms.double(-1)
+process.hiEvtPlaneFlat.vertexTag = cms.InputTag("offlinePrimaryVertices")
+process.hiEvtPlaneFlat.useNtrk = cms.untracked.bool(False)
+process.p = cms.Path(process.hiEvtPlane * process.hiEvtPlaneFlat)
+## KT : add event plane info - END
+
+## KT : filter events on dielectrons
 process.dielectronFilter = cms.EDFilter("PtMinGsfElectronCountFilter",
     src = cms.InputTag("gedGsfElectrons"),
     ptMin = cms.double(8.0),
@@ -309,3 +342,4 @@ process.skimanalysis.superFilters = cms.vstring("superFilterPath")
 ##filter all path with the production filter sequence
 for path in process.paths:
   getattr(process,path)._seq = process.filterSequence * getattr(process,path)._seq
+## KT : filter events on dielectrons - END

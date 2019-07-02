@@ -10,13 +10,15 @@ config.section_("JobType")
 config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "runForestAOD_pponAA_DATA_103X.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
-config.JobType.maxJobRuntimeMin = 2750    # request longer runtime.
-# forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/419b0eb45d6fc64bf427dcc668c46ebf2aa33921
-# runForestAOD_pponAA_DATA_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object + Z->e+e filter
-# https://github.com/CmsHI/cmssw/commit/a7368e9ee00017993af087b6265f97023d98c14b
+#config.JobType.maxJobRuntimeMin = 2750    # request longer runtime.
+## software : CMSSW_10_3_1
+## forest_CMSSW_10_3_1
+# https://github.com/CmsHI/cmssw/commit/027aac74d5dc19779d2738d9930a54b94e79d531
+# runForestAOD_pponAA_DATA_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object + add event plane info + Z->e+e filter
+# https://github.com/CmsHI/cmssw/commit/027aac74d5dc19779d2738d9930a54b94e79d531
 # relevant DAS query : summary dataset=/HIHardProbes/HIRun2018A-04Apr2019-v1/AOD
-#   output on 2019.06.17 : Number of blocks: 108 Number of events: 43654157 Number of files: 7747 Number of lumis: 41396 sum(file_size): 74107362626557 (74.1TB)  
+#   output on 2019.06.17 : Number of blocks: 108 Number of events: 43654157 Number of files: 7747 Number of lumis: 41396 sum(file_size): 74107362626557 (74.1TB)
+config.JobType.inputFiles = ["HeavyIonRPRcd_PbPb2018_offline.db"]
 
 config.section_("Data")
 config.Data.inputDataset = "/HIHardProbes/HIRun2018A-04Apr2019-v1/AOD"
