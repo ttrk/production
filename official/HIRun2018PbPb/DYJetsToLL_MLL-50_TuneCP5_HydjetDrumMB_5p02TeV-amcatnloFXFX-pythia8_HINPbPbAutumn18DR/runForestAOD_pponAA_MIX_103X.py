@@ -107,7 +107,7 @@ process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cfi')
 process.load('HeavyIonsAnalysis.TrackAnalysis.HiGenAnalyzer_cfi')
 # making cuts looser so that we can actually check dNdEta
 process.HiGenParticleAna.ptMin = cms.untracked.double(0.4) # default is 5
-process.HiGenParticleAna.etaMax = cms.untracked.double(3.5) # default is 2
+process.HiGenParticleAna.etaMax = cms.untracked.double(3.0) # default is 2
 
 ###############################################################################
 
@@ -173,7 +173,7 @@ process.akPu4CaloCombinedSecondaryVertexV2BJetTags.tagInfos = cms.VInputTag(
 
 # trained on CS jets
 process.CSVscikitTags.weightFile = cms.FileInPath(
-    'HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb_BDTG.weights.xml')
+    'HeavyIonsAnalysis/JetAnalysis/data/TMVA_Btag_CsJets_PbPb2018_BDTG.weights.xml')
 
 ###############################################################################
 
@@ -277,3 +277,36 @@ process = MassReplaceInputTag(process,"offlinePrimaryVertices","offlinePrimaryVe
 process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
 # Customization
 ###############################################################################
+
+## KT : add event plane info
+# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=40#CMSSW_10_3_X_Instructions_2018_P
+process.load("RecoHI.HiEvtPlaneAlgos.HiEvtPlane_cfi")
+process.load("RecoHI.HiEvtPlaneAlgos.hiEvtPlaneFlat_cfi")
+process.load("CondCore.CondDB.CondDB_cfi")
+process.CondDB.connect = "sqlite_file:HeavyIonRPRcd_PbPb2018_offline.db"
+process.PoolDBESSource = cms.ESSource("PoolDBESSource",
+                                       process.CondDB,
+                                       toGet = cms.VPSet(cms.PSet(record = cms.string('HeavyIonRPRcd'),
+                                                                  tag = cms.string('HeavyIonRPRcd_PbPb2018_offline')
+                                                                  )
+                                                         )
+                                      )
+process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
+#process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring(),
+#                             inputCommands=cms.untracked.vstring(
+#        'keep *',
+#        'drop *_hiEvtPlane_*_*'
+#        )
+#)
+process.hiEvtPlane.trackTag = cms.InputTag("generalTracks")
+process.hiEvtPlane.vertexTag = cms.InputTag("offlinePrimaryVertices")
+process.hiEvtPlane.loadDB = cms.bool(True)
+process.hiEvtPlane.useNtrk = cms.untracked.bool(False)
+process.hiEvtPlane.caloCentRef = cms.double(-1)
+process.hiEvtPlane.caloCentRefWidth = cms.double(-1)
+process.hiEvtPlaneFlat.caloCentRef = cms.double(-1)
+process.hiEvtPlaneFlat.caloCentRefWidth = cms.double(-1)
+process.hiEvtPlaneFlat.vertexTag = cms.InputTag("offlinePrimaryVertices")
+process.hiEvtPlaneFlat.useNtrk = cms.untracked.bool(False)
+process.p = cms.Path(process.hiEvtPlane * process.hiEvtPlaneFlat)
+## KT : add event plane info - END
