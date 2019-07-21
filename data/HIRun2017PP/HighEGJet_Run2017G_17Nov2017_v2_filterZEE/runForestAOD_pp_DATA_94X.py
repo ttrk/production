@@ -65,49 +65,48 @@ process.TFileService = cms.Service("TFileService",
 #############################
 # Jets
 #############################
-
-from RecoJets.JetProducers.ak4PFJets_cfi import ak4PFJets
-ak4PFJets.doAreaFastjet = True
-process.ak5PFJets = ak4PFJets.clone(rParam = 0.5)
-process.ak3PFJets = ak4PFJets.clone(rParam = 0.3)
-
-process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4CaloJetSequence_pp_data_cff')
-
-process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak3PFJetSequence_pp_data_cff')
-process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4PFJetSequence_pp_data_cff')
-process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak5PFJetSequence_pp_data_cff')
-
-process.highPurityTracks = cms.EDFilter("TrackSelector",
-    src = cms.InputTag("generalTracks"),
-    cut = cms.string('quality("highPurity")')
-)
-
-process.jetSequences = cms.Sequence(
-    process.ak3PFJets +
-    process.ak5PFJets +
-    process.highPurityTracks +
-    process.ak4CaloJetSequence +
-    process.ak3PFJetSequence +
-    process.ak4PFJetSequence +
-    process.ak5PFJetSequence
-)
+process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_data_cff')
 
 #####################################################################################
 
 ############################
 # Event Analysis
 ############################
+process.load('RecoHI.HiCentralityAlgos.HiCentrality_cfi')
+process.hiCentrality.produceHFhits = True
+process.hiCentrality.srcHFhits = cms.InputTag("reducedHcalRecHits", "hfreco")
+process.hiCentrality.produceHFtowers = False
+process.hiCentrality.produceEcalhits = True
+process.hiCentrality.srcEBhits = cms.InputTag("reducedEcalRecHitsEB")
+process.hiCentrality.srcEEhits = cms.InputTag("reducedEcalRecHitsEE")
+process.hiCentrality.produceZDChits = False
+process.hiCentrality.produceETmidRapidity = False
+process.hiCentrality.producePixelhits = False
+#process.hiCentrality.srcPixelhits = cms.InputTag("siPixelRecHits")
+process.hiCentrality.srcVertex = cms.InputTag("offlinePrimaryVertices")
+process.hiCentrality.produceTracks = True
+process.hiCentrality.srcTracks = cms.InputTag("generalTracks")
+process.hiCentrality.producePixelTracks = False
+#process.hiCentrality.srcPixelTracks = cms.InputTag("hiConformalPixelTracks")
+process.hiCentrality.reUseCentrality = False
+#process.hiCentrality.srcReUse = cms.InputTag("hiCentrality","","RECO")
+
+process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
+process.centralityBin.Centrality = cms.InputTag("hiCentrality")
+process.centralityBin.centralityVariable = cms.string("HFtowers")
+#process.centralityBin.nonDefaultGlauberModel = cms.string("")
+
 process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
+#process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_mc_cfi')
 process.hiEvtAnalyzer.Vertex = cms.InputTag("offlinePrimaryVertices")
-process.hiEvtAnalyzer.doCentrality = cms.bool(False)
+process.hiEvtAnalyzer.doCentrality = cms.bool(True)
+process.hiEvtAnalyzer.CentralitySrc = cms.InputTag("hiCentrality")
+process.hiEvtAnalyzer.CentralityBinSrc = cms.InputTag("centralityBin","HFtowers")
 process.hiEvtAnalyzer.doEvtPlane = cms.bool(False)
 
+process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
 process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
 process.load('HeavyIonsAnalysis.EventAnalysis.l1object_cfi')
-
-process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
-from HeavyIonsAnalysis.EventAnalysis.dummybranches_cff import addHLTdummybranchesForPP
-addHLTdummybranchesForPP(process)
 
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
 process.pfcandAnalyzer.skipCharged = False
@@ -132,28 +131,15 @@ process.load('HeavyIonsAnalysis.JetAnalysis.TrkAnalyzers_cff')
 # Photons
 #####################
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
-process.ggHiNtuplizer.gsfElectronLabel         = "gedGsfElectrons"
-process.ggHiNtuplizer.recoPhotonHiIsolationMap = 'photonIsolationHIProducerpp'
-# set to False if it gives error due to "not found" photonIsolationHIProducer
-process.ggHiNtuplizer.useValMapIso             = True
-process.ggHiNtuplizer.VtxLabel                 = "offlinePrimaryVertices"
-process.ggHiNtuplizer.particleFlowCollection   = "particleFlow"
-process.ggHiNtuplizer.doGenParticles           = False
-process.ggHiNtuplizer.doElectronVID            = True
-
-process.ggHiNtuplizerGED = process.ggHiNtuplizer.clone(
-    doElectrons = True,
-    doMuons = True,
-    recoPhotonSrc = cms.InputTag('gedPhotons'),
-    recoPhotonHiIsolationMap = cms.InputTag('photonIsolationHIProducerppGED'))
-
+process.ggHiNtuplizer.doGenParticles = False
+process.ggHiNtuplizerGED.doGenParticles = False
 process.ggHiNtuplizerGED.doEffectiveAreas = cms.bool(True)
-#process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
-#process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
-#process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
-#process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
-#process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
-#process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
+process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
+process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
+process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
+process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
 
 ####################################################################################
 
@@ -181,11 +167,13 @@ for idmod in my_id_modules:
 #########################
 
 process.ana_step = cms.Path(
-    process.hltanalysisReco *
+    process.hltanalysis *
     process.hltobject *
     process.l1object +
+    process.hiCentrality *
+    process.centralityBin *
     process.hiEvtAnalyzer *
-    process.jetSequences +
+    process.jetSequence +
     # Should be added in the path for VID module
     # process.egmGsfElectronIDSequence +
     process.ggHiNtuplizer +
@@ -236,14 +224,6 @@ process.pVertexFilterCutEandG = cms.Path(process.pileupVertexFilterCutEandG)
 process.pAna = cms.EndPath(process.skimanalysis)
 
 # Customization
-
-for analyzer in [process.ak3PFJetAnalyzer,
-                 process.ak4PFJetAnalyzer,
-                 process.ak5PFJetAnalyzer,
-                 process.ak4CaloJetAnalyzer,
-                 ]:
-    analyzer.trackSelection = process.ak4PFSecondaryVertexTagInfos.trackSelection
-    analyzer.trackPairV0Filter = process.ak4PFSecondaryVertexTagInfos.vertexCuts.v0Filter
 
 # Customization
 # KT : filter events on dielectrons
