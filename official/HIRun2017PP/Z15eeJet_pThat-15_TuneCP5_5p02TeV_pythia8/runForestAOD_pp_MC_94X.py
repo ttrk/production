@@ -48,9 +48,6 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '94X_mc2017_realistic_forppRef5TeV', '')
 process.HiForest.GlobalTagLabel = process.GlobalTag.globaltag
 
-from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_pp5020
-process = overrideJEC_pp5020(process)
-
 #####################################################################################
 # Define tree output
 #####################################################################################
@@ -69,6 +66,12 @@ process.load("HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_mc_cff")
 
 # Use this version for JEC
 # process.load("HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_jec_cff")
+
+# temporary corrections
+for m in vars(process).values():
+    if (isinstance(m, cms.EDProducer)
+            and m._TypedParameterizable__type == 'JetCorrFactorsProducer'):
+        m.payload = "AK4PF"
 
 #####################################################################################
 
@@ -127,6 +130,7 @@ process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsE
 process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
 process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doEleERegression = cms.bool(True)
 
 ####################################################################################
 
@@ -158,6 +162,7 @@ process.ana_step = cms.Path(
     process.hiEvtAnalyzer *
     process.hltobject +
     process.l1object +
+    process.HiGenParticleAna*
     process.genJetSequence +
     process.jetSequence +
     # Should be added in the path for VID module

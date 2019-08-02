@@ -13,9 +13,9 @@ config.JobType.psetName = "runForestAOD_pp_MC_94X.py"
 #config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 ## software : CMSSW_9_4_10
 ## forest_CMSSW_9_4_10
-# https://github.com/CmsHI/cmssw/commit/a06e2f34edb4997ec9d7c9363d511d5eecac00ce
-## runForestAOD_pp_MC_94X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object + HiGenParticleAna.etaMax = 5, ptMin = 0.4
-# https://github.com/CmsHI/cmssw/commit/13ef2e83536987c958abeb141988de347620152e
+# https://github.com/CmsHI/cmssw/commit/756904222b58e139ef8f48efea126156c9688d84
+## runForestAOD_pp_MC_94X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, and doEleERegression + activate l1object + HiGenParticleAna.etaMax = 5, ptMin = 0.4
+# https://github.com/CmsHI/cmssw/commit/756904222b58e139ef8f48efea126156c9688d84
 # dataset summary on DAS
 # Number of blocks: 7 Number of events: 998438 Number of files: 30 Number of lumis: 1001 sum(file_size): 77166282156 (77.2GB)
 
