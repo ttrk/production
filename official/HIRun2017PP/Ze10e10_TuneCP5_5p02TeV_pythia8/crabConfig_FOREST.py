@@ -13,9 +13,9 @@ config.JobType.psetName = "runForestAOD_pp_MC_94X.py"
 #config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 ## software : CMSSW_9_4_10
 ## forest_CMSSW_9_4_10
-# https://github.com/CmsHI/cmssw/commit/4da4ff7aa28955bd63082e473397eacc0e28d2ac
-## runForestAOD_pp_MC_94X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object + HiGenParticleAna.etaMax = 5, ptMin = 0.4
-# https://github.com/CmsHI/cmssw/commit/5de23a5b4ecfbe46f852c502ad5e1956fe9442b5
+# https://github.com/CmsHI/cmssw/commit/756904222b58e139ef8f48efea126156c9688d84
+## runForestAOD_pp_MC_94X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, and doEleERegression + activate l1object + HiGenParticleAna.etaMax = 5, ptMin = 0.4
+# https://github.com/CmsHI/cmssw/commit/756904222b58e139ef8f48efea126156c9688d84
 # dataset summary on DAS
 # Number of blocks: 3 Number of events: 1093479 Number of files: 25 Number of lumis: 1055 sum(file_size): 75561907982 (75.6GB)
 
@@ -31,8 +31,8 @@ config.Data.outLFNDirBase = "/store/user/katatar/official/HIRun2017PP/"
 
 config.section_("Site")
 config.Site.storageSite = "T2_US_MIT"
-config.Site.whitelist = ["T2_US_MIT"]
+#config.Site.whitelist = ["T2_US_MIT"]
 
-config.section_("Debug")
-config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
+#config.section_("Debug")
+#config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
 
