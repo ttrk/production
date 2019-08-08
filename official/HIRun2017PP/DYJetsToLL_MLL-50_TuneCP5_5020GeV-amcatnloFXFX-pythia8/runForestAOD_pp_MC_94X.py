@@ -62,19 +62,22 @@ process.TFileService = cms.Service("TFileService",
 #############################
 # Jets
 #############################
-
-process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPP")
-process.ak4PFcorr.payload = "AK4PF"
+process.load("HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_mc_cff")
 
 # Use this version for JEC
-# process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_JECPP")
+# process.load("HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_jec_cff")
+
+# temporary corrections
+for m in vars(process).values():
+    if (isinstance(m, cms.EDProducer)
+            and m._TypedParameterizable__type == 'JetCorrFactorsProducer'):
+        m.payload = "AK4PF"
 
 #####################################################################################
 
 ############################
 # Event Analysis
 ############################
-process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
 # use data version to avoid PbPb MC
 process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
 process.hiEvtAnalyzer.Vertex = cms.InputTag("offlinePrimaryVertices")
@@ -83,19 +86,15 @@ process.hiEvtAnalyzer.doEvtPlane = cms.bool(False)
 process.hiEvtAnalyzer.doMC = cms.bool(True) # general MC info
 process.hiEvtAnalyzer.doHiMC = cms.bool(False) # HI specific MC info
 
+process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
 process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
 process.load('HeavyIonsAnalysis.EventAnalysis.l1object_cfi')
-
-process.hltanalysis.caloStage2Digis = cms.string('caloStage2Digis')
-process.hltanalysis.gmtStage2Digis = cms.string('gmtStage2Digis')
-process.hltanalysis.l1tAlgBlkInputTag = cms.InputTag("gtStage2Digis")
-process.hltanalysis.l1tExtBlkInputTag = cms.InputTag("gtStage2Digis")
 
 process.load('HeavyIonsAnalysis.JetAnalysis.HiGenAnalyzer_cfi')
 process.HiGenParticleAna.genParticleSrc = cms.untracked.InputTag("genParticles")
 process.HiGenParticleAna.doHI = False
 process.HiGenParticleAna.ptMin = cms.untracked.double(0.4) # default is 5
-process.HiGenParticleAna.etaMax = cms.untracked.double(3.5) # default is 2
+process.HiGenParticleAna.etaMax = cms.untracked.double(5.0) # default is 2
 
 process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cff')
 
@@ -124,27 +123,14 @@ process.load('HeavyIonsAnalysis.JetAnalysis.TrkAnalyzers_cff')
 # photons
 ######################
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
-process.ggHiNtuplizer.gsfElectronLabel         = "gedGsfElectrons"
-process.ggHiNtuplizer.recoPhotonHiIsolationMap = 'photonIsolationHIProducerpp'
-# set to False if it gives error due to "not found" photonIsolationHIProducer
-process.ggHiNtuplizer.useValMapIso             = True
-process.ggHiNtuplizer.VtxLabel                 = "offlinePrimaryVertices"
-process.ggHiNtuplizer.particleFlowCollection   = "particleFlow"
-process.ggHiNtuplizer.doElectronVID            = True
-
-process.ggHiNtuplizerGED = process.ggHiNtuplizer.clone(
-    doElectrons = True,
-    doMuons = True,
-    recoPhotonSrc = cms.InputTag('gedPhotons'),
-    recoPhotonHiIsolationMap = cms.InputTag('photonIsolationHIProducerppGED'))
-
 process.ggHiNtuplizerGED.doEffectiveAreas = cms.bool(True)
 process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
 process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
 process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
 process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
-#process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
-#process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doEleERegression = cms.bool(True)
 
 ####################################################################################
 
@@ -177,7 +163,8 @@ process.ana_step = cms.Path(
     process.hltobject +
     process.l1object +
     process.HiGenParticleAna*
-    process.jetSequences +
+    process.genJetSequence +
+    process.jetSequence +
     # Should be added in the path for VID module
     # process.egmGsfElectronIDSequence +
     process.ggHiNtuplizer +
@@ -229,5 +216,3 @@ process.pVertexFilterCutEandG = cms.Path(process.pileupVertexFilterCutEandG)
 process.pAna = cms.EndPath(process.skimanalysis)
 
 # Customization
-process.ak4PFJetAnalyzer.trackSelection = process.ak4PFSecondaryVertexTagInfos.trackSelection
-process.ak4PFJetAnalyzer.trackPairV0Filter = process.ak4PFSecondaryVertexTagInfos.vertexCuts.v0Filter
