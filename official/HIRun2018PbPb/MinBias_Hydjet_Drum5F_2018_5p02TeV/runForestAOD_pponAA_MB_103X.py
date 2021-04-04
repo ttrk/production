@@ -105,7 +105,7 @@ process.pfcandAnalyzer.doTrackMatching  = cms.bool(True)
 process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cfi')
 process.load('HeavyIonsAnalysis.TrackAnalysis.HiGenAnalyzer_cfi')
 # making cuts looser so that we can actually check dNdEta
-process.HiGenParticleAna.ptMin = cms.untracked.double(0.4) # default is 5
+process.HiGenParticleAna.ptMin = cms.untracked.double(0.1) # default is 5
 process.HiGenParticleAna.etaMax = cms.untracked.double(5.) # default is 2
 
 ###############################################################################
@@ -147,6 +147,8 @@ process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
 process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
 process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsEB")
 process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
+process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
 
 ###############################################################################
 

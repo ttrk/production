@@ -60,9 +60,6 @@ process.GlobalTag.toGet.extend([
         ),
     ])
 
-from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_PbPb5020
-process = overrideJEC_PbPb5020(process)
-
 process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
 process.centralityBin.Centrality = cms.InputTag("hiCentrality")
 process.centralityBin.centralityVariable = cms.string("HFtowers")
@@ -83,16 +80,6 @@ process.TFileService = cms.Service("TFileService",
 #############################
 # jet reco sequence
 process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pponAA_MIX_cff')
-# replace above with this one for JEC:
-# process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_JEC_cff')
-
-# temporary
-process.akPu4Calocorr.payload = "AK4Calo"
-process.akPu4PFcorr.payload = "AK4PF"
-process.akCs4PFcorr.payload = "AK4PF"
-process.ak4PFcorr.payload = "AK4PF"
-process.akPu4PFJets.jetPtMin = 1
-
 
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
@@ -107,7 +94,7 @@ process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cfi')
 process.load('HeavyIonsAnalysis.TrackAnalysis.HiGenAnalyzer_cfi')
 # making cuts looser so that we can actually check dNdEta
 process.HiGenParticleAna.ptMin = cms.untracked.double(0.4) # default is 5
-process.HiGenParticleAna.etaMax = cms.untracked.double(3.0) # default is 2
+process.HiGenParticleAna.etaMax = cms.untracked.double(5.) # default is 2
 
 ###############################################################################
 
@@ -149,6 +136,8 @@ process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsE
 process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
 process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doEleERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doSuperClusters = cms.bool(True)
 
 ###############################################################################
 
@@ -203,6 +192,7 @@ process.ana_step = cms.Path(
     process.HiGenParticleAna +
     process.genSignalSequence +
     process.jetSequence +
+    process.hiPuRhoR3Analyzer + 
     process.ggHiNtuplizer +
     process.ggHiNtuplizerGED +
     process.hiFJRhoAnalyzer +
@@ -279,7 +269,7 @@ process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
 ###############################################################################
 
 ## KT : add event plane info
-# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=40#CMSSW_10_3_X_Instructions_2018_P
+# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=42#Re_reco_using_CMSSW_10_3_3_patch
 process.load("RecoHI.HiEvtPlaneAlgos.HiEvtPlane_cfi")
 process.load("RecoHI.HiEvtPlaneAlgos.hiEvtPlaneFlat_cfi")
 process.load("CondCore.CondDB.CondDB_cfi")
@@ -287,11 +277,13 @@ process.CondDB.connect = "sqlite_file:HeavyIonRPRcd_PbPb2018_offline.db"
 process.PoolDBESSource = cms.ESSource("PoolDBESSource",
                                        process.CondDB,
                                        toGet = cms.VPSet(cms.PSet(record = cms.string('HeavyIonRPRcd'),
-                                                                  tag = cms.string('HeavyIonRPRcd_PbPb2018_offline')
+                                                                  tag = cms.string('HeavyIonRPRcd')
                                                                   )
                                                          )
                                       )
 process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
+#readFiles = cms.untracked.vstring()
+#secFiles = cms.untracked.vstring()
 #process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring(),
 #                             inputCommands=cms.untracked.vstring(
 #        'keep *',
