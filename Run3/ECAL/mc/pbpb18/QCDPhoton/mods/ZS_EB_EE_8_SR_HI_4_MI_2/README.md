@@ -1,5 +1,5 @@
 # Instructions
-## 1. Generate database file
+## 1. Generate database
 
   ```bash
   cmsRun srCondWrite_cfg.py
@@ -14,7 +14,7 @@ This creates the `EcalSRSettings_mod.db` file
   cmsRun step2_DIGI.py &> step2_DIGI.log
   ```
 
-Run digitization for few events, e.g. 10 events as in the code, to test it works correctly.
+Run digitization for few events, e.g. 10 events as in the current code, to check it works correctly.
 
 ## 3. Submit jobs
 
