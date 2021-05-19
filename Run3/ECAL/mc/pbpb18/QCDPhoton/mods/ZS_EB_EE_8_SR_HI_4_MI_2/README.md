@@ -33,7 +33,7 @@ Configs in this directory are to be run on the full or a large portion of the sa
 
 If you have questions/issue, the following can help
 
-[Grid certificates](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookRunningGrid)
+[Grid certificates](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookStartingGrid)
 
 [CRAB guide](https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab)
 
