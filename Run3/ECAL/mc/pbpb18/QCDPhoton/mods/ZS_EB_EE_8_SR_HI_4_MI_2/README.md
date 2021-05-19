@@ -11,7 +11,7 @@ This creates the `EcalSRSettings_mod.db` file
 
   ```bash
   voms-proxy-init --valid 168:00 --voms cms
-  cmsRun srCondWrite_cfg.py
+  cmsRun step2_DIGI.py &> step2_DIGI.log
   ```
 
 Run digitization for few events, e.g. 10 events as in the code, to test it works correctly.
@@ -34,5 +34,6 @@ Configs in this directory are to be run on the full or a large portion of the sa
 If you have questions/issue, the following can help
 
 [Grid certificates](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookRunningGrid)
+
 [CRAB guide](https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab)
 
