@@ -1,0 +1,7 @@
+import CondCore.DBCommon.CondDBSetup_cfi
+process.GlobalTag.toGet = cms.VPSet(
+  cms.PSet(record = cms.string("EcalSRSettingsRcd"),
+    tag = cms.string("EcalSRSettings_mod"),
+    connect = cms.string("sqlite_file:EcalSRSettings_mod.db") ## can change the .db file and tag name as you wish
+    )
+  )
