@@ -52,19 +52,31 @@ process.HiForest.GlobalTagLabel = process.GlobalTag.globaltag
 print('\n\033[31m~*~ USING CENTRALITY TABLE FOR PbPb 2018 DATA ~*~\033[0m\n')
 process.GlobalTag.snapshotTime = cms.string("9999-12-31 23:59:59.000")
 process.GlobalTag.toGet.extend([
-    cms.PSet(record = cms.string("HeavyIonRcd"),
-        tag = cms.string("CentralityTable_HFtowers200_DataPbPb_periHYDJETshape_run2v1031x02_offline"),
+    cms.PSet(record = cms.string("HeavyIonRcd"), 
+        tag = cms.string("CentralityTable_HFtowers200_DataPbPb_periHYDJETshape_run2v1033p1x01_offline"),
         connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
         label = cms.untracked.string("HFtowers")
         ),
     ])
 
-from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_PbPb5020
-process = overrideJEC_PbPb5020(process)
+process.load('RecoHI.HiCentralityAlgos.HiCentrality_cfi')
+process.hiCentrality.produceHFhits = False
+process.hiCentrality.produceHFtowers = False
+process.hiCentrality.produceEcalhits = False
+process.hiCentrality.produceZDChits = False
+process.hiCentrality.produceETmidRapidity = False
+process.hiCentrality.producePixelhits = False
+process.hiCentrality.produceTracks = False
+process.hiCentrality.producePixelTracks = False
+process.hiCentrality.reUseCentrality = True
+process.hiCentrality.srcReUse = cms.InputTag("hiCentrality","","RECO")
+process.hiCentrality.srcTracks = cms.InputTag("generalTracks")
+process.hiCentrality.srcVertex = cms.InputTag("offlinePrimaryVertices")
 
 process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
 process.centralityBin.Centrality = cms.InputTag("hiCentrality")
 process.centralityBin.centralityVariable = cms.string("HFtowers")
+process.centralityBin.nonDefaultGlauberModel = cms.string("")
 
 ###############################################################################
 # Define tree output
@@ -82,20 +94,6 @@ process.TFileService = cms.Service("TFileService",
 #############################
 # jet reco sequence
 process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pponAA_data_cff')
-# replace above with this one for JEC:
-# process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_JEC_cff')
-
-# temporary
-process.akPu4Calocorr.payload = "AK4Calo"
-process.akPu4PFcorr.payload = "AK4PF"
-process.akCs4PFcorr.payload = "AK4PF"
-process.akFlowPuCs4PFcorr.payload = "AK4PF"
-process.akPu3Calocorr.payload = "AK4Calo"
-process.akPu3PFcorr.payload = "AK3PF"
-process.akCs3PFcorr.payload = "AK3PF"
-process.akFlowPuCs3PFcorr.payload = "AK3PF"
-process.akPu3PFJets.jetPtMin = 1
-process.akPu4PFJets.jetPtMin = 1
 
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
@@ -141,6 +139,8 @@ process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsE
 process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
 process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doEleERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doSuperClusters = cms.bool(True)
 
 ###############################################################################
 
@@ -280,7 +280,7 @@ process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
 
 # Customization
 ## KT : add event plane info
-# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=40#CMSSW_10_3_X_Instructions_2018_P
+# https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=42#Re_reco_using_CMSSW_10_3_3_patch
 process.load("RecoHI.HiEvtPlaneAlgos.HiEvtPlane_cfi")
 process.load("RecoHI.HiEvtPlaneAlgos.hiEvtPlaneFlat_cfi")
 process.load("CondCore.CondDB.CondDB_cfi")
@@ -288,11 +288,13 @@ process.CondDB.connect = "sqlite_file:HeavyIonRPRcd_PbPb2018_offline.db"
 process.PoolDBESSource = cms.ESSource("PoolDBESSource",
                                        process.CondDB,
                                        toGet = cms.VPSet(cms.PSet(record = cms.string('HeavyIonRPRcd'),
-                                                                  tag = cms.string('HeavyIonRPRcd_PbPb2018_offline')
+                                                                  tag = cms.string('HeavyIonRPRcd')
                                                                   )
                                                          )
                                       )
 process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
+#readFiles = cms.untracked.vstring()
+#secFiles = cms.untracked.vstring()
 #process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring(),
 #                             inputCommands=cms.untracked.vstring(
 #        'keep *',
