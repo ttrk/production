@@ -3,6 +3,8 @@
 # Type: Embedded Monte Carlo
 # Input: AOD
 
+cleanJets = True
+
 import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
 
@@ -64,6 +66,15 @@ process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
 process.centralityBin.Centrality = cms.InputTag("hiCentrality")
 process.centralityBin.centralityVariable = cms.string("HFtowers")
 
+process.GlobalTag.toGet.extend([
+    cms.PSet(record = cms.string("BTagTrackProbability3DRcd"),
+             tag = cms.string("JPcalib_MC103X_2018PbPb_v4"),
+             connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS")
+
+         )
+      ])
+
+
 ###############################################################################
 # Define tree output
 ###############################################################################
@@ -85,6 +96,9 @@ process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
 process.pfcandAnalyzer.doTrackMatching  = cms.bool(True)
 
+from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_MC_PbPb5020_2018
+process = overrideJEC_MC_PbPb5020_2018(process)
+
 ###############################################################################
 
 #############################
@@ -94,7 +108,7 @@ process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cfi')
 process.load('HeavyIonsAnalysis.TrackAnalysis.HiGenAnalyzer_cfi')
 # making cuts looser so that we can actually check dNdEta
 process.HiGenParticleAna.ptMin = cms.untracked.double(0.4) # default is 5
-process.HiGenParticleAna.etaMax = cms.untracked.double(3.) # default is 2
+process.HiGenParticleAna.etaMax = cms.untracked.double(5.) # default is 2
 
 ###############################################################################
 
@@ -128,7 +142,12 @@ process.load('HeavyIonsAnalysis.TrackAnalysis.TrkAnalyzers_cff')
 #####################
 # Photons
 #####################
+SS2018PbPbMC = "HeavyIonsAnalysis/PhotonAnalysis/data/SS2018PbPbMC.dat"
+process.load('HeavyIonsAnalysis.PhotonAnalysis.correctedElectronProducer_cfi')
+process.correctedElectrons.correctionFile = SS2018PbPbMC
+
 process.load('HeavyIonsAnalysis.PhotonAnalysis.ggHiNtuplizer_cfi')
+process.ggHiNtuplizerGED.gsfElectronLabel = "correctedElectrons"
 process.ggHiNtuplizerGED.doEffectiveAreas = cms.bool(True)
 process.ggHiNtuplizerGED.doRecHitsEB = cms.bool(True)
 process.ggHiNtuplizerGED.doRecHitsEE = cms.bool(True)
@@ -175,6 +194,14 @@ process.load('HeavyIonsAnalysis.JetAnalysis.rechitanalyzer_cfi')
 #Recover peripheral primary vertices
 #https://twiki.cern.ch/twiki/bin/view/CMS/HITracking2018PbPb#Peripheral%20Vertex%20Recovery
 process.load("RecoVertex.PrimaryVertexProducer.OfflinePrimaryVerticesRecovery_cfi")
+process.load("TrackingTools.TransientTrack.TransientTrackBuilder_cfi")
+
+# clean bad PF candidates
+if cleanJets:
+    process.load("RecoHI.HiJetAlgos.HiBadParticleFilter_cfi")
+    process.pfBadCandAnalyzer = process.pfcandAnalyzer.clone(pfCandidateLabel = cms.InputTag("filteredParticleFlow","cleaned"))
+    process.pfFilter = cms.Path(process.filteredParticleFlow + process.pfBadCandAnalyzer)
+
 
 #########################
 # Main analysis list
@@ -193,14 +220,15 @@ process.ana_step = cms.Path(
     process.genSignalSequence +
     process.jetSequence +
     process.hiPuRhoR3Analyzer + 
+    process.correctedElectrons +
     process.ggHiNtuplizer +
     process.ggHiNtuplizerGED +
     process.hiFJRhoAnalyzer +
     process.hiFJRhoAnalyzerFinerBins +
     process.pfcandAnalyzer +
-    #process.pfcandAnalyzerCS +
-    process.trackSequencesPP
-    #process.rechitanalyzerpp
+    process.pfcandAnalyzerCS +
+    process.trackSequencesPP +
+    process.rechitanalyzerpp
     )
 
 # # edm output for debugging purposes
@@ -265,6 +293,13 @@ process.pAna = cms.EndPath(process.skimanalysis)
 from HLTrigger.Configuration.CustomConfigs import MassReplaceInputTag
 process = MassReplaceInputTag(process,"offlinePrimaryVertices","offlinePrimaryVerticesRecovery")
 process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
+
+if cleanJets == True:
+    from HLTrigger.Configuration.CustomConfigs import MassReplaceInputTag
+    process = MassReplaceInputTag(process,"particleFlow","filteredParticleFlow")                                                                                                               
+    process.filteredParticleFlow.PFCandidates  = "particleFlow"
+
+
 # Customization
 ###############################################################################
 
@@ -283,7 +318,7 @@ process.PoolDBESSource = cms.ESSource("PoolDBESSource",
                                       )
 process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
 #readFiles = cms.untracked.vstring()
-#secFiles = cms.untracked.vstring()
+#secFiles = cms.untracked.vstring() 
 #process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring(),
 #                             inputCommands=cms.untracked.vstring(
 #        'keep *',
@@ -293,6 +328,9 @@ process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
 process.hiEvtPlane.trackTag = cms.InputTag("generalTracks")
 process.hiEvtPlane.vertexTag = cms.InputTag("offlinePrimaryVertices")
 process.hiEvtPlane.loadDB = cms.bool(True)
+process.hiEvtPlane.flatnvtxbins = cms.int32(10)
+process.hiEvtPlane.flatminvtx = cms.double(-15.)
+process.hiEvtPlane.flatdelvtx = cms.double(3.)
 process.hiEvtPlane.useNtrk = cms.untracked.bool(False)
 process.hiEvtPlane.caloCentRef = cms.double(-1)
 process.hiEvtPlane.caloCentRefWidth = cms.double(-1)
@@ -300,5 +338,11 @@ process.hiEvtPlaneFlat.caloCentRef = cms.double(-1)
 process.hiEvtPlaneFlat.caloCentRefWidth = cms.double(-1)
 process.hiEvtPlaneFlat.vertexTag = cms.InputTag("offlinePrimaryVertices")
 process.hiEvtPlaneFlat.useNtrk = cms.untracked.bool(False)
+#process.checkflattening.flatnvtxbins = cms.int32(10)
+#process.checkflattening.flatminvtx = cms.double(-15.)
+#process.checkflattening.flatdelvtx = cms.double(3.)
+#process.checkflattening.trackTag_ = cms.InputTag("generalTracks")
+#process.checkflattening.vertexTag_ = cms.InputTag("offlinePrimaryVertices")
+#process.p = cms.Path(process.collisionEventSelectionAODv2 * process.centralityBin* process.hiEvtPlane * process.hiEvtPlaneFlat)
 process.p = cms.Path(process.hiEvtPlane * process.hiEvtPlaneFlat)
 ## KT : add event plane info - END

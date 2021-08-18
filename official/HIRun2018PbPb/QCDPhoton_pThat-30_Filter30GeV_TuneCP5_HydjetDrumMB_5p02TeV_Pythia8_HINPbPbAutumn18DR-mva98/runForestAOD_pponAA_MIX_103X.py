@@ -3,9 +3,7 @@
 # Type: Embedded Monte Carlo
 # Input: AOD
 
-# keep disabled by default until fully commissioned
-cleanJets = False
-
+cleanJets = True
 
 import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
@@ -110,7 +108,7 @@ process.load('HeavyIonsAnalysis.EventAnalysis.runanalyzer_cfi')
 process.load('HeavyIonsAnalysis.TrackAnalysis.HiGenAnalyzer_cfi')
 # making cuts looser so that we can actually check dNdEta
 process.HiGenParticleAna.ptMin = cms.untracked.double(0.4) # default is 5
-process.HiGenParticleAna.etaMax = cms.untracked.double(3.) # default is 2
+process.HiGenParticleAna.etaMax = cms.untracked.double(5.) # default is 2
 
 ###############################################################################
 
@@ -320,7 +318,7 @@ process.PoolDBESSource = cms.ESSource("PoolDBESSource",
                                       )
 process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
 #readFiles = cms.untracked.vstring()
-#secFiles = cms.untracked.vstring()
+#secFiles = cms.untracked.vstring() 
 #process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring(),
 #                             inputCommands=cms.untracked.vstring(
 #        'keep *',
@@ -330,6 +328,9 @@ process.es_prefer_flatparms = cms.ESPrefer('PoolDBESSource','')
 process.hiEvtPlane.trackTag = cms.InputTag("generalTracks")
 process.hiEvtPlane.vertexTag = cms.InputTag("offlinePrimaryVertices")
 process.hiEvtPlane.loadDB = cms.bool(True)
+process.hiEvtPlane.flatnvtxbins = cms.int32(10)
+process.hiEvtPlane.flatminvtx = cms.double(-15.)
+process.hiEvtPlane.flatdelvtx = cms.double(3.)
 process.hiEvtPlane.useNtrk = cms.untracked.bool(False)
 process.hiEvtPlane.caloCentRef = cms.double(-1)
 process.hiEvtPlane.caloCentRefWidth = cms.double(-1)
@@ -337,5 +338,11 @@ process.hiEvtPlaneFlat.caloCentRef = cms.double(-1)
 process.hiEvtPlaneFlat.caloCentRefWidth = cms.double(-1)
 process.hiEvtPlaneFlat.vertexTag = cms.InputTag("offlinePrimaryVertices")
 process.hiEvtPlaneFlat.useNtrk = cms.untracked.bool(False)
+#process.checkflattening.flatnvtxbins = cms.int32(10)
+#process.checkflattening.flatminvtx = cms.double(-15.)
+#process.checkflattening.flatdelvtx = cms.double(3.)
+#process.checkflattening.trackTag_ = cms.InputTag("generalTracks")
+#process.checkflattening.vertexTag_ = cms.InputTag("offlinePrimaryVertices")
+#process.p = cms.Path(process.collisionEventSelectionAODv2 * process.centralityBin* process.hiEvtPlane * process.hiEvtPlaneFlat)
 process.p = cms.Path(process.hiEvtPlane * process.hiEvtPlaneFlat)
 ## KT : add event plane info - END

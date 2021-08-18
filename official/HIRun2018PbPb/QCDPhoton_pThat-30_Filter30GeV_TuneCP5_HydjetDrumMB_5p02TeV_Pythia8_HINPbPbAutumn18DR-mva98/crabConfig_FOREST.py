@@ -11,11 +11,11 @@ config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "runForestAOD_pponAA_MIX_103X.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
 #config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
-## software : CMSSW_10_3_1
+## software : CMSSW_10_3_3_patch1
 ## forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/953dc9523f318c69ed58c81c1609337b8e8e0799
+# https://github.com/CmsHI/cmssw/commit/fff9de2a54e62debab81057f8d6f8c82c2fd3dd6
 # runForestAOD_pponAA_MIX_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, doEleERegression, and doSuperClusters + activate l1object + add event plane info
-# https://github.com/CmsHI/cmssw/commit/90c689f96e613cafa19176528dc7f362f2634d68
+# https://github.com/CmsHI/cmssw/commit/1f9264da586b55e0424c6a66b66d893af792e5f6
 # dataset summary on DAS
 # Number of blocks: 10 Number of events: 1011555 Number of files: 302 Number of lumis: 10001 sum(file_size): 1141256597023 (1.1TB)
 config.JobType.inputFiles = ["HeavyIonRPRcd_PbPb2018_offline.db"]
@@ -36,4 +36,9 @@ config.Site.storageSite = "T2_US_MIT"
 
 #config.section_("Debug")
 #config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
+
+#The server answered with an error.
+#Server answered with: Invalid input parameter
+#Reason is: ERROR: CMSSW_10_3_3_patch1 on slc7_amd64_gcc700 is not among supported releases; Use config.JobType.allowUndistributedCMSSW = True if you are sure of what you are doing
+config.JobType.allowUndistributedCMSSW = True
 

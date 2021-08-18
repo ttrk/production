@@ -11,11 +11,11 @@ config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "runForestAOD_pponAA_MIX_103X.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
 #config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
-## software : CMSSW_10_3_1
+## software : CMSSW_10_3_3_patch1
 ## forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/e057db28daa87a62700fbf5ec88235a858bce602
+# https://github.com/CmsHI/cmssw/commit/fff9de2a54e62debab81057f8d6f8c82c2fd3dd6
 # runForestAOD_pponAA_MIX_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, doEleERegression, and doSuperClusters + activate l1object + add event plane info
-# https://github.com/CmsHI/cmssw/commit/063ee4bc563cb393c2cfb407a5bb5f62c78c2763
+# https://github.com/CmsHI/cmssw/commit/1f9264da586b55e0424c6a66b66d893af792e5f6
 config.JobType.inputFiles = ["HeavyIonRPRcd_PbPb2018_offline.db"]
 
 config.section_("Data")
@@ -34,4 +34,9 @@ config.Site.storageSite = "T2_US_MIT"
 
 #config.section_("Debug")
 #config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
+
+#The server answered with an error.
+#Server answered with: Invalid input parameter
+#Reason is: ERROR: CMSSW_10_3_3_patch1 on slc7_amd64_gcc700 is not among supported releases; Use config.JobType.allowUndistributedCMSSW = True if you are sure of what you are doing
+config.JobType.allowUndistributedCMSSW = True
 
