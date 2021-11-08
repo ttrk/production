@@ -40,8 +40,8 @@ config.Data.splitting = "FileBased"
 config.Data.unitsPerJob = 1
 config.Data.totalUnits = -1
 config.Data.publication = False
-config.Data.outputDatasetTag = "HIRun2018A-04Apr2019-v1-userInputFiles4ECAL-FOREST"
-config.Data.outLFNDirBase = "/store/user/katatar/HIRun2018PbPb/"
+config.Data.outputDatasetTag = ""
+config.Data.outLFNDirBase = "/store/user/katatar/HIRun2018PbPb/HIMinimumBias2/HIRun2018A-04Apr2019-v1-userInputFiles4ECAL-FOREST/"
 
 config.section_("Site")
 config.Site.storageSite = "T2_US_MIT"
