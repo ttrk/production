@@ -157,6 +157,7 @@ process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doEleERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doSuperClusters = cms.bool(True)
+process.ggHiNtuplizerGED.doEvtPlane = cms.bool(True)
 
 ###############################################################################
 

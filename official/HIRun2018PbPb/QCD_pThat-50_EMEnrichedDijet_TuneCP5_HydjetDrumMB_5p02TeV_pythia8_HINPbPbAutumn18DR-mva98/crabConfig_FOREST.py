@@ -13,8 +13,8 @@ config.JobType.maxMemoryMB = 2500    # request high memory machines.
 #config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 ## software : CMSSW_10_3_3_patch1
 ## forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/fff9de2a54e62debab81057f8d6f8c82c2fd3dd6
-# runForestAOD_pponAA_MIX_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, doEleERegression, and doSuperClusters + activate l1object + add event plane info
+# https://github.com/CmsHI/cmssw/commit/1519b69f556c8db08a3f177d372026193358432d
+# runForestAOD_pponAA_MIX_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, doEleERegression, doSuperClusters, and doEvtPlane + activate l1object + add event plane info
 # https://github.com/CmsHI/cmssw/commit/1f9264da586b55e0424c6a66b66d893af792e5f6
 config.JobType.inputFiles = ["HeavyIonRPRcd_PbPb2018_offline.db"]
 
