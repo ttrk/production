@@ -3,6 +3,8 @@
 # Type: Data
 # Input: AOD
 
+cleanJets = True
+
 import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
 
@@ -27,7 +29,7 @@ process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
     fileNames = cms.untracked.vstring(
         "/store/hidata/HIRun2018A/HIHardProbes/AOD/04Apr2019-v1/510000/FF3E8DBE-AE0A-1F45-BB26-42C241ED530E.root"
-        ),
+),
     )
 
 # Number of events we want to process, -1 = all events
@@ -63,6 +65,14 @@ process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
 process.centralityBin.Centrality = cms.InputTag("hiCentrality")
 process.centralityBin.centralityVariable = cms.string("HFtowers")
 
+process.GlobalTag.toGet.extend([
+    cms.PSet(record = cms.string("BTagTrackProbability3DRcd"),
+             tag = cms.string("JPcalib_Data103X_2018PbPb_v1"),
+             connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS")
+
+         )
+      ])
+
 ###############################################################################
 # Define tree output
 ###############################################################################
@@ -83,6 +93,7 @@ process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pponAA_data_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.hiFJRhoAnalyzer_cff')
 process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
 process.pfcandAnalyzer.doTrackMatching  = cms.bool(True)
+process.pfcandAnalyzer.pfAbsEtaMax = cms.double(10)
 
 from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_DATA_PbPb5020_2018
 process = overrideJEC_DATA_PbPb5020_2018(process)
@@ -134,6 +145,7 @@ process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doEleERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doSuperClusters = cms.bool(True)
+process.ggHiNtuplizerGED.doEvtPlane = cms.bool(True)
 
 ###############################################################################
 
@@ -178,7 +190,13 @@ process.pfTowerspp.doHF = False
 #Recover peripheral primary vertices
 #https://twiki.cern.ch/twiki/bin/view/CMS/HITracking2018PbPb#Peripheral%20Vertex%20Recovery
 process.load("RecoVertex.PrimaryVertexProducer.OfflinePrimaryVerticesRecovery_cfi")
+process.load("TrackingTools.TransientTrack.TransientTrackBuilder_cfi")
 
+# clean bad PF candidates
+if cleanJets:
+    process.load("RecoHI.HiJetAlgos.HiBadParticleFilter_cfi")
+    process.pfBadCandAnalyzer = process.pfcandAnalyzer.clone(pfCandidateLabel = cms.InputTag("filteredParticleFlow","cleaned"))
+    process.pfFilter = cms.Path(process.filteredParticleFlow + process.pfBadCandAnalyzer)
 
 #########################
 # Main analysis list
@@ -203,8 +221,8 @@ process.ana_step = cms.Path(
     process.pfcandAnalyzerCS +
     process.trackSequencesPP +
     process.zdcdigi +
-    process.QWzdcreco
-    #process.rechitanalyzerpp
+    process.QWzdcreco +
+    process.rechitanalyzerpp
     )
 
 # # edm output for debugging purposes
@@ -270,9 +288,18 @@ from HLTrigger.Configuration.CustomConfigs import MassReplaceInputTag
 process = MassReplaceInputTag(process,"offlinePrimaryVertices","offlinePrimaryVerticesRecovery")
 process.offlinePrimaryVerticesRecovery.oldVertexLabel = "offlinePrimaryVertices"
 
+if cleanJets == True:
+    from HLTrigger.Configuration.CustomConfigs import MassReplaceInputTag
+    process = MassReplaceInputTag(process,"particleFlow","filteredParticleFlow")
+    process.filteredParticleFlow.PFCandidates  = "particleFlow"
+
 ###############################################################################
 
 # Customization
+## KT : Use the original PF cand collection for photon and PF cand tree
+process.ggHiNtuplizer.particleFlowCollection = cms.InputTag("particleFlow")
+process.ggHiNtuplizerGED.particleFlowCollection = cms.InputTag("particleFlow")
+process.pfcandAnalyzer.pfCandidateLabel = cms.InputTag("particleFlow")
 ## KT : add event plane info
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHeavyIonFlatEvtPlane?rev=42#Re_reco_using_CMSSW_10_3_3_patch
 process.load("RecoHI.HiEvtPlaneAlgos.HiEvtPlane_cfi")

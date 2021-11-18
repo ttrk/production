@@ -13,9 +13,9 @@ config.JobType.maxMemoryMB = 2500    # request high memory machines.
 #config.JobType.maxJobRuntimeMin = 2750    # request longer runtime.
 ## software : CMSSW_10_3_1
 ## forest_CMSSW_10_3_1
-# https://github.com/CmsHI/cmssw/commit/5c5ccb4013e2ebecfbca0ca433cb14bb36b9f1d3
-# runForestAOD_pponAA_DATA_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object + add event plane info + photon filter
-# https://github.com/CmsHI/cmssw/commit/4d7967c0beee30ae2573fa9108ae9925d620c9e5
+# https://github.com/CmsHI/cmssw/commit/48abfe59b0007693a8fa385abe45064a34abdcca
+# runForestAOD_pponAA_DATA_103X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, doEleERegression, doSuperClusters, and doEvtPlane + activate l1object + use the original (not "cleaned") PF cand collection + add event plane info + photon filter
+# https://github.com/CmsHI/cmssw/commit/48abfe59b0007693a8fa385abe45064a34abdcca
 # relevant DAS query : summary dataset=/HIHardProbes/HIRun2018A-04Apr2019-v1/AOD
 #   output on 2019.06.17 : Number of blocks: 108 Number of events: 43654157 Number of files: 7747 Number of lumis: 41396 sum(file_size): 74107362626557 (74.1TB)
 config.JobType.inputFiles = ["HeavyIonRPRcd_PbPb2018_offline.db"]
