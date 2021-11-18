@@ -10,7 +10,7 @@ config.section_("JobType")
 config.JobType.pluginName = "Analysis"
 config.JobType.psetName = "step2_DIGI.py"
 config.JobType.maxMemoryMB = 3500    # request high memory machines.
-config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
+#config.JobType.maxJobRuntimeMin = 2750    # request longer runtime, ~48 hours.
 config.JobType.inputFiles = ["EcalSRSettings_mod.db"]
 
 ## software : CMSSW_10_3_2
@@ -31,10 +31,10 @@ config.Data.outLFNDirBase = "/store/user/katatar/run3/ECAL/"
 
 config.section_("Site")
 config.Site.storageSite = "T2_US_MIT"
-#config.Site.whitelist = ["T2_US_MIT"]
+config.Site.whitelist = ["T2_US_MIT"]
 
-#config.section_("Debug")
-#config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
+config.section_("Debug")
+config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
 
 #The server answered with an error.
 #Server answered with: Invalid input parameter
