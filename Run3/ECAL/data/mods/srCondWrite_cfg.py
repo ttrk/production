@@ -2,7 +2,7 @@ import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("ProcessOne")
 process.load("CondCore.DBCommon.CondDBCommon_cfi")
-process.CondDBCommon.connect = 'sqlite_file:EcalSRSettings_2018_mc.db'
+process.CondDBCommon.connect = 'sqlite_file:EcalSRSettings.db'
 process.CondDBCommon.DBParameters.authenticationPath = '/afs/cern.ch/cms/DB/conddb'
 
 process.MessageLogger = cms.Service("MessageLogger",
@@ -21,7 +21,7 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
     process.CondDBCommon,
     toPut = cms.VPSet(cms.PSet(
         record = cms.string('EcalSRSettingsRcd'),
-        tag = cms.string('EcalSRSettings_2018_mc')
+        tag = cms.string('EcalSRSettings')
     ))
 )
 
@@ -176,6 +176,6 @@ process.writeInDB.srpBarrelLowInterestChannelZS = cms.double(5.5*0.035)
 
 # ZS energy threshold in GeV to apply to low interest channels of endcap
 process.writeInDB.eeDccAdcToGeV = cms.double(0.06)
-process.writeInDB.srpEndcapLowInterestChannelZS = cms.double(6*0.06)
+process.writeInDB.srpEndcapLowInterestChannelZS = cms.double(6.0*0.06)
 
 process.p = cms.Path(process.writeInDB)
