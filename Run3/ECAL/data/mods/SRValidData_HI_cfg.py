@@ -6,7 +6,7 @@ process.options = cms.untracked.PSet( allowUnscheduled = cms.untracked.bool(True
 
 #Number of events to process
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(300)
     #input = cms.untracked.int32(10)
     #input = cms.untracked.int32(1000)
 )
@@ -19,13 +19,15 @@ process.source = cms.Source("PoolSource",
 #
 # Special High PU RUN 325310 Fill=7358, Colliding bunches:26, PU=?:, HLTPhysics DT=7%
 #'file:/wk_cms/paganis/data/HLTPhysicsRun2018E/325/310/B78CE309-9B47-8B4C-BA21-400928224A43.root',#LS=33-34, PU=98
-'file:/wk_cms/paganis/data/HLTPhysicsRun2018E/325/310/BAF43ACB-24C6-D04A-9EEA-FA1481CDBFC7.root',#LS=91-92, PU=95
+#'file:/wk_cms/paganis/data/HLTPhysicsRun2018E/325/310/BAF43ACB-24C6-D04A-9EEA-FA1481CDBFC7.root',#LS=91-92, PU=95
 #'file:/wk_cms/paganis/data/HLTPhysicsRun2018E/325/310/',#LS=, PU=
 #
 # Special High PU RUN 325308 Fill=7358, Colliding bunches:26, PU=108:, HLTPhysics DT=7%
 #'file:/wk_cms/paganis/data/HLTPhysicsRun2018E/325/308/025FAAF8-485A-0543-9436-DBD269137CD5.root',#LS=98, PU=107
 #'file:/wk_cms/paganis/data/HLTPhysicsRun2018E/325/308/07D447CA-64BA-7B43-BB08-1DDEBAFF7BE7.root',#LS=89, PU=102
 #
+
+'/store/hidata/HIRun2018A/HIHardProbes/RAW/v1/000/327/400/00000/01C5AD0D-0F7C-7343-B21E-2F3E4C36EE3E.root'
         )
 )
 
@@ -41,7 +43,7 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 # DQM services
 process.load("DQMServices.Core.DQM_cfg")
 process.load("DQMServices.Components.DQMEnvironment_cfi")
-process.dqmSaver.workflow = "/Run2015C/Commissioning/RAW"
+process.dqmSaver.workflow = "/HIRun2018A/HIHardProbes/RAW"
 #process.load("CalibCalorimetry.Configuration.Ecal_FakeConditions_cff")
 #process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 ##process.load("DQM.Integration.config.FrontierCondition_GT_Offline_cfi")
@@ -58,8 +60,8 @@ process.GlobalTag.toGet = cms.VPSet(
 #              tag = cms.string("EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.0_5.5ADC_mc"),
 #              connect = cms.string("sqlite_file:EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.0_5.5ADC_mc.db")
 # Check2:
-              tag = cms.string("EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.0_5.0ADC_mc"),
-              connect = cms.string("sqlite_file:EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.0_5.0ADC_mc.db")
+#              tag = cms.string("EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.0_5.0ADC_mc"),
+#              connect = cms.string("sqlite_file:EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.0_5.0ADC_mc.db")
 # Check3:
 #              tag = cms.string("EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.5_5.5ADC_mc"),
 #              connect = cms.string("sqlite_file:EcalSRSettings_LTH2.0_HTH4.0GeV_ZS5.5_5.5ADC_mc.db")
@@ -70,6 +72,9 @@ process.GlobalTag.toGet = cms.VPSet(
 # Check1: 1ADC tighter in EB
 #             tag = cms.string("EcalSRSettings_LTH2.5_HTH4.5GeV_ZS5.5_6.5ADC_mc"),
 #             connect = cms.string("sqlite_file:EcalSRSettings_LTH2.5_HTH4.5GeV_ZS5.5_6.5ADC_mc.db")
+
+              tag = cms.string("EcalSRSettings_2018_mc"),
+              connect = cms.string("sqlite_file:EcalSRSettings_2018_mc.db")
              )
     )
 
@@ -104,6 +109,7 @@ process.GlobalTag.toGet = cms.VPSet(
 process.load("EventFilter.EcalRawToDigi.EcalUnpackerMapping_cfi")
 process.load("EventFilter.EcalRawToDigi.EcalUnpackerData_cfi")
 process.ecalEBunpacker.silentMode = cms.untracked.bool(True)
+process.ecalEBunpacker.InputLabel = cms.InputTag("rawDataRepacker")
 
 #
 # ECAL digitization sequence
@@ -181,8 +187,8 @@ from SimCalorimetry.EcalSimProducers.ecaldigi_cfi import *
 from SimCalorimetry.EcalSelectiveReadoutProducers.ecalDigis_cfi import *
 simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
 simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
-simEcalDigis.trigPrimBypassLTH = cms.double(3.0)# 2xGeV C1 DEFAULT
-simEcalDigis.trigPrimBypassHTH = cms.double(7.0)# 2xGeV C1 DEFAULT
+simEcalDigis.trigPrimBypassLTH = cms.double(2.0)# 2xGeV C1 DEFAULT
+simEcalDigis.trigPrimBypassHTH = cms.double(4.0)# 2xGeV C1 DEFAULT
 #simEcalDigis.trigPrimBypassLTH = cms.double(4.0)# 2xGeV C1 //2GeV Et 2018 Default
 #simEcalDigis.trigPrimBypassHTH = cms.double(8.0)# 2xGeV C1 //4GeV Et 2018 Default
 #simEcalDigis.trigPrimBypassLTH = cms.double(0.0)# 2xGeV C1
