@@ -87,18 +87,6 @@ if [ ${removeCustomHLTLines} -gt 0 ]; then
   ### Line removal - END ###
 fi
 
-#### Add hltBitAnalyzer
-#echo '' >> $configFile
-#echo 'process.load("HLTrigger.HLTanalyzers.HLTBitAnalyser_cfi")' >> $configFile
-#echo 'process.hltbitanalysis.HLTProcessName = cms.string("'${PROCESS}'")' >> $configFile
-#echo 'process.hltbitanalysis.hltresults = cms.InputTag("TriggerResults", "", "'${PROCESS}'")' >> $configFile
-#echo 'process.hltbitanalysis.l1results = cms.InputTag("hltGtStage2Digis", "", "'${PROCESS}'")' >> $configFile
-#echo 'process.hltbitanalysis.UseTFileService = cms.untracked.bool(True)' >> $configFile
-#echo 'process.hltbitanalysis.RunParameters = cms.PSet(isData = cms.untracked.bool(True))' >> $configFile
-#echo 'process.hltBitAnalysis = cms.EndPath(process.hltbitanalysis)' >> $configFile
-#echo 'process.schedule.append( process.hltBitAnalysis )' >> $configFile
-#echo 'process.TFileService = cms.Service("TFileService", fileName=cms.string("openHLT.root"))' >> $configFile
-
 addHLTObjs=1
 if [ ${addHLTObjs} -gt 0 ]; then
   # Add hltBitAnalyzer and HLT objects
@@ -136,76 +124,8 @@ fi
 ###echo 'process.hltobject.triggerResults = cms.InputTag("TriggerResults", "", "'${PROCESS}'")' >> $configFile
 ###echo 'process.hltobject.triggerEvent = cms.InputTag("hltTriggerSummaryAOD", "", "'${PROCESS}'")' >> $configFile
 ###echo 'process.hltobject.triggerNames = cms.vstring(
-###"HLT_HIGEDPhoton10_L1Seeded",
-###"HLT_HIGEDPhoton15_L1Seeded",
-###"HLT_HIGEDPhoton20_L1Seeded",
-###"HLT_HIGEDPhoton30_L1Seeded",
-###"HLT_HIGEDPhoton40_L1Seeded",
-###"HLT_HIGEDPhoton50_L1Seeded",
-###"HLT_HIGEDPhoton60_L1Seeded",
-###"HLT_HIGEDPhoton10_HECut_L1Seeded",
-###"HLT_HIGEDPhoton15_HECut_L1Seeded",
-###"HLT_HIGEDPhoton20_HECut_L1Seeded",
-###"HLT_HIGEDPhoton30_HECut_L1Seeded",
-###"HLT_HIGEDPhoton40_HECut_L1Seeded",
-###"HLT_HIGEDPhoton50_HECut_L1Seeded",
-###"HLT_HIGEDPhoton60_HECut_L1Seeded",
-###"HLT_HIGEDPhoton10_EB_L1Seeded",
-###"HLT_HIGEDPhoton15_EB_L1Seeded",
-###"HLT_HIGEDPhoton20_EB_L1Seeded",
-###"HLT_HIGEDPhoton30_EB_L1Seeded",
-###"HLT_HIGEDPhoton40_EB_L1Seeded",
-###"HLT_HIGEDPhoton50_EB_L1Seeded",
-###"HLT_HIGEDPhoton60_EB_L1Seeded",
-###"HLT_HIGEDPhoton10_EB_HECut_L1Seeded",
-###"HLT_HIGEDPhoton15_EB_HECut_L1Seeded",
-###"HLT_HIGEDPhoton20_EB_HECut_L1Seeded",
-###"HLT_HIGEDPhoton30_EB_HECut_L1Seeded",
-###"HLT_HIGEDPhoton40_EB_HECut_L1Seeded",
-###"HLT_HIGEDPhoton50_EB_HECut_L1Seeded",
-###"HLT_HIGEDPhoton60_EB_HECut_L1Seeded",
-###"HLT_HIGEDPhoton10",
-###"HLT_HIGEDPhoton15",
-###"HLT_HIGEDPhoton20",
-###"HLT_HIGEDPhoton30",
 ###"HLT_HIGEDPhoton40",
-###"HLT_HIGEDPhoton50",
-###"HLT_HIGEDPhoton60",
-###"HLT_HIGEDPhoton10_HECut",
-###"HLT_HIGEDPhoton15_HECut",
-###"HLT_HIGEDPhoton20_HECut",
-###"HLT_HIGEDPhoton30_HECut",
-###"HLT_HIGEDPhoton40_HECut",
-###"HLT_HIGEDPhoton50_HECut",
-###"HLT_HIGEDPhoton60_HECut",
-###"HLT_HIGEDPhoton10_EB",
-###"HLT_HIGEDPhoton15_EB",
-###"HLT_HIGEDPhoton20_EB",
-###"HLT_HIGEDPhoton30_EB",
 ###"HLT_HIGEDPhoton40_EB",
-###"HLT_HIGEDPhoton50_EB",
-###"HLT_HIGEDPhoton60_EB",
-###"HLT_HIGEDPhoton10_EB_HECut",
-###"HLT_HIGEDPhoton15_EB_HECut",
-###"HLT_HIGEDPhoton20_EB_HECut",
-###"HLT_HIGEDPhoton30_EB_HECut",
-###"HLT_HIGEDPhoton40_EB_HECut",
-###"HLT_HIGEDPhoton50_EB_HECut",
-###"HLT_HIGEDPhoton60_EB_HECut",
-###"HLT_HIIslandPhoton10_Eta3p1",
-###"HLT_HIIslandPhoton15_Eta3p1",
-###"HLT_HIIslandPhoton20_Eta3p1",
-###"HLT_HIIslandPhoton30_Eta3p1",
-###"HLT_HIIslandPhoton40_Eta3p1",
-###"HLT_HIIslandPhoton50_Eta3p1",
-###"HLT_HIIslandPhoton60_Eta3p1",
-###"HLT_HIIslandPhoton10_Eta1p5",
-###"HLT_HIIslandPhoton15_Eta1p5",
-###"HLT_HIIslandPhoton20_Eta1p5",
-###"HLT_HIIslandPhoton30_Eta1p5",
-###"HLT_HIIslandPhoton40_Eta1p5",
-###"HLT_HIIslandPhoton50_Eta1p5",
-###"HLT_HIIslandPhoton60_Eta1p5"
 ###)'>> $configFile
 ###echo 'process.hltObject = cms.EndPath(process.hltobject)' >> $configFile
 
