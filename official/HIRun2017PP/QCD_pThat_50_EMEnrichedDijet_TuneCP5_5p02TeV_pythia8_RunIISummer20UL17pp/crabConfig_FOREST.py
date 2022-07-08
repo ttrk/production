@@ -30,6 +30,7 @@ config.Data.outLFNDirBase = "/store/user/katatar/official/pp17/"
 config.section_("Site")
 config.Site.storageSite = "T2_US_MIT"
 #config.Site.whitelist = ["T2_US_MIT"]
+config.Site.ignoreGlobalBlacklist = True
 
 #config.section_("Debug")
 #config.Debug.extraJDL = ["+CMS_ALLOW_OVERFLOW=False"]
