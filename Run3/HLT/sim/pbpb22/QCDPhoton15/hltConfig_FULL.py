@@ -1,4 +1,4 @@
-# L1T WARN:  L1REPACK:Full (intended for 2016 data) only supports Stage 2 eras for now.
+# L1T WARN:  L1REPACK:FullMC (intended for MC events with RAW eventcontent) only supports Stage 2 eras for now.
 # L1T WARN:  Use a legacy version of L1REPACK for now.
 import FWCore.ParameterSet.Config as cms
 from HeterogeneousCore.CUDACore.ProcessAcceleratorCUDA import ProcessAcceleratorCUDA
@@ -23865,25 +23865,56 @@ process.hlttktkVtxForDmesonDpt60NoIter10 = cms.EDProducer("HLTDisplacedtktkVtxPr
 )
 
 
+process.packCaloStage2 = cms.EDProducer("L1TDigiToRaw",
+    FWId = cms.uint32(1),
+    FedId = cms.int32(1366),
+    InputLabel = cms.InputTag("simCaloStage2Digis"),
+    Setup = cms.string('stage2::CaloSetup'),
+    TowerInputLabel = cms.InputTag("simCaloStage2Layer1Digis"),
+    lenSlinkHeader = cms.untracked.int32(8),
+    lenSlinkTrailer = cms.untracked.int32(8)
+)
+
+
+process.packGmtStage2 = cms.EDProducer("L1TDigiToRaw",
+    BMTFInputLabel = cms.InputTag("simKBmtfDigis","BMTF"),
+    EMTFInputLabel = cms.InputTag("simEmtfDigis","EMTF"),
+    EMTFShowerInputLabel = cms.InputTag("simEmtfShowers","EMTF"),
+    FWId = cms.uint32(117440512),
+    FedId = cms.int32(1402),
+    ImdInputLabelBMTF = cms.InputTag("simGmtStage2Digis","imdMuonsBMTF"),
+    ImdInputLabelEMTFNeg = cms.InputTag("simGmtStage2Digis","imdMuonsEMTFNeg"),
+    ImdInputLabelEMTFPos = cms.InputTag("simGmtStage2Digis","imdMuonsEMTFPos"),
+    ImdInputLabelOMTFNeg = cms.InputTag("simGmtStage2Digis","imdMuonsOMTFNeg"),
+    ImdInputLabelOMTFPos = cms.InputTag("simGmtStage2Digis","imdMuonsOMTFPos"),
+    InputLabel = cms.InputTag("simGmtStage2Digis"),
+    OMTFInputLabel = cms.InputTag("simOmtfDigis","OMTF"),
+    Setup = cms.string('stage2::GMTSetup'),
+    ShowerInputLabel = cms.InputTag("simGmtShowerDigis"),
+    lenSlinkHeader = cms.untracked.int32(8),
+    lenSlinkTrailer = cms.untracked.int32(8)
+)
+
+
 process.packGtStage2 = cms.EDProducer("L1TDigiToRaw",
-    EGammaInputTag = cms.InputTag("unpackGtStage2","EGamma"),
-    EtSumInputTag = cms.InputTag("unpackGtStage2","EtSum"),
-    ExtInputTag = cms.InputTag("unpackGtStage2"),
+    EGammaInputTag = cms.InputTag("simCaloStage2Digis"),
+    EtSumInputTag = cms.InputTag("simCaloStage2Digis"),
+    ExtInputTag = cms.InputTag("simGtExtFakeStage2Digis"),
     FWId = cms.uint32(69377),
     FedId = cms.int32(1404),
     GtInputTag = cms.InputTag("simGtStage2Digis"),
-    JetInputTag = cms.InputTag("unpackGtStage2","Jet"),
-    MuonInputTag = cms.InputTag("unpackGtStage2","Muon"),
+    JetInputTag = cms.InputTag("simCaloStage2Digis"),
+    MuonInputTag = cms.InputTag("simGmtStage2Digis"),
     Setup = cms.string('stage2::GTSetup'),
-    ShowerInputLabel = cms.InputTag("unpackGtStage2","MuonShower"),
-    TauInputTag = cms.InputTag("unpackGtStage2","Tau"),
+    ShowerInputLabel = cms.InputTag("simGmtShowerDigis"),
+    TauInputTag = cms.InputTag("simCaloStage2Digis"),
     lenSlinkHeader = cms.untracked.int32(8),
     lenSlinkTrailer = cms.untracked.int32(8)
 )
 
 
 process.rawDataCollector = cms.EDProducer("RawDataCollectorByLabel",
-    RawCollectionList = cms.VInputTag("packGtStage2", cms.InputTag("rawDataCollector","","@skipCurrentProcess")),
+    RawCollectionList = cms.VInputTag("packCaloStage2", "packGmtStage2", "packGtStage2", cms.InputTag("rawDataCollector","","@skipCurrentProcess")),
     verbose = cms.untracked.int32(0)
 )
 
@@ -24027,6 +24058,760 @@ process.rawDataRepacker = cms.EDProducer("RawDataCollectorByLabel",
 )
 
 
+process.simBmtfDigis = cms.EDProducer("L1TMuonBarrelTrackProducer",
+    DTDigi_Source = cms.InputTag("simTwinMuxDigis"),
+    DTDigi_Theta_Source = cms.InputTag("simDtTriggerPrimitiveDigis"),
+    Debug = cms.untracked.int32(0)
+)
+
+
+process.simCaloStage2Digis = cms.EDProducer("L1TStage2Layer2Producer",
+    firmware = cms.int32(1),
+    towerToken = cms.InputTag("simCaloStage2Layer1Digis"),
+    useStaticConfig = cms.bool(False)
+)
+
+
+process.simCaloStage2Layer1Digis = cms.EDProducer("L1TCaloLayer1",
+    ecalToken = cms.InputTag("unpackEcal","EcalTriggerPrimitives"),
+    firmwareVersion = cms.int32(3),
+    hcalToken = cms.InputTag("simHcalTriggerPrimitiveDigis"),
+    unpackEcalMask = cms.bool(False),
+    unpackHcalMask = cms.bool(False),
+    useCalib = cms.bool(True),
+    useECALLUT = cms.bool(True),
+    useHCALLUT = cms.bool(True),
+    useHFLUT = cms.bool(True),
+    useLSB = cms.bool(True),
+    verbose = cms.bool(False)
+)
+
+
+process.simCscTriggerPrimitiveDigis = cms.EDProducer("CSCTriggerPrimitivesProducer",
+    CSCComparatorDigiProducer = cms.InputTag("unpackCSC","MuonCSCComparatorDigi"),
+    CSCWireDigiProducer = cms.InputTag("unpackCSC","MuonCSCWireDigi"),
+    GEMPadDigiClusterProducer = cms.InputTag("simMuonGEMPadDigiClusters"),
+    MaxBX = cms.int32(11),
+    MinBX = cms.int32(5),
+    alctPhase1 = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(4),
+        alctGhostCancellationSideQuality = cms.bool(False),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(False),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(4),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    alctPhase2 = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(1),
+        alctGhostCancellationSideQuality = cms.bool(True),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(True),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(0),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    alctPhase2GEM = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(1),
+        alctGhostCancellationSideQuality = cms.bool(True),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(True),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(0),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    checkBadChambers = cms.bool(False),
+    clctPhase1 = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(10),
+        clctNplanesHitPattern = cms.uint32(4),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(2),
+        clctStartBxShift = cms.int32(0),
+        useDeadTimeZoning = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    clctPhase2 = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(5),
+        clctNplanesHitPattern = cms.uint32(4),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(2),
+        clctPretriggerTriggerZone = cms.uint32(224),
+        clctStartBxShift = cms.int32(0),
+        clctStateMachineZone = cms.uint32(4),
+        useDeadTimeZoning = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    clctPhase2GEM = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(5),
+        clctNplanesHitPattern = cms.uint32(3),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(2),
+        clctPretriggerTriggerZone = cms.uint32(224),
+        clctStartBxShift = cms.int32(0),
+        clctStateMachineZone = cms.uint32(4),
+        useDeadTimeZoning = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    commonParam = cms.PSet(
+        disableME1a = cms.bool(False),
+        disableME42 = cms.bool(False),
+        enableAlctPhase2 = cms.bool(False),
+        gangedME1a = cms.bool(False),
+        runCCLUT_OTMB = cms.bool(False),
+        runCCLUT_TMB = cms.bool(False),
+        runME11ILT = cms.bool(True),
+        runME11Up = cms.bool(True),
+        runME21ILT = cms.bool(False),
+        runME21Up = cms.bool(True),
+        runME31Up = cms.bool(True),
+        runME41Up = cms.bool(True),
+        runPhase2 = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    copadParamGE11 = cms.PSet(
+        maxDeltaBX = cms.uint32(0),
+        maxDeltaPad = cms.uint32(4),
+        maxDeltaRoll = cms.uint32(1),
+        verbosity = cms.uint32(0)
+    ),
+    copadParamGE21 = cms.PSet(
+        maxDeltaBX = cms.uint32(0),
+        maxDeltaPad = cms.uint32(4),
+        maxDeltaRoll = cms.uint32(1),
+        verbosity = cms.uint32(0)
+    ),
+    debugParameters = cms.bool(True),
+    keepALCTPreTriggers = cms.bool(False),
+    keepCLCTPreTriggers = cms.bool(True),
+    keepShowers = cms.bool(True),
+    mpcParam = cms.PSet(
+        dropInvalidStubs = cms.bool(False),
+        dropLowQualityStubs = cms.bool(False),
+        maxStubs = cms.uint32(18),
+        sortStubs = cms.bool(False)
+    ),
+    showerParam = cms.PSet(
+        anodeShower = cms.PSet(
+            minLayersCentralTBin = cms.uint32(5),
+            showerMaxInTBin = cms.uint32(8),
+            showerMaxOutTBin = cms.uint32(7),
+            showerMinInTBin = cms.uint32(8),
+            showerMinOutTBin = cms.uint32(4),
+            showerThresholds = cms.vuint32(
+                140, 140, 140, 20, 41,
+                45, 8, 12, 16, 28,
+                56, 58, 9, 18, 22,
+                26, 55, 57, 8, 16,
+                20, 31, 62, 64, 13,
+                27, 31
+            )
+        ),
+        cathodeShower = cms.PSet(
+            minLayersCentralTBin = cms.uint32(5),
+            showerMaxInTBin = cms.uint32(8),
+            showerMaxOutTBin = cms.uint32(5),
+            showerMinInTBin = cms.uint32(6),
+            showerMinOutTBin = cms.uint32(2),
+            showerThresholds = cms.vuint32(
+                100, 100, 100, 19, 38,
+                42, 8, 11, 15, 17,
+                33, 35, 10, 20, 24,
+                15, 31, 33, 9, 18,
+                22, 17, 34, 36, 11,
+                22, 26
+            )
+        ),
+        source = cms.uint32(3)
+    ),
+    tmbPhase1 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        clctTrigEnable = cms.uint32(0),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(7),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(True),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(7),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    tmbPhase2 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        clctTrigEnable = cms.uint32(0),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(5),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(5),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    tmbPhase2GE11 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        assignGEMCSCBending = cms.bool(False),
+        buildLCTfromALCTCLCTand1GEM = cms.bool(True),
+        buildLCTfromALCTCLCTand2GEM = cms.bool(True),
+        buildLCTfromALCTandGEM = cms.bool(True),
+        buildLCTfromALCTandGEM_ME1a = cms.bool(True),
+        buildLCTfromCLCTandGEM = cms.bool(True),
+        buildLCTfromCLCTandGEM_ME1a = cms.bool(True),
+        clctTrigEnable = cms.uint32(0),
+        dropLowQualityALCTsNoGEMs = cms.bool(False),
+        dropLowQualityCLCTsNoGEMs = cms.bool(True),
+        dropLowQualityCLCTsNoGEMs_ME1a = cms.bool(True),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchEarliestGemsOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(5),
+        matchWithHS = cms.bool(True),
+        maxDeltaBXALCTGEM = cms.uint32(1),
+        maxDeltaBXCLCTGEM = cms.uint32(2),
+        maxDeltaHsEven = cms.uint32(7),
+        maxDeltaHsEvenME1a = cms.uint32(5),
+        maxDeltaHsOdd = cms.uint32(16),
+        maxDeltaHsOddME1a = cms.uint32(12),
+        mitigateSlopeByCosi = cms.bool(True),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbDropUsedGems = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(5),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    tmbPhase2GE21 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        assignGEMCSCBending = cms.bool(False),
+        buildLCTfromALCTCLCTand1GEM = cms.bool(True),
+        buildLCTfromALCTCLCTand2GEM = cms.bool(True),
+        buildLCTfromALCTandGEM = cms.bool(True),
+        buildLCTfromCLCTandGEM = cms.bool(True),
+        clctTrigEnable = cms.uint32(0),
+        dropLowQualityALCTsNoGEMs = cms.bool(True),
+        dropLowQualityCLCTsNoGEMs = cms.bool(True),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchEarliestGemsOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(5),
+        matchWithHS = cms.bool(True),
+        maxDeltaBXALCTGEM = cms.uint32(1),
+        maxDeltaBXCLCTGEM = cms.uint32(2),
+        maxDeltaHsEven = cms.uint32(3),
+        maxDeltaHsOdd = cms.uint32(5),
+        mitigateSlopeByCosi = cms.bool(True),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbDropUsedGems = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(5),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    )
+)
+
+
+process.simCscTriggerPrimitiveDigisRun3 = cms.EDProducer("CSCTriggerPrimitivesProducer",
+    CSCComparatorDigiProducer = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi"),
+    CSCWireDigiProducer = cms.InputTag("simMuonCSCDigis","MuonCSCWireDigi"),
+    GEMPadDigiClusterProducer = cms.InputTag("simMuonGEMPadDigiClusters"),
+    MaxBX = cms.int32(11),
+    MinBX = cms.int32(5),
+    alctPhase1 = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(4),
+        alctGhostCancellationSideQuality = cms.bool(False),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(False),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(4),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    alctPhase2 = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(1),
+        alctGhostCancellationSideQuality = cms.bool(True),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(True),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(0),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    alctPhase2GEM = cms.PSet(
+        alctAccelMode = cms.uint32(0),
+        alctDriftDelay = cms.uint32(2),
+        alctEarlyTbins = cms.int32(4),
+        alctFifoPretrig = cms.uint32(10),
+        alctFifoTbins = cms.uint32(16),
+        alctGhostCancellationBxDepth = cms.int32(1),
+        alctGhostCancellationSideQuality = cms.bool(True),
+        alctHitPersist = cms.uint32(6),
+        alctL1aWindowWidth = cms.uint32(7),
+        alctNarrowMaskForR1 = cms.bool(True),
+        alctNplanesHitAccelPattern = cms.uint32(4),
+        alctNplanesHitAccelPretrig = cms.uint32(3),
+        alctNplanesHitPattern = cms.uint32(4),
+        alctNplanesHitPretrig = cms.uint32(3),
+        alctPretrigDeadtime = cms.uint32(0),
+        alctTrigMode = cms.uint32(2),
+        alctUseCorrectedBx = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    checkBadChambers = cms.bool(False),
+    clctPhase1 = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(10),
+        clctNplanesHitPattern = cms.uint32(4),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(2),
+        clctStartBxShift = cms.int32(0),
+        useDeadTimeZoning = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    clctPhase2 = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(5),
+        clctNplanesHitPattern = cms.uint32(4),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(2),
+        clctPretriggerTriggerZone = cms.uint32(224),
+        clctStartBxShift = cms.int32(0),
+        clctStateMachineZone = cms.uint32(4),
+        useDeadTimeZoning = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    clctPhase2GEM = cms.PSet(
+        clctDriftDelay = cms.uint32(2),
+        clctFifoPretrig = cms.uint32(7),
+        clctFifoTbins = cms.uint32(12),
+        clctHitPersist = cms.uint32(4),
+        clctMinSeparation = cms.uint32(5),
+        clctNplanesHitPattern = cms.uint32(3),
+        clctNplanesHitPretrig = cms.uint32(3),
+        clctPidThreshPretrig = cms.uint32(2),
+        clctPretriggerTriggerZone = cms.uint32(224),
+        clctStartBxShift = cms.int32(0),
+        clctStateMachineZone = cms.uint32(4),
+        useDeadTimeZoning = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    commonParam = cms.PSet(
+        disableME1a = cms.bool(False),
+        disableME42 = cms.bool(False),
+        enableAlctPhase2 = cms.bool(False),
+        gangedME1a = cms.bool(False),
+        runCCLUT_OTMB = cms.bool(True),
+        runCCLUT_TMB = cms.bool(False),
+        runME11ILT = cms.bool(True),
+        runME11Up = cms.bool(True),
+        runME21ILT = cms.bool(False),
+        runME21Up = cms.bool(True),
+        runME31Up = cms.bool(True),
+        runME41Up = cms.bool(True),
+        runPhase2 = cms.bool(True),
+        verbosity = cms.int32(0)
+    ),
+    copadParamGE11 = cms.PSet(
+        maxDeltaBX = cms.uint32(0),
+        maxDeltaPad = cms.uint32(4),
+        maxDeltaRoll = cms.uint32(1),
+        verbosity = cms.uint32(0)
+    ),
+    copadParamGE21 = cms.PSet(
+        maxDeltaBX = cms.uint32(0),
+        maxDeltaPad = cms.uint32(4),
+        maxDeltaRoll = cms.uint32(1),
+        verbosity = cms.uint32(0)
+    ),
+    debugParameters = cms.bool(True),
+    keepALCTPreTriggers = cms.bool(False),
+    keepCLCTPreTriggers = cms.bool(True),
+    keepShowers = cms.bool(True),
+    mpcParam = cms.PSet(
+        dropInvalidStubs = cms.bool(False),
+        dropLowQualityStubs = cms.bool(False),
+        maxStubs = cms.uint32(18),
+        sortStubs = cms.bool(False)
+    ),
+    showerParam = cms.PSet(
+        anodeShower = cms.PSet(
+            minLayersCentralTBin = cms.uint32(5),
+            showerMaxInTBin = cms.uint32(8),
+            showerMaxOutTBin = cms.uint32(7),
+            showerMinInTBin = cms.uint32(8),
+            showerMinOutTBin = cms.uint32(4),
+            showerThresholds = cms.vuint32(
+                140, 140, 140, 20, 41,
+                45, 8, 12, 16, 28,
+                56, 58, 9, 18, 22,
+                26, 55, 57, 8, 16,
+                20, 31, 62, 64, 13,
+                27, 31
+            )
+        ),
+        cathodeShower = cms.PSet(
+            minLayersCentralTBin = cms.uint32(5),
+            showerMaxInTBin = cms.uint32(8),
+            showerMaxOutTBin = cms.uint32(5),
+            showerMinInTBin = cms.uint32(6),
+            showerMinOutTBin = cms.uint32(2),
+            showerThresholds = cms.vuint32(
+                100, 100, 100, 19, 38,
+                42, 8, 11, 15, 17,
+                33, 35, 10, 20, 24,
+                15, 31, 33, 9, 18,
+                22, 17, 34, 36, 11,
+                22, 26
+            )
+        ),
+        source = cms.uint32(3)
+    ),
+    tmbPhase1 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        clctTrigEnable = cms.uint32(0),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(7),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(True),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(7),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    tmbPhase2 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        clctTrigEnable = cms.uint32(0),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(5),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(5),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    tmbPhase2GE11 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        assignGEMCSCBending = cms.bool(False),
+        buildLCTfromALCTCLCTand1GEM = cms.bool(True),
+        buildLCTfromALCTCLCTand2GEM = cms.bool(True),
+        buildLCTfromALCTandGEM = cms.bool(True),
+        buildLCTfromALCTandGEM_ME1a = cms.bool(True),
+        buildLCTfromCLCTandGEM = cms.bool(True),
+        buildLCTfromCLCTandGEM_ME1a = cms.bool(True),
+        clctTrigEnable = cms.uint32(0),
+        dropLowQualityALCTsNoGEMs = cms.bool(False),
+        dropLowQualityCLCTsNoGEMs = cms.bool(True),
+        dropLowQualityCLCTsNoGEMs_ME1a = cms.bool(True),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchEarliestGemsOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(5),
+        matchWithHS = cms.bool(True),
+        maxDeltaBXALCTGEM = cms.uint32(1),
+        maxDeltaBXCLCTGEM = cms.uint32(2),
+        maxDeltaHsEven = cms.uint32(7),
+        maxDeltaHsEvenME1a = cms.uint32(5),
+        maxDeltaHsOdd = cms.uint32(16),
+        maxDeltaHsOddME1a = cms.uint32(12),
+        mitigateSlopeByCosi = cms.bool(True),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbDropUsedGems = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(5),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    ),
+    tmbPhase2GE21 = cms.PSet(
+        alctTrigEnable = cms.uint32(0),
+        assignGEMCSCBending = cms.bool(False),
+        buildLCTfromALCTCLCTand1GEM = cms.bool(True),
+        buildLCTfromALCTCLCTand2GEM = cms.bool(True),
+        buildLCTfromALCTandGEM = cms.bool(True),
+        buildLCTfromCLCTandGEM = cms.bool(True),
+        clctTrigEnable = cms.uint32(0),
+        dropLowQualityALCTsNoGEMs = cms.bool(True),
+        dropLowQualityCLCTsNoGEMs = cms.bool(True),
+        ignoreAlctCrossClct = cms.bool(True),
+        matchEarliestClctOnly = cms.bool(True),
+        matchEarliestGemsOnly = cms.bool(True),
+        matchTrigEnable = cms.uint32(1),
+        matchTrigWindowSize = cms.uint32(5),
+        matchWithHS = cms.bool(True),
+        maxDeltaBXALCTGEM = cms.uint32(1),
+        maxDeltaBXCLCTGEM = cms.uint32(2),
+        maxDeltaHsEven = cms.uint32(3),
+        maxDeltaHsOdd = cms.uint32(5),
+        mitigateSlopeByCosi = cms.bool(True),
+        mpcBlockMe1a = cms.uint32(0),
+        preferredBxMatch = cms.vint32(
+            0, -1, 1, -2, 2,
+            -3, 3
+        ),
+        tmbDropUsedClcts = cms.bool(False),
+        tmbDropUsedGems = cms.bool(False),
+        tmbEarlyTbins = cms.int32(4),
+        tmbL1aWindowSize = cms.uint32(5),
+        tmbReadoutEarliest2 = cms.bool(True),
+        useHighMultiplicityBits = cms.bool(False),
+        verbosity = cms.int32(0)
+    )
+)
+
+
+process.simDtTriggerPrimitiveDigis = cms.EDProducer("DTTrigProd",
+    DTTFSectorNumbering = cms.bool(True),
+    debug = cms.untracked.bool(False),
+    digiTag = cms.InputTag("unpackDT"),
+    lutBtic = cms.untracked.int32(31),
+    lutDumpFlag = cms.untracked.bool(False)
+)
+
+
+process.simEmtfDigis = cms.EDProducer("L1TMuonEndCapTrackProducer",
+    BXWindow = cms.int32(2),
+    CPPFEnable = cms.bool(False),
+    CPPFInput = cms.InputTag("simCPPFDigis"),
+    CSCComparatorInput = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi"),
+    CSCEnable = cms.bool(True),
+    CSCInput = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED"),
+    CSCInputBXShift = cms.int32(-8),
+    DTEnable = cms.bool(False),
+    DTPhiInput = cms.InputTag("simTwinMuxDigis"),
+    DTThetaInput = cms.InputTag("simDtTriggerPrimitiveDigis"),
+    Era = cms.string('Run3_2021'),
+    FWConfig = cms.bool(True),
+    GEMEnable = cms.bool(False),
+    GEMInput = cms.InputTag("simMuonGEMPadDigiClusters"),
+    GEMInputBXShift = cms.int32(0),
+    IRPCEnable = cms.bool(False),
+    ME0Enable = cms.bool(False),
+    ME0Input = cms.InputTag("me0TriggerConvertedPseudoDigis"),
+    ME0InputBXShift = cms.int32(-8),
+    MaxBX = cms.int32(3),
+    MinBX = cms.int32(-3),
+    RPCEnable = cms.bool(True),
+    RPCInput = cms.InputTag("unpackRPC"),
+    RPCInputBXShift = cms.int32(0),
+    UseRun3CCLUT_OTMB = cms.bool(False),
+    UseRun3CCLUT_TMB = cms.bool(False),
+    spGCParams16 = cms.PSet(
+        BugSameSectorPt0 = cms.bool(False),
+        MaxRoadsPerZone = cms.int32(3),
+        MaxTracks = cms.int32(3),
+        UseSecondEarliest = cms.bool(True)
+    ),
+    spPAParams16 = cms.PSet(
+        Bug9BitDPhi = cms.bool(False),
+        BugGMTPhi = cms.bool(False),
+        BugMode7CLCT = cms.bool(False),
+        BugNegPt = cms.bool(False),
+        FixMode15HighPt = cms.bool(True),
+        ModeQualVer = cms.int32(2),
+        PromoteMode7 = cms.bool(False),
+        ProtobufFileName = cms.string('model_graph.displ.5.pb'),
+        ReadPtLUTFile = cms.bool(False)
+    ),
+    spPCParams16 = cms.PSet(
+        DuplicateTheta = cms.bool(True),
+        FixME11Edges = cms.bool(True),
+        FixZonePhi = cms.bool(True),
+        IncludeNeighbor = cms.bool(True),
+        UseNewZones = cms.bool(False),
+        ZoneBoundaries = cms.vint32(0, 41, 49, 87, 127),
+        ZoneOverlap = cms.int32(2)
+    ),
+    spPRParams16 = cms.PSet(
+        PatternDefinitions = cms.vstring(
+            '4,15:15,7:7,7:7,7:7',
+            '3,16:16,7:7,7:6,7:6',
+            '3,14:14,7:7,8:7,8:7',
+            '2,18:17,7:7,7:5,7:5',
+            '2,13:12,7:7,10:7,10:7',
+            '1,22:19,7:7,7:0,7:0',
+            '1,11:8,7:7,14:7,14:7',
+            '0,30:23,7:7,7:0,7:0',
+            '0,7:0,7:7,14:7,14:7'
+        ),
+        SymPatternDefinitions = cms.vstring(
+            '4,15:15:15:15,7:7:7:7,7:7:7:7,7:7:7:7',
+            '3,16:16:14:14,7:7:7:7,8:7:7:6,8:7:7:6',
+            '2,18:17:13:12,7:7:7:7,10:7:7:4,10:7:7:4',
+            '1,22:19:11:8,7:7:7:7,14:7:7:0,14:7:7:0',
+            '0,30:23:7:0,7:7:7:7,14:7:7:0,14:7:7:0'
+        ),
+        UseSymmetricalPatterns = cms.bool(True)
+    ),
+    spTBParams16 = cms.PSet(
+        BugAmbigThetaWin = cms.bool(False),
+        BugME11Dupes = cms.bool(False),
+        BugSt2PhDiff = cms.bool(False),
+        ThetaWindow = cms.int32(8),
+        ThetaWindowZone0 = cms.int32(4),
+        TwoStationSameBX = cms.bool(True),
+        UseSingleHits = cms.bool(False)
+    ),
+    verbosity = cms.untracked.int32(0)
+)
+
+
+process.simEmtfShowers = cms.EDProducer("L1TMuonEndCapShowerProducer",
+    CSCShowerInput = cms.InputTag("simCscTriggerPrimitiveDigis"),
+    enableOneNominalShowers = cms.bool(True),
+    enableOneTightShowers = cms.bool(True),
+    enableTwoLooseShowers = cms.bool(False),
+    mightGet = cms.optional.untracked.vstring,
+    nLooseShowers = cms.uint32(2),
+    nNominalShowers = cms.uint32(1),
+    nTightShowers = cms.uint32(1)
+)
+
+
+process.simGmtCaloSumDigis = cms.EDProducer("L1TMuonCaloSumProducer",
+    caloStage2Layer2Label = cms.InputTag("simCaloStage2Layer1Digis")
+)
+
+
+process.simGmtShowerDigis = cms.EDProducer("L1TMuonShowerProducer",
+    bxMax = cms.int32(0),
+    bxMin = cms.int32(0),
+    mightGet = cms.optional.untracked.vstring,
+    showerInput = cms.InputTag("simEmtfShowers","EMTF")
+)
+
+
+process.simGmtStage2Digis = cms.EDProducer("L1TMuonProducer",
+    autoBxRange = cms.bool(True),
+    autoCancelMode = cms.bool(False),
+    barrelTFInput = cms.InputTag("simKBmtfDigis","BMTF"),
+    bmtfCancelMode = cms.string('kftracks'),
+    bxMax = cms.int32(2),
+    bxMin = cms.int32(-2),
+    emtfCancelMode = cms.string('coordinate'),
+    forwardTFInput = cms.InputTag("simEmtfDigis","EMTF"),
+    overlapTFInput = cms.InputTag("simOmtfDigis","OMTF"),
+    triggerTowerInput = cms.InputTag("simGmtCaloSumDigis","TriggerTowerSums")
+)
+
+
 process.simGtExtFakeStage2Digis = cms.EDProducer("L1TExtCondProducer",
     bxFirst = cms.int32(-2),
     bxLast = cms.int32(2),
@@ -24034,7 +24819,7 @@ process.simGtExtFakeStage2Digis = cms.EDProducer("L1TExtCondProducer",
     setBptxMinus = cms.bool(True),
     setBptxOR = cms.bool(True),
     setBptxPlus = cms.bool(True),
-    tcdsRecordLabel = cms.InputTag("unpackTcds","tcdsRecord")
+    tcdsRecordLabel = cms.InputTag("")
 )
 
 
@@ -24042,28 +24827,372 @@ process.simGtStage2Digis = cms.EDProducer("L1TGlobalProducer",
     AlgoBlkInputTag = cms.InputTag("gtStage2Digis"),
     AlgorithmTriggersUnmasked = cms.bool(True),
     AlgorithmTriggersUnprescaled = cms.bool(True),
-    EGammaInputTag = cms.InputTag("unpackGtStage2","EGamma"),
-    EtSumInputTag = cms.InputTag("unpackGtStage2","EtSum"),
-    ExtInputTag = cms.InputTag("unpackGtStage2"),
+    EGammaInputTag = cms.InputTag("simCaloStage2Digis"),
+    EtSumInputTag = cms.InputTag("simCaloStage2Digis"),
+    ExtInputTag = cms.InputTag("simGtExtFakeStage2Digis"),
     GetPrescaleColumnFromData = cms.bool(False),
-    JetInputTag = cms.InputTag("unpackGtStage2","Jet"),
-    MuonInputTag = cms.InputTag("unpackGtStage2","Muon"),
-    MuonShowerInputTag = cms.InputTag("unpackGtStage2","MuonShower"),
+    JetInputTag = cms.InputTag("simCaloStage2Digis"),
+    MuonInputTag = cms.InputTag("simGmtStage2Digis"),
+    MuonShowerInputTag = cms.InputTag("simGmtShowerDigis"),
     RequireMenuToMatchAlgoBlkInput = cms.bool(False),
-    TauInputTag = cms.InputTag("unpackGtStage2","Tau"),
+    TauInputTag = cms.InputTag("simCaloStage2Digis"),
     useMuonShowers = cms.bool(True)
 )
 
 
-process.unpackGtStage2 = cms.EDProducer("L1TRawToDigi",
-    FedIds = cms.vint32(1404),
-    InputLabel = cms.InputTag("rawDataCollector","","@skipCurrentProcess"),
-    Setup = cms.string('stage2::GTSetup')
+process.simHcalTriggerPrimitiveDigis = cms.EDProducer("HcalTrigPrimDigiProducer",
+    FG_HF_thresholds = cms.vuint32(17, 255),
+    FG_threshold = cms.uint32(12),
+    FrontEndFormatError = cms.bool(False),
+    InputTagFEDRaw = cms.InputTag("rawDataCollector"),
+    LSConfig = cms.untracked.PSet(
+        HcalFeatureHFEMBit = cms.bool(False),
+        Long_Short_Offset = cms.double(10.1),
+        Long_vrs_Short_Slope = cms.double(100.2),
+        Min_Long_Energy = cms.double(10),
+        Min_Short_Energy = cms.double(10)
+    ),
+    MinSignalThreshold = cms.uint32(0),
+    PMTNoiseThreshold = cms.uint32(0),
+    PeakFinderAlgorithm = cms.int32(2),
+    RunZS = cms.bool(False),
+    ZS_threshold = cms.uint32(1),
+    applySaturationFix = cms.bool(True),
+    inputLabel = cms.VInputTag("unpackHcal", "unpackHcal"),
+    inputUpgradeLabel = cms.VInputTag("unpackHcal", "unpackHcal"),
+    latency = cms.int32(1),
+    numberOfFilterPresamplesHBQIE11 = cms.int32(0),
+    numberOfFilterPresamplesHEQIE11 = cms.int32(0),
+    numberOfPresamples = cms.int32(2),
+    numberOfPresamplesHF = cms.int32(1),
+    numberOfSamples = cms.int32(4),
+    numberOfSamplesHF = cms.int32(2),
+    overrideDBweightsAndFilterHB = cms.bool(False),
+    overrideDBweightsAndFilterHE = cms.bool(False),
+    peakFilter = cms.bool(True),
+    tpScales = cms.PSet(
+        HBHE = cms.PSet(
+            LSBQIE11 = cms.double(0.0625),
+            LSBQIE11Overlap = cms.double(0.0625),
+            LSBQIE8 = cms.double(0.125)
+        ),
+        HF = cms.PSet(
+            NCTShift = cms.int32(2),
+            RCTShift = cms.int32(3)
+        )
+    ),
+    upgradeHB = cms.bool(True),
+    upgradeHE = cms.bool(True),
+    upgradeHF = cms.bool(True),
+    useTDCInMinBiasBits = cms.bool(False),
+    weights = cms.vdouble(1.0, 1.0),
+    weightsQIE11 = cms.PSet(
+        ieta1 = cms.vdouble(1.0, 1.0),
+        ieta10 = cms.vdouble(1.0, 1.0),
+        ieta11 = cms.vdouble(1.0, 1.0),
+        ieta12 = cms.vdouble(1.0, 1.0),
+        ieta13 = cms.vdouble(1.0, 1.0),
+        ieta14 = cms.vdouble(1.0, 1.0),
+        ieta15 = cms.vdouble(1.0, 1.0),
+        ieta16 = cms.vdouble(1.0, 1.0),
+        ieta17 = cms.vdouble(1.0, 1.0),
+        ieta18 = cms.vdouble(1.0, 1.0),
+        ieta19 = cms.vdouble(1.0, 1.0),
+        ieta2 = cms.vdouble(1.0, 1.0),
+        ieta20 = cms.vdouble(1.0, 1.0),
+        ieta21 = cms.vdouble(1.0, 1.0),
+        ieta22 = cms.vdouble(1.0, 1.0),
+        ieta23 = cms.vdouble(1.0, 1.0),
+        ieta24 = cms.vdouble(1.0, 1.0),
+        ieta25 = cms.vdouble(1.0, 1.0),
+        ieta26 = cms.vdouble(1.0, 1.0),
+        ieta27 = cms.vdouble(1.0, 1.0),
+        ieta28 = cms.vdouble(1.0, 1.0),
+        ieta3 = cms.vdouble(1.0, 1.0),
+        ieta4 = cms.vdouble(1.0, 1.0),
+        ieta5 = cms.vdouble(1.0, 1.0),
+        ieta6 = cms.vdouble(1.0, 1.0),
+        ieta7 = cms.vdouble(1.0, 1.0),
+        ieta8 = cms.vdouble(1.0, 1.0),
+        ieta9 = cms.vdouble(1.0, 1.0)
+    )
 )
 
 
-process.unpackTcds = cms.EDProducer("TcdsRawToDigi",
+process.simKBmtfDigis = cms.EDProducer("L1TMuonBarrelKalmanTrackProducer",
+    algoSettings = cms.PSet(
+        aPhi = cms.vdouble(1.942, 0.01511, 0.01476, 0.009799),
+        aPhiB = cms.vdouble(-1.508, -0.1237, -0.1496, -0.1333),
+        aPhiBNLO = cms.vdouble(0.000331, 0, 0, 0),
+        bPhi = cms.vdouble(-1, 0.18245, 0.20898, 0.17286),
+        bPhiB = cms.vdouble(-1, 1.18245, 1.20898, 1.17286),
+        chiSquare = cms.vdouble(0.0, 0.109375, 0.234375, 0.359375),
+        chiSquareCut = cms.vint32(126, 126, 126, 126, 126),
+        chiSquareCutCurvMax = cms.vint32(2500, 2500, 2500, 2500, 2500),
+        chiSquareCutPattern = cms.vint32(7, 11, 13, 14, 15),
+        chiSquareCutTight = cms.vint32(
+            40, 126, 60, 126, 126,
+            126
+        ),
+        combos1 = cms.vint32(),
+        combos2 = cms.vint32(3),
+        combos3 = cms.vint32(5, 6, 7),
+        combos4 = cms.vint32(
+            9, 10, 11, 12, 13,
+            14, 15
+        ),
+        eLoss = cms.vdouble(0.000765, 0, 0, 0),
+        etaLUT0 = cms.vdouble(8.946, 7.508, 6.279, 6.399),
+        etaLUT1 = cms.vdouble(0.159, 0.116, 0.088, 0.128),
+        initialK = cms.vdouble(-1.196, -1.581, -2.133, -2.263),
+        initialK2 = cms.vdouble(-0.000326, -0.0007165, 0.002305, -0.00563),
+        lutFile = cms.string('L1Trigger/L1TMuon/data/bmtf_luts/kalmanLUTs_v302.root'),
+        mScatteringPhi = cms.vdouble(0.00249, 5.47e-05, 3.49e-05, 1.37e-05),
+        mScatteringPhiB = cms.vdouble(0.00722, 0.003461, 0.004447, 0.00412),
+        phiAt2 = cms.double(0.15918),
+        pointResolutionPhi = cms.double(1.0),
+        pointResolutionPhiB = cms.double(500.0),
+        pointResolutionPhiBH = cms.vdouble(151.0, 173.0, 155.0, 153.0),
+        pointResolutionPhiBL = cms.vdouble(17866.0, 19306.0, 23984.0, 23746.0),
+        pointResolutionVertex = cms.double(1.0),
+        trackComp = cms.vdouble(1.75, 1.25, 0.625, 0.25),
+        trackCompCut = cms.vint32(
+            15, 15, 15, 15, 15,
+            15
+        ),
+        trackCompCutCurvMax = cms.vint32(
+            34, 34, 34, 34, 34,
+            34
+        ),
+        trackCompCutPattern = cms.vint32(
+            3, 5, 6, 9, 10,
+            12
+        ),
+        trackCompErr1 = cms.vdouble(2.0, 2.0, 2.0, 2.0),
+        trackCompErr2 = cms.vdouble(0.21875, 0.21875, 0.21875, 0.3125),
+        useOfflineAlgo = cms.bool(False),
+        verbose = cms.bool(False)
+    ),
+    bx = cms.vint32(-2, -1, 0, 1, 2),
+    src = cms.InputTag("simKBmtfStubs"),
+    trackFinderSettings = cms.PSet(
+        sectorSettings = cms.PSet(
+            regionSettings = cms.PSet(
+                verbose = cms.int32(0)
+            ),
+            verbose = cms.int32(0),
+            wheelsToProcess = cms.vint32(-2, -1, 0, 1, 2)
+        ),
+        sectorsToProcess = cms.vint32(
+            0, 1, 2, 3, 4,
+            5, 6, 7, 8, 9,
+            10, 11
+        ),
+        verbose = cms.int32(0)
+    )
+)
+
+
+process.simKBmtfStubs = cms.EDProducer("L1TMuonBarrelKalmanStubProducer",
+    cotTheta_1 = cms.vint32(
+        105, 101, 97, 93, 88,
+        84, 79, 69, 64, 58,
+        52, 46, 40, 34, 21,
+        14, 7, 0, -7, -14,
+        -21, -34, -40, -46, -52,
+        -58, -64, -69, -79, -84,
+        -88, -93, -97, -101, -105
+    ),
+    cotTheta_2 = cms.vint32(
+        93, 89, 85, 81, 77,
+        73, 68, 60, 55, 50,
+        45, 40, 34, 29, 17,
+        12, 6, 0, -6, -12,
+        -17, -29, -34, -40, -45,
+        -50, -55, -60, -68, -73,
+        -77, -81, -85, -89, -93
+    ),
+    cotTheta_3 = cms.vint32(
+        81, 77, 74, 70, 66,
+        62, 58, 51, 46, 42,
+        38, 33, 29, 24, 15,
+        10, 5, 0, -5, -10,
+        -15, -24, -29, -33, -38,
+        -42, -46, -51, -58, -62,
+        -66, -70, -74, -77, -81
+    ),
+    disableMasks = cms.bool(False),
+    maxBX = cms.int32(2),
+    minBX = cms.int32(-2),
+    minPhiQuality = cms.int32(0),
+    minThetaQuality = cms.int32(0),
+    srcPhi = cms.InputTag("simTwinMuxDigis"),
+    srcTheta = cms.InputTag("simDtTriggerPrimitiveDigis"),
+    verbose = cms.int32(0)
+)
+
+
+process.simMuonGEMPadDigiClusters = cms.EDProducer("GEMPadDigiClusterProducer",
+    InputCollection = cms.InputTag("simMuonGEMPadDigis"),
+    maxClusterSize = cms.uint32(8),
+    maxClustersOHGE11 = cms.uint32(4),
+    maxClustersOHGE21 = cms.uint32(5),
+    mightGet = cms.optional.untracked.vstring,
+    nOHGE11 = cms.uint32(2),
+    nOHGE21 = cms.uint32(4),
+    sendOverflowClusters = cms.bool(False)
+)
+
+
+process.simMuonGEMPadDigis = cms.EDProducer("GEMPadDigiProducer",
+    InputCollection = cms.InputTag("simMuonGEMDigis"),
+    mightGet = cms.optional.untracked.vstring
+)
+
+
+process.simOmtfDigis = cms.EDProducer("L1TMuonOverlapPhase1TrackProducer",
+    XMLDumpFileName = cms.string('TestEvents.xml'),
+    bxMax = cms.int32(0),
+    bxMin = cms.int32(0),
+    dropCSCPrimitives = cms.bool(False),
+    dropDTPrimitives = cms.bool(False),
+    dropRPCPrimitives = cms.bool(False),
+    dumpDetailedResultToXML = cms.bool(False),
+    dumpGPToXML = cms.bool(False),
+    dumpResultToXML = cms.bool(False),
+    eventsXMLFiles = cms.vstring('TestEvents.xml'),
+    processorType = cms.string('OMTFProcessor'),
+    readEventsFromXML = cms.bool(False),
+    srcCSC = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED"),
+    srcDTPh = cms.InputTag("simDtTriggerPrimitiveDigis"),
+    srcDTTh = cms.InputTag("simDtTriggerPrimitiveDigis"),
+    srcRPC = cms.InputTag("unpackRPC")
+)
+
+
+process.simTwinMuxDigis = cms.EDProducer("L1TTwinMuxProducer",
+    DTDigi_Source = cms.InputTag("simDtTriggerPrimitiveDigis"),
+    DTThetaDigi_Source = cms.InputTag("simDtTriggerPrimitiveDigis"),
+    RPC_Source = cms.InputTag("unpackRPC")
+)
+
+
+process.unpackCSC = cms.EDProducer("CSCDCCUnpacker",
+    B904Setup = cms.untracked.bool(False),
+    Debug = cms.untracked.bool(False),
+    DisableMappingCheck = cms.untracked.bool(False),
+    ErrorMask = cms.uint32(0),
+    ExaminerMask = cms.uint32(535558134),
+    FormatedEventDump = cms.untracked.bool(False),
+    InputObjects = cms.InputTag("rawDataCollector","","@skipCurrentProcess"),
+    PrintEventNumber = cms.untracked.bool(False),
+    SuppressZeroLCT = cms.untracked.bool(True),
+    UnpackStatusDigis = cms.bool(False),
+    UseExaminer = cms.bool(True),
+    UseFormatStatus = cms.bool(True),
+    UseSelectiveUnpacking = cms.bool(True),
+    VisualFEDInspect = cms.untracked.bool(False),
+    VisualFEDShort = cms.untracked.bool(False),
+    mightGet = cms.optional.untracked.vstring,
+    runDQM = cms.untracked.bool(False),
+    useCSCShowers = cms.bool(True),
+    useGEMs = cms.bool(True),
+    useRPCs = cms.bool(False)
+)
+
+
+process.unpackDT = cms.EDProducer("DTuROSRawToDigi",
+    debug = cms.untracked.bool(False),
+    inputLabel = cms.InputTag("rawDataCollector","","@skipCurrentProcess")
+)
+
+
+process.unpackEcal = cms.EDProducer("EcalRawToDigi",
+    DoRegional = cms.bool(False),
+    FEDs = cms.vint32(
+        601, 602, 603, 604, 605,
+        606, 607, 608, 609, 610,
+        611, 612, 613, 614, 615,
+        616, 617, 618, 619, 620,
+        621, 622, 623, 624, 625,
+        626, 627, 628, 629, 630,
+        631, 632, 633, 634, 635,
+        636, 637, 638, 639, 640,
+        641, 642, 643, 644, 645,
+        646, 647, 648, 649, 650,
+        651, 652, 653, 654
+    ),
+    FedLabel = cms.InputTag("listfeds"),
     InputLabel = cms.InputTag("rawDataCollector","","@skipCurrentProcess"),
+    eventPut = cms.bool(True),
+    feIdCheck = cms.bool(True),
+    feUnpacking = cms.bool(True),
+    forceToKeepFRData = cms.bool(False),
+    headerUnpacking = cms.bool(True),
+    memUnpacking = cms.bool(True),
+    mightGet = cms.optional.untracked.vstring,
+    numbTriggerTSamples = cms.int32(1),
+    numbXtalTSamples = cms.int32(10),
+    orderedDCCIdList = cms.vint32(
+        1, 2, 3, 4, 5,
+        6, 7, 8, 9, 10,
+        11, 12, 13, 14, 15,
+        16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25,
+        26, 27, 28, 29, 30,
+        31, 32, 33, 34, 35,
+        36, 37, 38, 39, 40,
+        41, 42, 43, 44, 45,
+        46, 47, 48, 49, 50,
+        51, 52, 53, 54
+    ),
+    orderedFedList = cms.vint32(
+        601, 602, 603, 604, 605,
+        606, 607, 608, 609, 610,
+        611, 612, 613, 614, 615,
+        616, 617, 618, 619, 620,
+        621, 622, 623, 624, 625,
+        626, 627, 628, 629, 630,
+        631, 632, 633, 634, 635,
+        636, 637, 638, 639, 640,
+        641, 642, 643, 644, 645,
+        646, 647, 648, 649, 650,
+        651, 652, 653, 654
+    ),
+    silentMode = cms.untracked.bool(True),
+    srpUnpacking = cms.bool(True),
+    syncCheck = cms.bool(True),
+    tccUnpacking = cms.bool(True)
+)
+
+
+process.unpackHcal = cms.EDProducer("HcalRawToDigi",
+    ComplainEmptyData = cms.untracked.bool(False),
+    ElectronicsMap = cms.string(''),
+    ExpectedOrbitMessageTime = cms.untracked.int32(-1),
+    FEDs = cms.untracked.vint32(),
+    FilterDataQuality = cms.bool(True),
+    HcalFirstFED = cms.untracked.int32(700),
+    InputLabel = cms.InputTag("rawDataCollector","","@skipCurrentProcess"),
+    UnpackCalib = cms.untracked.bool(True),
+    UnpackTTP = cms.untracked.bool(True),
+    UnpackUMNio = cms.untracked.bool(True),
+    UnpackZDC = cms.untracked.bool(True),
+    UnpackerMode = cms.untracked.int32(0),
+    firstSample = cms.int32(0),
+    lastSample = cms.int32(9),
+    mightGet = cms.optional.untracked.vstring,
+    saveQIE10DataNSamples = cms.untracked.vint32(),
+    saveQIE10DataTags = cms.untracked.vstring(),
+    saveQIE11DataNSamples = cms.untracked.vint32(),
+    saveQIE11DataTags = cms.untracked.vstring(),
+    silent = cms.untracked.bool(True)
+)
+
+
+process.unpackRPC = cms.EDProducer("RPCUnpackingModule",
+    InputLabel = cms.InputTag("rawDataCollector","","@skipCurrentProcess"),
+    doSynchro = cms.bool(True),
     mightGet = cms.optional.untracked.vstring
 )
 
@@ -37958,6 +39087,33 @@ process.CaloGeometryBuilder = cms.ESProducer("CaloGeometryBuilder",
 )
 
 
+process.CaloTPGTranscoder = cms.ESProducer("CaloTPGTranscoderULUTs",
+    FG_HF_thresholds = cms.vuint32(15, 19),
+    LUTfactor = cms.vint32(1, 2, 5, 0),
+    RCTLSB = cms.double(0.25),
+    ZS = cms.vint32(4, 2, 1, 0),
+    hcalLUT1 = cms.FileInPath('CalibCalorimetry/CaloTPG/data/outputLUTtranscoder_physics.dat'),
+    hcalLUT2 = cms.FileInPath('CalibCalorimetry/CaloTPG/data/TPGcalcDecompress2.txt'),
+    ietaLowerBound = cms.vint32(1, 18, 27, 29),
+    ietaUpperBound = cms.vint32(17, 26, 28, 32),
+    linearLUTs = cms.bool(True),
+    nominal_gain = cms.double(0.177),
+    read_Ascii_Compression_LUTs = cms.bool(False),
+    read_Ascii_RCT_LUTs = cms.bool(False),
+    tpScales = cms.PSet(
+        HBHE = cms.PSet(
+            LSBQIE11 = cms.double(0.0625),
+            LSBQIE11Overlap = cms.double(0.0625),
+            LSBQIE8 = cms.double(0.125)
+        ),
+        HF = cms.PSet(
+            NCTShift = cms.int32(2),
+            RCTShift = cms.int32(3)
+        )
+    )
+)
+
+
 process.CaloTopologyBuilder = cms.ESProducer("CaloTopologyBuilder")
 
 
@@ -38084,11 +39240,46 @@ process.HcalGeometryFromDBEP = cms.ESProducer("HcalGeometryFromDBEP",
 )
 
 
+process.HcalTPGCoderULUT = cms.ESProducer("HcalTPGCoderULUT",
+    FGLUTs = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/HBHE_FG_LUT.dat'),
+    FG_HF_thresholds = cms.vuint32(15, 19),
+    LUTGenerationMode = cms.bool(True),
+    MaskBit = cms.int32(32768),
+    RCalibFile = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/RecHit-TPG-calib.dat'),
+    applyFixPCC = cms.bool(True),
+    contain1TSHB = cms.bool(False),
+    contain1TSHE = cms.bool(False),
+    containPhaseNSHB = cms.double(6.0),
+    containPhaseNSHE = cms.double(6.0),
+    inputLUTs = cms.FileInPath('CalibCalorimetry/HcalTPGAlgos/data/inputLUTcoder_physics.dat'),
+    linearLUTs = cms.bool(True),
+    overrideDBweightsAndFilterHB = cms.bool(False),
+    overrideDBweightsAndFilterHE = cms.bool(False),
+    read_Ascii_LUTs = cms.bool(False),
+    read_FG_LUTs = cms.bool(False),
+    read_XML_LUTs = cms.bool(False),
+    tpScales = cms.PSet(
+        HBHE = cms.PSet(
+            LSBQIE11 = cms.double(0.0625),
+            LSBQIE11Overlap = cms.double(0.0625),
+            LSBQIE8 = cms.double(0.125)
+        ),
+        HF = cms.PSet(
+            NCTShift = cms.int32(2),
+            RCTShift = cms.int32(3)
+        )
+    )
+)
+
+
 process.HcalTopologyIdealEP = cms.ESProducer("HcalTopologyIdealEP",
     Exclude = cms.untracked.string(''),
     MergePosition = cms.untracked.bool(True),
     appendToDataLabel = cms.string('')
 )
+
+
+process.HcalTrigTowerGeometryESProducer = cms.ESProducer("HcalTrigTowerGeometryESProducer")
 
 
 process.L1DTConfigFromDB = cms.ESProducer("DTConfigDBProducer",
@@ -38877,6 +40068,339 @@ process.caloDetIdAssociator = cms.ESProducer("DetIdAssociatorESProducer",
     includeME0 = cms.bool(False),
     nEta = cms.int32(70),
     nPhi = cms.int32(72)
+)
+
+
+process.caloStage2Params = cms.ESProducer("L1TCaloStage2ParamsESProducer",
+    centralityLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/centralityLUT_stage1.txt'),
+    centralityNodeVersion = cms.int32(1),
+    centralityRegionMask = cms.int32(0),
+    egBypassECALFG = cms.uint32(1),
+    egBypassEGVetos = cms.uint32(0),
+    egBypassExtHOverE = cms.uint32(1),
+    egBypassHoE = cms.uint32(0),
+    egBypassShape = cms.uint32(1),
+    egCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/corrections_Trimming10_compressedieta_compressedE_compressedshape_PANTELIS_v2_NEW_CALIBRATIONS_withShape_v17.04.04.txt'),
+    egCalibrationType = cms.string('compressed'),
+    egCalibrationVersion = cms.uint32(0),
+    egCompressShapesLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/egCompressLUT_v4.txt'),
+    egEtaCut = cms.int32(24),
+    egHOverEcutBarrel = cms.int32(1),
+    egHOverEcutEndcap = cms.int32(1),
+    egHcalThreshold = cms.double(0.0),
+    egIsoAreaNrTowersEta = cms.uint32(2),
+    egIsoAreaNrTowersPhi = cms.uint32(4),
+    egIsoLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/EG_Iso_LUT_04_04_2017.2.txt'),
+    egIsoLUTFile2 = cms.FileInPath('L1Trigger/L1TCalorimeter/data/EG_LoosestIso_2018.2.txt'),
+    egIsoMaxEtaAbsForIsoSum = cms.uint32(27),
+    egIsoMaxEtaAbsForTowerSum = cms.uint32(4),
+    egIsoPUEstTowerGranularity = cms.uint32(1),
+    egIsoVetoNrTowersPhi = cms.uint32(2),
+    egIsolationType = cms.string('compressed'),
+    egLsb = cms.double(0.5),
+    egMaxHOverE = cms.double(0.15),
+    egMaxHOverELUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/HoverEIdentification_0.995_v15.12.23.txt'),
+    egMaxHcalEt = cms.double(0.0),
+    egMaxPtHOverE = cms.double(128.0),
+    egMaxPtHOverEIsolation = cms.int32(40),
+    egMaxPtJetIsolation = cms.int32(63),
+    egMinPtHOverEIsolation = cms.int32(1),
+    egMinPtJetIsolation = cms.int32(25),
+    egNeighbourThreshold = cms.double(1.0),
+    egPUSParams = cms.vdouble(1, 4, 32),
+    egPUSType = cms.string('None'),
+    egSeedThreshold = cms.double(2.0),
+    egShapeIdLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/shapeIdentification_adapt0.99_compressedieta_compressedE_compressedshape_v15.12.08.txt'),
+    egShapeIdType = cms.string('compressed'),
+    egShapeIdVersion = cms.uint32(0),
+    egTrimmingLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/egTrimmingLUT_10_v16.01.19.txt'),
+    etSumBypassEcalSumPUS = cms.uint32(1),
+    etSumBypassEttPUS = cms.uint32(1),
+    etSumBypassMetPUS = cms.uint32(0),
+    etSumCentralityLower = cms.vdouble(
+        0.0, 3.5, 11.5, 126.5, 367.0,
+        868.5, 1738.5, 65535.0
+    ),
+    etSumCentralityUpper = cms.vdouble(
+        6.5, 18.0, 176.5, 456.0, 991.0,
+        1867.0, 3126.5, 65535.0
+    ),
+    etSumEcalSumCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    etSumEcalSumCalibrationType = cms.string('None'),
+    etSumEcalSumPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_dummy.txt'),
+    etSumEcalSumPUSType = cms.string('None'),
+    etSumEtThreshold = cms.vdouble(0.0, 30.0, 0.0, 30.0, 0.0),
+    etSumEtaMax = cms.vint32(28, 26, 28, 26, 28),
+    etSumEtaMin = cms.vint32(1, 1, 1, 1, 1),
+    etSumEttCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    etSumEttCalibrationType = cms.string('None'),
+    etSumEttPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_dummy.txt'),
+    etSumEttPUSType = cms.string('None'),
+    etSumLsb = cms.double(0.5),
+    etSumMetPUSLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_towEtThresh_2017v7.txt'),
+    etSumMetPUSType = cms.string('LUT'),
+    etSumXCalibrationType = cms.string('None'),
+    etSumYCalibrationType = cms.string('None'),
+    isoTauEtaMax = cms.int32(25),
+    isoTauEtaMin = cms.int32(0),
+    jetBypassPUS = cms.uint32(0),
+    jetCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_calib_2018v1_ECALZS_noHFJEC_HI.txt'),
+    jetCalibrationParams = cms.vdouble(),
+    jetCalibrationType = cms.string('LUT'),
+    jetCompressEtaLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_eta_compress_2017v1.txt'),
+    jetCompressPtLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_pt_compress_2017v1.txt'),
+    jetLsb = cms.double(0.5),
+    jetNeighbourThreshold = cms.double(0.0),
+    jetPUSType = cms.string('PhiRing1'),
+    jetPUSUsePhiRing = cms.uint32(1),
+    jetRegionMask = cms.int32(0),
+    jetSeedThreshold = cms.double(4.0),
+    layer1ECalScaleETBins = cms.vint32(
+        3, 6, 9, 12, 15,
+        20, 25, 30, 35, 40,
+        45, 55, 70, 256
+    ),
+    layer1ECalScaleFactors = cms.vdouble( (
+        1.128436, 1.102229, 1.128385, 1.127897, 1.142444,
+        1.115476, 1.104283, 1.124583, 1.115929, 1.115196,
+        1.130342, 1.127173, 1.13064, 1.125474, 1.126652,
+        1.143535, 1.148905, 1.309035, 1.156021, 1.292685,
+        1.314302, 1.327634, 1.341229, 1.364885, 1.411117,
+        0.0, 0.0, 0.0, 1.128436, 1.102229,
+        1.128385, 1.127897, 1.142444, 1.115476, 1.104283,
+        1.124583, 1.115929, 1.115196, 1.130342, 1.127173,
+        1.13064, 1.125474, 1.126652, 1.143535, 1.148905,
+        1.309035, 1.156021, 1.292685, 1.314302, 1.327634,
+        1.341229, 1.364885, 1.411117, 1.432419, 0.0,
+        0.0, 1.078545, 1.072734, 1.075464, 1.08192,
+        1.078434, 1.072281, 1.07978, 1.082043, 1.094741,
+        1.074544, 1.082784, 1.084089, 1.086375, 1.099718,
+        1.092858, 1.092855, 1.105166, 1.256155, 1.126301,
+        1.215671, 1.226302, 1.2689, 1.281721, 1.310629,
+        1.356976, 1.386428, 1.220159, 0.0, 1.052366,
+        1.053986, 1.05525, 1.051033, 1.055017, 1.062249,
+        1.059624, 1.065355, 1.062623, 1.054089, 1.060477,
+        1.074504, 1.07557, 1.078549, 1.071588, 1.080279,
+        1.078463, 1.211087, 1.103915, 1.186517, 1.194161,
+        1.234868, 1.25008, 1.274639, 1.327394, 1.362218,
+        1.161404, 1.062366, 1.04464, 1.043507, 1.046185,
+        1.042067, 1.042425, 1.044121, 1.050677, 1.051604,
+        1.04607, 1.04014, 1.052732, 1.055652, 1.057201,
+        1.062982, 1.059512, 1.054542, 1.063873, 1.189094,
+        1.091948, 1.165298, 1.177338, 1.213632, 1.223587,
+        1.259376, 1.312025, 1.330172, 1.16022, 1.059058,
+        1.032947, 1.033877, 1.036016, 1.036056, 1.037819,
+        1.036489, 1.040341, 1.035373, 1.042736, 1.03051,
+        1.039291, 1.043943, 1.051946, 1.049653, 1.045154,
+        1.048874, 1.043392, 1.146608, 1.083743, 1.161479,
+        1.16494, 1.197187, 1.229915, 1.238886, 1.28941,
+        1.34462, 1.078591, 1.051894, 1.025813, 1.028301,
+        1.026054, 1.03205, 1.029899, 1.032383, 1.033763,
+        1.034211, 1.033892, 1.023902, 1.03496, 1.039866,
+        1.039984, 1.042478, 1.041047, 1.044143, 1.038748,
+        1.146814, 1.069148, 1.134356, 1.147952, 1.175102,
+        1.202532, 1.234549, 1.285897, 1.280056, 1.055845,
+        1.050155, 1.02537, 1.024465, 1.023378, 1.024989,
+        1.026322, 1.02514, 1.026122, 1.028451, 1.029161,
+        1.020083, 1.031555, 1.032971, 1.036222, 1.04241,
+        1.038053, 1.036796, 1.037195, 1.123576, 1.071556,
+        1.129229, 1.129561, 1.170449, 1.19024, 1.218357,
+        1.270482, 1.302586, 1.047321, 1.0491, 1.018591,
+        1.019825, 1.020823, 1.019265, 1.021761, 1.021521,
+        1.024053, 1.024121, 1.024979, 1.015315, 1.026035,
+        1.028734, 1.030409, 1.031414, 1.030694, 1.03345,
+        1.035642, 1.103688, 1.066969, 1.117955, 1.13595,
+        1.16317, 1.180714, 1.228736, 1.254963, 1.307361,
+        1.047123, 1.047264, 1.017483, 1.016714, 1.018925,
+        1.017087, 1.020438, 1.018852, 1.020796, 1.022534,
+        1.023495, 1.013378, 1.024097, 1.026067, 1.029037,
+        1.030731, 1.028759, 1.03248, 1.03468, 1.101491,
+        1.06977, 1.110644, 1.129222, 1.147881, 1.176695,
+        1.21911, 1.253033, 1.308691, 1.040706, 1.046607,
+        1.015432, 1.014445, 1.016057, 1.014908, 1.019115,
+        1.016567, 1.020411, 1.019852, 1.020255, 1.010779,
+        1.023433, 1.023674, 1.027479, 1.027385, 1.027332,
+        1.027537, 1.029061, 1.091079, 1.063278, 1.108876,
+        1.122727, 1.171282, 1.172058, 1.211259, 1.245839,
+        1.303968, 1.033863, 1.047743, 1.01437, 1.013304,
+        1.013397, 1.014261, 1.013673, 1.013183, 1.018534,
+        1.016581, 1.017015, 1.00822, 1.019515, 1.02156,
+        1.024502, 1.025611, 1.025905, 1.025863, 1.027252,
+        1.08523, 1.06304, 1.112256, 1.116617, 1.140393,
+        1.159214, 1.191434, 1.240601, 1.268525, 1.033247,
+        1.042853, 1.010174, 1.009843, 1.01152, 1.011041,
+        1.012957, 1.009075, 1.013178, 1.013301, 1.015033,
+        1.005133, 1.017533, 1.018564, 1.020319, 1.022634,
+        1.022429, 1.022338, 1.025613, 1.077639, 1.057895,
+        1.107098, 1.111157, 1.136106, 1.161737, 1.179259,
+        1.232736, 1.290141, 1.018941, 1.014733, 1.000302,
+        1.007651, 1.000751, 1.007791, 1.008949, 1.005394,
+        1.009599, 1.01018, 1.010865, 1.001827, 1.012447,
+        1.015231, 1.019545, 1.020611, 1.022404, 1.019032,
+        1.023113, 1.065127, 1.054688, 1.102754, 1.106151,
+        1.125574, 1.13448, 1.180965, 1.231939, 1.277289,
+        1.018941, 1.014733
+     ) ),
+    layer1HCalScaleETBins = cms.vint32(
+        6, 9, 12, 15, 20,
+        25, 30, 35, 40, 45,
+        55, 70, 256
+    ),
+    layer1HCalScaleFactors = cms.vdouble( (
+        1.691347, 1.704095, 1.729441, 1.735242, 1.726367,
+        1.780424, 1.794996, 1.815904, 1.817388, 1.894632,
+        1.932656, 1.957527, 1.97089, 2.005818, 2.041546,
+        2.042775, 1.989288, 1.594904, 1.659821, 1.676038,
+        1.495936, 1.505035, 1.51259, 1.51147, 1.494893,
+        1.378435, 1.430994, 1.500227, 1.531796, 1.547539,
+        1.559295, 1.561478, 1.568922, 1.601485, 1.616591,
+        1.620739, 1.642884, 1.67842, 1.692987, 1.728681,
+        1.728957, 1.76665, 1.782739, 1.782875, 1.751371,
+        1.431918, 1.487225, 1.483881, 1.336485, 1.349895,
+        1.363924, 1.375728, 1.377818, 1.310078, 1.334588,
+        1.399686, 1.465418, 1.4628, 1.47584, 1.474735,
+        1.474407, 1.506928, 1.526279, 1.524, 1.532718,
+        1.583398, 1.60838, 1.623528, 1.619634, 1.646501,
+        1.667856, 1.674628, 1.635381, 1.350235, 1.394938,
+        1.38394, 1.244552, 1.256971, 1.26118, 1.282746,
+        1.279512, 1.221092, 1.241831, 1.351526, 1.390201,
+        1.404198, 1.416259, 1.404045, 1.418265, 1.437914,
+        1.450857, 1.463511, 1.462653, 1.501891, 1.518896,
+        1.548252, 1.545831, 1.565901, 1.574314, 1.575115,
+        1.557629, 1.301893, 1.326949, 1.312526, 1.197573,
+        1.210304, 1.222283, 1.239081, 1.240673, 1.185591,
+        1.207651, 1.275166, 1.31426, 1.335228, 1.340603,
+        1.323027, 1.324793, 1.347954, 1.349916, 1.363145,
+        1.359628, 1.402624, 1.416518, 1.457202, 1.461053,
+        1.48409, 1.500787, 1.49845, 1.471731, 1.215732,
+        1.253565, 1.243598, 1.157168, 1.164428, 1.175435,
+        1.18931, 1.192682, 1.142038, 1.16281, 1.230426,
+        1.262901, 1.26538, 1.274364, 1.276111, 1.282349,
+        1.291748, 1.305521, 1.301818, 1.305124, 1.336506,
+        1.345742, 1.357458, 1.370139, 1.381995, 1.394554,
+        1.388952, 1.363805, 1.16681, 1.20478, 1.193913,
+        1.118331, 1.124657, 1.136138, 1.148564, 1.147392,
+        1.085564, 1.109949, 1.184837, 1.221607, 1.219692,
+        1.23595, 1.230444, 1.234908, 1.2451, 1.256813,
+        1.252608, 1.263569, 1.284188, 1.300083, 1.309901,
+        1.312849, 1.3355, 1.339967, 1.328269, 1.309282,
+        1.128239, 1.173002, 1.16303, 1.077388, 1.087037,
+        1.08562, 1.099773, 1.097418, 1.047416, 1.080447,
+        1.135984, 1.186335, 1.189457, 1.186903, 1.191054,
+        1.192951, 1.218812, 1.222226, 1.220196, 1.221331,
+        1.264243, 1.284869, 1.277098, 1.263366, 1.276293,
+        1.291829, 1.275918, 1.248086, 1.0957, 1.143874,
+        1.132783, 1.054939, 1.055922, 1.055405, 1.05833,
+        1.062463, 1.012972, 1.028538, 1.089975, 1.155949,
+        1.15312, 1.157186, 1.16332, 1.157607, 1.174722,
+        1.181157, 1.179473, 1.186948, 1.192614, 1.207973,
+        1.215075, 1.252322, 1.231549, 1.241483, 1.224214,
+        1.207592, 1.069829, 1.112551, 1.107158, 1.025349,
+        1.026181, 1.028466, 1.035129, 1.030918, 0.977843,
+        1.004295, 1.075236, 1.122942, 1.124839, 1.1309,
+        1.139241, 1.134602, 1.141732, 1.154381, 1.154366,
+        1.162207, 1.167863, 1.182334, 1.189497, 1.179567,
+        1.185553, 1.205978, 1.188532, 1.154839, 1.058371,
+        1.096597, 1.086545, 0.997724, 1.00069, 1.005683,
+        1.009107, 1.006028, 0.962736, 0.974019, 1.035748,
+        1.094997, 1.0986, 1.101567, 1.102895, 1.106445,
+        1.113255, 1.114956, 1.11893, 1.128154, 1.135288,
+        1.145308, 1.151612, 1.142554, 1.15364, 1.154025,
+        1.1381, 1.127446, 1.034945, 1.069153, 1.062188,
+        0.977909, 0.972598, 0.972539, 0.978454, 0.975065,
+        0.941113, 0.948722, 1.004971, 1.05502, 1.054883,
+        1.059317, 1.061911, 1.062005, 1.066707, 1.074156,
+        1.064278, 1.07281, 1.076579, 1.084072, 1.091055,
+        1.09064, 1.086634, 1.095179, 1.075771, 1.051884,
+        1.00593, 1.033331, 1.024734, 0.943637, 0.941986,
+        0.937779, 0.943865, 0.928477, 0.902234, 0.908232,
+        0.960607, 1.005841, 1.011405, 1.012527, 1.015557,
+        1.014508, 1.020877, 1.019076, 1.015173, 1.015651,
+        1.019594, 1.026845, 1.024959, 1.025915, 1.029455,
+        1.017985, 1.016933, 0.989723, 0.977768, 0.993744,
+        0.9852, 0.907247, 0.903328, 0.912164, 0.898908,
+        0.886431, 0.851162, 0.863541, 0.890523
+     ) ),
+    layer1HFScaleETBins = cms.vint32(
+        6, 9, 12, 15, 20,
+        25, 30, 35, 40, 45,
+        55, 70, 256
+    ),
+    layer1HFScaleFactors = cms.vdouble(
+        1.401648, 1.138462, 1.188641, 1.17358, 1.218745,
+        1.238716, 1.279351, 1.306353, 1.352201, 1.425513,
+        1.766435, 1.913788, 1.284459, 1.081785, 1.142576,
+        1.136715, 1.11877, 1.156336, 1.173606, 1.201886,
+        1.276473, 1.29196, 1.663819, 1.755983, 1.204911,
+        1.055869, 1.092, 1.100584, 1.049183, 1.082497,
+        1.082629, 1.113835, 1.167107, 1.195128, 1.573579,
+        1.696511, 1.148313, 1.036986, 1.094283, 1.054889,
+        1.001794, 1.023684, 1.032747, 1.048416, 1.09611,
+        1.146655, 1.541076, 1.641335, 1.100579, 1.014459,
+        1.045712, 1.024446, 0.964075, 0.9781, 0.990507,
+        1.007612, 1.048333, 1.095952, 1.501771, 1.598874,
+        1.062801, 0.98834, 1.024694, 0.983528, 0.925067,
+        0.93992, 0.957879, 0.972375, 1.007824, 1.060773,
+        1.440472, 1.54538, 1.022108, 0.97088, 1.008919,
+        0.956236, 0.907449, 0.922011, 0.938728, 0.950612,
+        0.987919, 1.03676, 1.395258, 1.500256, 0.997997,
+        0.952793, 0.98733, 0.928038, 0.891417, 0.9063,
+        0.921343, 0.936786, 0.970373, 1.01464, 1.342585,
+        1.464742, 0.98056, 0.93997, 0.976677, 0.911275,
+        0.88397, 0.896411, 0.909605, 0.92825, 0.960889,
+        1.000147, 1.299124, 1.444636, 0.96095, 0.92499,
+        0.949128, 0.902849, 0.880957, 0.892083, 0.904219,
+        0.920509, 0.950512, 0.989206, 1.253466, 1.428955,
+        0.947099, 0.90335, 0.94155, 0.892063, 0.873377,
+        0.886352, 0.900072, 0.91584, 0.944985, 0.981827,
+        1.199814, 1.410339, 0.915085, 0.901126, 0.930501,
+        0.883655, 0.869623, 0.883995, 0.896408, 0.913637,
+        0.946368, 0.979263, 1.145768, 1.360238, 0.886918,
+        0.895145, 0.914478, 0.882066, 0.871161, 0.886831,
+        0.900315, 0.917568, 0.952193, 0.984897, 1.097738,
+        1.285041
+    ),
+    metCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metCalibrationType = cms.string('None'),
+    metHFCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metHFCalibrationType = cms.string('None'),
+    metHFPhiCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    metPhiCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/lut_etSumCalib_dummy.txt'),
+    minimumBiasThresholds = cms.vint32(0, 0, 0, 0),
+    pileUpTowerThreshold = cms.int32(0),
+    q2LUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/q2LUT_stage1.txt'),
+    regionLsb = cms.double(0.5),
+    regionPUSParams = cms.vdouble(),
+    regionPUSType = cms.string('None'),
+    regionPUSVersion = cms.int32(0),
+    tauCalibrationLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/Tau_Calibration_LUT_2018_Layer1CalibrationNewHCAL_FW_v13.0.0.txt'),
+    tauCalibrationLUTFileEta = cms.FileInPath('L1Trigger/L1TCalorimeter/data/tauCalibrationLUTEta.txt'),
+    tauCompressLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/tauCompressAllLUT_12bit_v3.txt'),
+    tauEtToHFRingEtLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/tauHwEtToHFRingScale_LUT.txt'),
+    tauIsoAreaNrTowersEta = cms.uint32(2),
+    tauIsoAreaNrTowersPhi = cms.uint32(4),
+    tauIsoLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/Tau_Iso_LUT_Option_31_extrap_2018_FW_v10.0.0.txt'),
+    tauIsoLUTFile2 = cms.FileInPath('L1Trigger/L1TCalorimeter/data/Tau_Iso_LUT_Option_31_extrap_2018_FW_v10.0.0.txt'),
+    tauIsoVetoNrTowersPhi = cms.uint32(2),
+    tauLsb = cms.double(0.5),
+    tauMaxJetIsolationA = cms.double(0.1),
+    tauMaxJetIsolationB = cms.double(100.0),
+    tauMaxPtTauVeto = cms.double(64.0),
+    tauMinPtJetIsolationB = cms.double(192.0),
+    tauNeighbourThreshold = cms.double(0.0),
+    tauPUSParams = cms.vdouble(1, 4, 32),
+    tauPUSType = cms.string('None'),
+    tauRegionMask = cms.int32(0),
+    tauSeedThreshold = cms.double(0.0),
+    tauTrimmingShapeVetoLUTFile = cms.FileInPath('L1Trigger/L1TCalorimeter/data/Tau_TrimmingShapeVeto_LUT_v1.0.0.txt'),
+    towerEncoding = cms.bool(True),
+    towerLsbE = cms.double(0.5),
+    towerLsbH = cms.double(0.5),
+    towerLsbSum = cms.double(0.5),
+    towerNBitsE = cms.int32(8),
+    towerNBitsH = cms.int32(8),
+    towerNBitsRatio = cms.int32(3),
+    towerNBitsSum = cms.int32(9)
 )
 
 
@@ -41300,6 +42824,13 @@ process.caloConfigSource = cms.ESSource("EmptyESSource",
 )
 
 
+process.caloParamsSource = cms.ESSource("EmptyESSource",
+    firstValid = cms.vuint32(1),
+    iovIsRunNotTime = cms.bool(True),
+    recordName = cms.string('L1TCaloParamsRcd')
+)
+
+
 process.ecalMultifitParametersGPUESProducer = cms.ESSource("EcalMultifitParametersGPUESProducer",
     EBamplitudeFitParameters = cms.vdouble(1.138, 1.652),
     EBtimeFitParameters = cms.vdouble(
@@ -41460,13 +42991,28 @@ process.HLTDoFullUnpackingEgammaEcalTask = cms.Task(process.HLTDoFullUnpackingEg
 process.HLTDoLocalHcalTask = cms.Task(process.hltHbhereco, process.hltHbherecoFromGPU, process.hltHbherecoGPU, process.hltHbherecoLegacy, process.hltHcalDigis, process.hltHcalDigisGPU, process.hltHfprereco, process.hltHfreco, process.hltHoreco)
 
 
+process.SimL1TCalorimeterTask = cms.Task(process.simCaloStage2Digis, process.simCaloStage2Layer1Digis)
+
+
 process.SimL1TGlobalTask = cms.Task(process.simGtStage2Digis)
+
+
+process.SimL1TMuonCommonTask = cms.Task(process.simCscTriggerPrimitiveDigis, process.simDtTriggerPrimitiveDigis)
 
 
 process.SimL1TechnicalTriggersTask = cms.Task(process.simGtExtFakeStage2Digis)
 
 
-process.SimL1EmulatorTask = cms.Task(process.SimL1TGlobalTask, process.SimL1TechnicalTriggersTask, process.packGtStage2, process.rawDataCollector, process.unpackGtStage2, process.unpackTcds)
+process.simMuonGEMPadTask = cms.Task(process.simMuonGEMPadDigiClusters, process.simMuonGEMPadDigis)
+
+
+process.SimL1TMuonTask = cms.Task(process.SimL1TMuonCommonTask, process.simBmtfDigis, process.simCscTriggerPrimitiveDigisRun3, process.simEmtfDigis, process.simEmtfShowers, process.simGmtCaloSumDigis, process.simGmtShowerDigis, process.simGmtStage2Digis, process.simKBmtfDigis, process.simKBmtfStubs, process.simMuonGEMPadTask, process.simOmtfDigis, process.simTwinMuxDigis)
+
+
+process.SimL1EmulatorCoreTask = cms.Task(process.SimL1TCalorimeterTask, process.SimL1TGlobalTask, process.SimL1TMuonTask, process.SimL1TechnicalTriggersTask)
+
+
+process.SimL1EmulatorTask = cms.Task(process.SimL1EmulatorCoreTask, process.packCaloStage2, process.packGmtStage2, process.packGtStage2, process.rawDataCollector, process.simHcalTriggerPrimitiveDigis, process.unpackCSC, process.unpackDT, process.unpackEcal, process.unpackHcal, process.unpackRPC)
 
 
 process.HLTL1UnpackerSequence = cms.Sequence(process.hltGtStage2Digis+process.hltGtStage2ObjectMap)

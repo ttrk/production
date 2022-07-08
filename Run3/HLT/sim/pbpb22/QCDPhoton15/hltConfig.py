@@ -1,4 +1,4 @@
-# hltGetConfiguration /dev/CMSSW_12_3_0/HIon/V84 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator uGT --era Run3_pp_on_PbPb --input file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root --process MyHLT --full --mc --unprescale --no-output --max-events 100
+# hltGetConfiguration /dev/CMSSW_12_3_0/HIon/V84 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator FullMC --era Run3_pp_on_PbPb --input file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root --process MyHLT --full --mc --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1 --unprescale --no-output --max-events 100
 
 # /dev/CMSSW_12_3_0/HIon/V84 (CMSSW_12_3_0)
 
@@ -34243,7 +34243,7 @@ process = L1XML(process,"L1Menu_CollisionsHeavyIons2022_v0_0_0.xml")
 
 # run the Full L1T emulator, then repack the data into a new RAW collection, to be used by the HLT
 from HLTrigger.Configuration.CustomConfigs import L1REPACK
-process = L1REPACK(process,"uGT")
+process = L1REPACK(process,"FullMC")
 
 # limit the number of events to be processed
 process.maxEvents = cms.untracked.PSet(
@@ -34304,6 +34304,10 @@ process = customizeHLTforCMSSW(process,"GRun")
 # Eras-based customisations
 from HLTrigger.Configuration.Eras import modifyHLTforEras
 modifyHLTforEras(process)
+
+#User-defined customization functions
+from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParams_2018_v1_4_1
+process = L1TSettingsToCaloParams_2018_v1_4_1(process)
 
 process.options.numberOfThreads=cms.untracked.uint32(1)
 

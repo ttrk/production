@@ -28,14 +28,16 @@ SETUP="/dev/CMSSW_10_3_0/GRun"
 PROCESS="MyHLT"
 nEvents="100"
 DATAMC="--mc"
-CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4"
-L1EMU="uGT"
+# pick up customization for L1 Calo as shown in https://twiki.cern.ch/twiki/bin/view/CMS/L1HITaskForce2022?rev=55#Instructions_to_run_the_L1Emulat
+## this is necessary to run L1 EGs with correct parameters
+CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1"
+L1EMU="FullMC"  # "uGT"
 ERA="Run3_pp_on_PbPb"
 L1XML="L1Menu_CollisionsHeavyIons2022_v0_0_0.xml"
 #inputFile="root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root"
 inputFile="file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root"
 
-hltGetConfiguration ${MENU} --globaltag ${GLOBALTAG} --l1Xml ${L1XML} --l1-emulator ${L1EMU} --era ${ERA} --input ${inputFile} --process ${PROCESS} --full ${DATAMC} --unprescale --no-output --max-events ${nEvents} > ${configFile}
+hltGetConfiguration ${MENU} --globaltag ${GLOBALTAG} --l1Xml ${L1XML} --l1-emulator ${L1EMU} --era ${ERA} --input ${inputFile} --process ${PROCESS} --full ${DATAMC} ${CUSTOMISE} --unprescale --no-output --max-events ${nEvents} > ${configFile}
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales
 
 outputEDMEvent=0
