@@ -1,4 +1,4 @@
-# hltGetConfiguration /dev/CMSSW_12_3_0/HIon/V84 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator uGT --era Run3_pp_on_PbPb --input root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root --process MyHLT --full --mc --unprescale --no-output --max-events 100
+# hltGetConfiguration /dev/CMSSW_12_3_0/HIon/V84 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator uGT --era Run3_pp_on_PbPb --input file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root --process MyHLT --full --mc --unprescale --no-output --max-events 100
 
 # /dev/CMSSW_12_3_0/HIon/V84 (CMSSW_12_3_0)
 
@@ -34230,7 +34230,7 @@ process.schedule = cms.Schedule( *(process.HLTriggerFirstPath, process.Status_On
 # source module (EDM inputs)
 process.source = cms.Source( "PoolSource",
     fileNames = cms.untracked.vstring(
-        'root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root',
+        'file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root',
     ),
     inputCommands = cms.untracked.vstring(
         'keep *'
@@ -34292,7 +34292,7 @@ process.dqmOutput = cms.OutputModule("DQMRootOutputModule",
 #_customInfo['inputFiles'][False] = "file:RelVal_Raw_GRun_MC.root"
 #_customInfo['maxEvents' ]=  100
 #_customInfo['globalTag' ]= "auto:phase1_2021_realistic_hi"
-#_customInfo['inputFile' ]=  ['root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root']
+#_customInfo['inputFile' ]=  ['file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root']
 #_customInfo['realData'  ]=  False
 
 from HLTrigger.Configuration.customizeHLTforALL import customizeHLTforAll

@@ -32,7 +32,8 @@ CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCa
 L1EMU="uGT"
 ERA="Run3_pp_on_PbPb"
 L1XML="L1Menu_CollisionsHeavyIons2022_v0_0_0.xml"
-inputFile="root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root"
+#inputFile="root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root"
+inputFile="file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root"
 
 hltGetConfiguration ${MENU} --globaltag ${GLOBALTAG} --l1Xml ${L1XML} --l1-emulator ${L1EMU} --era ${ERA} --input ${inputFile} --process ${PROCESS} --full ${DATAMC} --unprescale --no-output --max-events ${nEvents} > ${configFile}
 # --l1-emulator Full : runs full L1 emulator, avoids L1 prescales

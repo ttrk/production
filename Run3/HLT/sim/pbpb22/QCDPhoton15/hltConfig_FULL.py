@@ -7,7 +7,7 @@ from HeterogeneousCore.CUDACore.SwitchProducerCUDA import SwitchProducerCUDA
 process = cms.Process("MyHLT")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root'),
+    fileNames = cms.untracked.vstring('file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root'),
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
