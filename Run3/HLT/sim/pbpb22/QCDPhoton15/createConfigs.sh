@@ -55,8 +55,8 @@ fi
 
 echo 'process.options.numberOfThreads=cms.untracked.uint32(1)' >> $configFile
 
-outputDQM=1
-if [ ${outputDQM} -gt 0 ]; then
+removeDQM=1
+if [ ${removeDQM} -gt 0 ]; then
   #process.DQMOutput = cms.FinalPath( process.dqmOutput )
   #process.schedule.append( process.DQMOutput )
 
