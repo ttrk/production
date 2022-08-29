@@ -1,0 +1,20 @@
+command called = cmsDriver.py Configuration/GenProduction/HIN-HINPbPbAutumn18GSHIMix-00075-fragment.py --mc --eventcontent RAWSIM --datatier GEN-SIM --conditions auto:phase1_2022_realistic_hi --step GEN,SIM --scenario HeavyIons --geometry DB:Extended --era Run3_pp_on_PbPb --beamspot Run3RoundOptics25ns13TeVLowSigmaZ --nThreads 8 --fileout file:.//step1_GEN_SIM.root -n 50 --no_exec --python_filename step1_GEN_SIM.py
+started on     = 29/08/2022 15:57:18
+############################################################
+GEN,SIM,ENDJOB
+with DB:
+Step: GEN Spec: 
+Loading generator fragment from Configuration.GenProduction.HIN-HINPbPbAutumn18GSHIMix-00075-fragment
+Setting numberOfConcurrentLuminosityBlocks=1 because of generator Pythia8GeneratorFilter
+Step: SIM Spec: 
+Step: ENDJOB Spec: 
+Config file step1_GEN_SIM.py created
+############################################################
+##### content of the SCRIPT = cmsDriver.py
+############################################################
+##### log of the SCRIPT = cmsDriver.py
+started  on    = 29/08/2022 15:57:18
+finished on    = 29/08/2022 15:57:35
+0 hours, 0 minutes and 17 seconds elapsed.
+Thu Jan 1 01:00:17 CET 1970
+##### END #####

@@ -1,0 +1,22 @@
+command called = cmsDriver.py step2 -s DIGI:pdigi_hi_nogen,L1,DIGI2RAW,HLT:@fake2 --conditions auto:phase1_2022_realistic_hi --datatier GEN-SIM-DIGI-RAW-HLTDEBUG --eventcontent FEVTDEBUGHLT --era Run3_pp_on_PbPb --nThreads 8 --filein file:step1_GEN_SIM.root --fileout file:.//step2_DIGI.root -n 50 --no_exec --python_filename step2_DIGI.py
+started on     = 29/08/2022 15:57:38
+############################################################
+DIGI:pdigi_hi_nogen,L1,DIGI2RAW,HLT:@fake2,ENDJOB
+We have determined that this is simulation (if not, rerun cmsDriver.py with --data)
+entry file:step1_GEN_SIM.root
+Step: DIGI Spec: ['pdigi_hi_nogen']
+Step: L1 Spec: 
+Step: DIGI2RAW Spec: 
+Step: HLT Spec: ['@fake2']
+Step: ENDJOB Spec: 
+customising the process with customizeHLTforMC from HLTrigger/Configuration/customizeHLTforMC
+Config file step2_DIGI.py created
+############################################################
+##### content of the SCRIPT = cmsDriver.py
+############################################################
+##### log of the SCRIPT = cmsDriver.py
+started  on    = 29/08/2022 15:57:38
+finished on    = 29/08/2022 15:57:45
+0 hours, 0 minutes and 7 seconds elapsed.
+Thu Jan 1 01:00:07 CET 1970
+##### END #####

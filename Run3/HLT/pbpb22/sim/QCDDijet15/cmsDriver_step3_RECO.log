@@ -1,0 +1,20 @@
+command called = cmsDriver.py step3 -s RAW2DIGI,L1Reco,RECO --conditions auto:phase1_2022_realistic_hi --datatier GEN-SIM-RECO --eventcontent AODSIM --era Run3_pp_on_PbPb --nThreads 8 --filein file:step2_DIGI.root --fileout file:.//step3_RECO.root -n 50 --no_exec --python_filename step3_RECO.py
+started on     = 29/08/2022 15:57:49
+############################################################
+RAW2DIGI,L1Reco,RECO,ENDJOB
+We have determined that this is simulation (if not, rerun cmsDriver.py with --data)
+entry file:step2_DIGI.root
+Step: RAW2DIGI Spec: 
+Step: L1Reco Spec: 
+Step: RECO Spec: 
+Step: ENDJOB Spec: 
+Config file step3_RECO.py created
+############################################################
+##### content of the SCRIPT = cmsDriver.py
+############################################################
+##### log of the SCRIPT = cmsDriver.py
+started  on    = 29/08/2022 15:57:49
+finished on    = 29/08/2022 15:58:21
+0 hours, 0 minutes and 32 seconds elapsed.
+Thu Jan 1 01:00:32 CET 1970
+##### END #####
