@@ -3,7 +3,6 @@
 runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 
 # https://twiki.cern.ch/twiki/bin/view/CMS/L1HITaskForce2022?rev=68#Instructions_to_run_the_L1Emulat
-#inputFile="root://xrootd.cmsaf.mit.edu//store/user/rbi/Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV/crab_Pythia8_AllQCDPhoton15_bias_Hydjet_Drum5Ev8_5020GeV_DIGI2RAW_PU_1030_v1/181030_234244/0001/step1_DIGI_L1_DIGI2RAW_HLT_PU_1652.root"
 inputFile="/store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1275.root"
 
 ## Setup
@@ -16,7 +15,6 @@ inputFile="/store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDP
 #git cms-merge-topic -u cms-l1t-offline:l1t-integration-v132.0
 #git clone https://github.com/cms-l1t-offline/L1Trigger-L1TCalorimeter.git L1Trigger/L1TCalorimeter/data
 #git cms-merge-topic -u kakwok:CLCT_thresholds
-
 #git cms-checkdeps -A -a
 
 #scram b -j 8
@@ -54,10 +52,6 @@ process.hcalDigis.saveQIE10DataNSamples = cms.untracked.vint32(10)
 process.hcalDigis.saveQIE10DataTags = cms.untracked.vstring( "MYDATA" )
 process.HcalTPGCoderULUT.FG_HF_thresholds = cms.vuint32(14, 19)
 ' >> ${config_l1Ntuple}
-
-##Jet customization (via Chris)
-#echo "" >> $config_l1Ntuple
-#echo "process.caloStage2Params.hiMode = cms.uint32(1)" >> $config_l1Ntuple
 
 ## process.caloStage2Params is somehow not seen. needed to use customiseSettings.L1TSettingsToCaloStage2Params_XXX to make it appear
 ##echo "process.caloStage2Params.egBypassExtHOverE = cms.uint32(1)" >> $config_l1Ntuple
