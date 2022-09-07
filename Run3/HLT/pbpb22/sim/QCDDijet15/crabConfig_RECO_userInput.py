@@ -13,7 +13,7 @@ config.JobType.numCores = 8
 config.JobType.maxMemoryMB = 20000   # Allowed maximum for a 8 core(s) job is 20000.
 config.JobType.maxJobRuntimeMin = 2880 # request longer runtime, 48 hours.
 
-## CMSSW_10_3_3_patch1
+## software : CMSSW_12_4_0
 
 config.section_("Data")
 #config.Data.inputDataset = "########################"
