@@ -1,0 +1,24 @@
+command called = cmsDriver.py step3 -s RAW2DIGI,L1Reco,RECO,RECOSIM,PAT --conditions auto:phase1_2022_realistic --datatier GEN-SIM-RECO,MINIAODSIM --eventcontent AODSIM,MINIAODSIM --geometry DB:Extended --era Run3 --nThreads 8 --filein file:step2_DIGI.root --fileout file:.//step3_RECO.root -n 10 --no_exec --python_filename step3_RECO.py
+started on     = 05/09/2022 15:18:28
+############################################################
+RAW2DIGI,L1Reco,RECO,RECOSIM,PAT,ENDJOB
+We have determined that this is simulation (if not, rerun cmsDriver.py with --data)
+with DB:
+entry file:step2_DIGI.root
+Step: RAW2DIGI Spec: 
+Step: L1Reco Spec: 
+Step: RECO Spec: 
+Step: RECOSIM Spec: 
+Step: PAT Spec: 
+Step: ENDJOB Spec: 
+customising the process with miniAOD_customizeAllMC from PhysicsTools/PatAlgos/slimming/miniAOD_tools
+Config file step3_RECO.py created
+############################################################
+##### content of the SCRIPT = cmsDriver.py
+############################################################
+##### log of the SCRIPT = cmsDriver.py
+started  on    = 05/09/2022 15:18:28
+finished on    = 05/09/2022 15:18:51
+0 hours, 0 minutes and 23 seconds elapsed.
+Thu Jan 1 01:00:23 CET 1970
+##### END #####
