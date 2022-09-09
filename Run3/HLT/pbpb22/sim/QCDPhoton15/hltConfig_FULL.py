@@ -11,7 +11,7 @@ process.source = cms.Source("PoolSource",
     inputCommands = cms.untracked.vstring('keep *')
 )
 process.HLTConfigVersion = cms.PSet(
-    tableName = cms.string('/dev/CMSSW_12_3_0/HIon/V84')
+    tableName = cms.string('/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1')
 )
 
 process.HLTIter0GroupedCkfTrajectoryBuilderIT = cms.PSet(

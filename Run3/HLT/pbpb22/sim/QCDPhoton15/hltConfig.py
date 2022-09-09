@@ -1,6 +1,6 @@
-# hltGetConfiguration /dev/CMSSW_12_3_0/HIon/V84 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator FullMC --era Run3_pp_on_PbPb --input file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root --process MyHLT --full --mc --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1 --unprescale --no-output --max-events 100
+# hltGetConfiguration /users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator FullMC --era Run3_pp_on_PbPb --input file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root --process MyHLT --full --mc --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1 --unprescale --no-output --max-events 100
 
-# /dev/CMSSW_12_3_0/HIon/V84 (CMSSW_12_3_0)
+# /users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1 (CMSSW_12_3_0)
 
 import FWCore.ParameterSet.Config as cms
 
@@ -13,7 +13,7 @@ process = cms.Process( "MyHLT", Run3_pp_on_PbPb )
 process.ProcessAcceleratorCUDA = ProcessAcceleratorCUDA()
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/dev/CMSSW_12_3_0/HIon/V84')
+  tableName = cms.string('/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1')
 )
 
 process.transferSystem = cms.PSet( 

@@ -21,7 +21,7 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 # This script is based on its ancestor : https://github.com/ttrk/production/blob/master/HIRun2018PbPb/HLT/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/createConfigs.sh
 ####
 
-MENU="/dev/CMSSW_12_3_0/HIon/V84"
+MENU="/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1" # copy of /dev/CMSSW_12_3_0/HIon/V84
 configFile="hltConfig.py"
 GLOBALTAG="auto:phase1_2021_realistic_hi"
 SETUP="/dev/CMSSW_10_3_0/GRun"
@@ -34,7 +34,7 @@ CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCa
 L1EMU="FullMC"  # "uGT"
 ERA="Run3_pp_on_PbPb"
 L1XML="L1Menu_CollisionsHeavyIons2022_v0_0_0.xml"
-#inputFile="root://cmsxrootd.fnal.gov//store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/211126_120712/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_177.root"
+#inputFile="/store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root"
 inputFile="file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root"
 
 hltGetConfiguration ${MENU} --globaltag ${GLOBALTAG} --l1Xml ${L1XML} --l1-emulator ${L1EMU} --era ${ERA} --input ${inputFile} --process ${PROCESS} --full ${DATAMC} ${CUSTOMISE} --unprescale --no-output --max-events ${nEvents} > ${configFile}
