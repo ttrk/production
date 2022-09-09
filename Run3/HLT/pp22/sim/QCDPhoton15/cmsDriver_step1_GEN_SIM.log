@@ -1,0 +1,21 @@
+command called = cmsDriver.py Configuration/GenProduction/Pythia8_AllQCDPhoton15_TuneCP5_5020GeV_bias_cff.py -s GEN,SIM --conditions auto:phase1_2022_realistic --beamspot Realistic25ns13p6TeVEarly2022Collision --datatier GEN-SIM --eventcontent FEVTDEBUG --geometry DB:Extended --era Run3 --nThreads 8 --fileout file:.//step1_GEN_SIM.root -n 2000 --no_exec --python_filename step1_GEN_SIM.py
+started on     = 05/09/2022 16:39:28
+############################################################
+GEN,SIM,ENDJOB
+We have determined that this is simulation (if not, rerun cmsDriver.py with --data)
+with DB:
+Step: GEN Spec: 
+Loading generator fragment from Configuration.GenProduction.Pythia8_AllQCDPhoton15_TuneCP5_5020GeV_bias_cff
+Setting numberOfConcurrentLuminosityBlocks=1 because of generator Pythia8GeneratorFilter
+Step: SIM Spec: 
+Step: ENDJOB Spec: 
+Config file step1_GEN_SIM.py created
+############################################################
+##### content of the SCRIPT = cmsDriver.py
+############################################################
+##### log of the SCRIPT = cmsDriver.py
+started  on    = 05/09/2022 16:39:28
+finished on    = 05/09/2022 16:39:30
+0 hours, 0 minutes and 2 seconds elapsed.
+Thu Jan 1 01:00:02 CET 1970
+##### END #####
