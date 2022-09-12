@@ -1,4 +1,4 @@
-# hltGetConfiguration /users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator FullMC --era Run3_pp_on_PbPb --input file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root --process MyHLT --full --mc --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1 --unprescale --no-output --max-events 100
+# hltGetConfiguration /users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator FullMC --era Run3_pp_on_PbPb --input /store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root --process MyHLT --full --mc --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1 --unprescale --no-output --max-events 20
 
 # /users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1 (CMSSW_12_3_0)
 
@@ -34230,7 +34230,7 @@ process.schedule = cms.Schedule( *(process.HLTriggerFirstPath, process.Status_On
 # source module (EDM inputs)
 process.source = cms.Source( "PoolSource",
     fileNames = cms.untracked.vstring(
-        'file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root',
+        '/store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root',
     ),
     inputCommands = cms.untracked.vstring(
         'keep *'
@@ -34247,7 +34247,7 @@ process = L1REPACK(process,"FullMC")
 
 # limit the number of events to be processed
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32( 100 )
+    input = cms.untracked.int32( 20 )
 )
 
 # enable TrigReport, TimeReport and MultiThreading
@@ -34290,9 +34290,9 @@ process.dqmOutput = cms.OutputModule("DQMRootOutputModule",
 #_customInfo['inputFiles']={}
 #_customInfo['inputFiles'][True]  = "file:RelVal_Raw_GRun_DATA.root"
 #_customInfo['inputFiles'][False] = "file:RelVal_Raw_GRun_MC.root"
-#_customInfo['maxEvents' ]=  100
+#_customInfo['maxEvents' ]=  20
 #_customInfo['globalTag' ]= "auto:phase1_2021_realistic_hi"
-#_customInfo['inputFile' ]=  ['file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root']
+#_customInfo['inputFile' ]=  ['/store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root']
 #_customInfo['realData'  ]=  False
 
 from HLTrigger.Configuration.customizeHLTforALL import customizeHLTforAll
