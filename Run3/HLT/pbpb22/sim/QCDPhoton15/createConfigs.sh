@@ -21,7 +21,9 @@ runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 # This script is based on its ancestor : https://github.com/ttrk/production/blob/master/HIRun2018PbPb/HLT/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/createConfigs.sh
 ####
 
-MENU="/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V1" # copy of /dev/CMSSW_12_3_0/HIon/V84
+MENU="/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V2"
+# V1 : copy of /dev/CMSSW_12_3_0/HIon/V84
+# V2 : clean-up of unnecessary/unrelated paths
 configFile="hltConfig.py"
 GLOBALTAG="auto:phase1_2021_realistic_hi"
 SETUP="/dev/CMSSW_10_3_0/GRun"
