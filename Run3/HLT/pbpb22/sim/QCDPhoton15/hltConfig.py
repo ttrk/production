@@ -31440,6 +31440,25 @@ process = L1TSettingsToCaloParamsHI_2022_v0_4(process)
 
 process.options.numberOfThreads=cms.untracked.uint32(1)
 
+process.simEcalTriggerPrimitiveDigis = cms.EDProducer('EcalTrigPrimProducer', BarrelOnly = cms.bool(False), Debug = cms.bool(False), Famos = cms.bool(False), InstanceEB = cms.string('ebDigis'), InstanceEE = cms.string('eeDigis'), Label = cms.string('unpackEcal'), TcpOutput = cms.bool(False), binOfMaximum = cms.int32(6))
+
+process.simCaloStage2Layer1Digis.ecalToken = cms.InputTag('simEcalTriggerPrimitiveDigis')
+
+process.SimL1TGlobal = cms.Sequence(process.SimL1TGlobalTask)
+process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+process.simEcalTriggerPrimitiveDigis+((process.simCaloStage2Layer1Digis+process.simCaloStage2Digis)+((process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis)+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis)+(process.simGtExtFakeStage2Digis)+process.SimL1TGlobal)+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)
+
+process.GlobalTag.toGet = cms.VPSet(
+    cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'),
+             tag = cms.string('EcalTPGFineGrainStrip_7'),
+             connect =cms.string('frontier://FrontierProd/CMS_CONDITIONS')
+                                                                 ),
+
+    cms.PSet(record = cms.string('EcalTPGSpikeRcd'),
+             tag = cms.string('EcalTPGSpike_12'),
+             connect =cms.string('frontier://FrontierProd/CMS_CONDITIONS')
+                                                                 )
+    )
+
 #import FWCore.ParameterSet.Config as cms
 #process = cms.Process("HLTANA")
 

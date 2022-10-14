@@ -104,6 +104,42 @@ if [ ${removeCustomHLTLines} -gt 0 ]; then
   ### Line removal - END ###
 fi
 
+# where L1 EG Spike Killer is activated :
+# https://github.com/cms-sw/cmssw/blob/master/SimCalorimetry/EcalTrigPrimAlgos/src/EcalFenixTcpFormat.cc#L72-L75
+# https://github.com/cms-sw/cmssw/blob/edb9f982c877bb0c568704d3383ede9ea099ec3a/SimCalorimetry/EcalTrigPrimAlgos/src/EcalFenixTcpFormat.cc#L72-L75
+# change Spike Killer WP
+# WP 12_12 : EcalTPGFineGrainStrip_12, EcalTPGSpike_12
+# WP 12_7  : EcalTPGFineGrainStrip_7 , EcalTPGSpike_12
+# WP 16_16 : EcalTPGFineGrainStrip_16, EcalTPGSpike_16
+mod_ECAL_SK=1 # set to 1 in order to modify the spike killer parameters
+TPG_FG=7
+TPG_Spike=12
+
+if [ ${mod_ECAL_SK} -gt 0 ]; then
+
+  echo "" >> ${configFile}
+  echo "process.simEcalTriggerPrimitiveDigis = cms.EDProducer('EcalTrigPrimProducer', BarrelOnly = cms.bool(False), Debug = cms.bool(False), Famos = cms.bool(False), InstanceEB = cms.string('ebDigis'), InstanceEE = cms.string('eeDigis'), Label = cms.string('unpackEcal'), TcpOutput = cms.bool(False), binOfMaximum = cms.int32(6))" >> ${configFile}
+  echo "" >> ${configFile}
+  echo "process.simCaloStage2Layer1Digis.ecalToken = cms.InputTag('simEcalTriggerPrimitiveDigis')" >> ${configFile}
+  echo "" >> ${configFile}
+  echo "process.SimL1TGlobal = cms.Sequence(process.SimL1TGlobalTask)" >> ${configFile} # need to redefine SimL1TGlobal, originally defined in https://cmssdt.cern.ch/lxr/source/L1Trigger/L1TGlobal/python/simDigis_cff.py#0026
+  # otherwise one gets AttributeError: 'Process' object has no attribute 'SimL1TGlobal'
+  echo "process.SimL1Emulator = cms.Sequence(process.unpackRPC+process.unpackDT+process.unpackCSC+process.unpackEcal+process.unpackHcal+process.simHcalTriggerPrimitiveDigis+process.simEcalTriggerPrimitiveDigis+((process.simCaloStage2Layer1Digis+process.simCaloStage2Digis)+((process.simDtTriggerPrimitiveDigis+process.simCscTriggerPrimitiveDigis)+process.simTwinMuxDigis+process.simBmtfDigis+process.simEmtfDigis+process.simOmtfDigis+process.simGmtCaloSumDigis+process.simGmtStage2Digis)+(process.simGtExtFakeStage2Digis)+process.SimL1TGlobal)+process.packCaloStage2+process.packGmtStage2+process.packGtStage2+process.rawDataCollector)" >> ${configFile}
+
+  echo "
+process.GlobalTag.toGet = cms.VPSet(
+    cms.PSet(record = cms.string('EcalTPGFineGrainStripEERcd'),
+             tag = cms.string('EcalTPGFineGrainStrip_"${TPG_FG}"'),
+             connect =cms.string('frontier://FrontierProd/CMS_CONDITIONS')
+                                                                 ),
+
+    cms.PSet(record = cms.string('EcalTPGSpikeRcd'),
+             tag = cms.string('EcalTPGSpike_"${TPG_Spike}"'),
+             connect =cms.string('frontier://FrontierProd/CMS_CONDITIONS')
+                                                                 )
+    )" >> ${configFile}
+fi
+
 addHLTObjs=1
 if [ ${addHLTObjs} -gt 0 ]; then
   # Add hltBitAnalyzer and HLT objects
