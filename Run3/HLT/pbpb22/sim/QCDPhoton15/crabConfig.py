@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "Pythia8_QCDPhoton_pThat15_Run3_HydjetEmbedded_cmssw_12_3_0_HIon_V84"
+config.General.requestName = "Pythia8_QCDPhoton_pThat15_Run3_HydjetEmbedded_pbpb22_hltTest_cmssw_12_3_0_HIon_V8"
 config.General.transferLogs = False
 
 config.section_("JobType")
@@ -19,10 +19,11 @@ config.section_("Data")
 config.Data.inputDataset = "/QCDPhoton_pThat15_Run3_HydjetEmbedded/mnguyen-QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI-752b0cc9d22f4a7f20eccfe0d5df0682/USER"
 config.Data.inputDBS = "phys03"
 config.Data.splitting = "FileBased"
-config.Data.unitsPerJob = 50
+config.Data.unitsPerJob = 10
 config.Data.totalUnits = -1
 config.Data.publication = False
-config.Data.outputDatasetTag = "cmssw_12_3_0_HIon_V84"
+#config.Data.outputDatasetTag = "cmssw_12_3_0_HIon_V84"
+config.Data.outputDatasetTag = "pbpb22_hltTest_cmssw_12_3_0_HIon_V8"
 config.Data.outLFNDirBase = "/store/user/katatar/run3/HLT/"
 
 config.section_("Site")
