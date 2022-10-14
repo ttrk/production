@@ -1,19 +1,19 @@
-# hltGetConfiguration /users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V8 --globaltag auto:phase1_2021_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator FullMC --era Run3_pp_on_PbPb --input /store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root --process MyHLT --full --mc --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1 --unprescale --no-output --max-events 20
+# hltGetConfiguration /users/katatar/run3/pbpb22/hltTest/dev_HIon/V1 --globaltag auto:phase1_2022_realistic_hi --l1Xml L1Menu_CollisionsHeavyIons2022_v0_0_0.xml --l1-emulator FullMC --era Run3 --input /store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root --process MyHLT --full --mc --customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParamsHI_2022_v0_4 --unprescale --no-output --max-events 20
 
-# /users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V8 (CMSSW_12_3_0)
+# /users/katatar/run3/pbpb22/hltTest/dev_HIon/V1 (CMSSW_12_4_0)
 
 import FWCore.ParameterSet.Config as cms
 
 from HeterogeneousCore.CUDACore.SwitchProducerCUDA import SwitchProducerCUDA
 from HeterogeneousCore.CUDACore.ProcessAcceleratorCUDA import ProcessAcceleratorCUDA
 
-from Configuration.Eras.Era_Run3_pp_on_PbPb_cff import Run3_pp_on_PbPb
-process = cms.Process( "MyHLT", Run3_pp_on_PbPb )
+from Configuration.Eras.Era_Run3_cff import Run3
+process = cms.Process( "MyHLT", Run3 )
 
 process.ProcessAcceleratorCUDA = ProcessAcceleratorCUDA()
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string('/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V8')
+  tableName = cms.string('/users/katatar/run3/pbpb22/hltTest/dev_HIon/V1')
 )
 
 process.transferSystem = cms.PSet( 
@@ -5415,6 +5415,7 @@ process.hltGtStage2ObjectMap = cms.EDProducer( "L1TGlobalProducer",
     AlgorithmTriggersUnmasked = cms.bool( True ),
     useMuonShowers = cms.bool( True ),
     resetPSCountersEachLumiSec = cms.bool( True ),
+    semiRandomInitialPSCounters = cms.bool( False ),
     ProduceL1GtDaqRecord = cms.bool( True ),
     ProduceL1GtObjectMapRecord = cms.bool( True ),
     EmulateBxInEvent = cms.int32( 1 ),
@@ -5623,7 +5624,6 @@ process.hltEcalDigisLegacy = cms.EDProducer( "EcalRawToDigi",
 )
 process.hltEcalDigisGPU = cms.EDProducer( "EcalRawToDigiGPU",
     InputLabel = cms.InputTag( "rawDataCollector" ),
-    maxFedSize = cms.uint32( 10240 ),
     FEDs = cms.vint32( 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650, 651, 652, 653, 654 ),
     maxChannelsEB = cms.uint32( 61200 ),
     maxChannelsEE = cms.uint32( 14648 ),
@@ -6271,7 +6271,8 @@ process.hltGemRecHits = cms.EDProducer( "GEMRecHitProducer",
     recAlgoConfig = cms.PSet(  ),
     recAlgo = cms.string( "GEMRecHitStandardAlgo" ),
     gemDigiLabel = cms.InputTag( "hltMuonGEMDigis" ),
-    applyMasking = cms.bool( False )
+    applyMasking = cms.bool( False ),
+    ge21Off = cms.bool( False )
 )
 process.hltGemSegments = cms.EDProducer( "GEMSegmentProducer",
     gemRecHitLabel = cms.InputTag( "hltGemRecHits" ),
@@ -7657,8 +7658,11 @@ process.hltIterL3OISeedsFromL2MuonsPPOnAA = cms.EDProducer( "TSGForOIFromL2",
     SF4 = cms.double( 7.0 ),
     SF5 = cms.double( 10.0 ),
     SF6 = cms.double( 2.0 ),
+    SFHld = cms.double( 2.0 ),
+    SFHd = cms.double( 4.0 ),
     tsosDiff1 = cms.double( 0.2 ),
     tsosDiff2 = cms.double( 0.02 ),
+    displacedReco = cms.bool( False ),
     propagatorName = cms.string( "PropagatorWithMaterialParabolicMf" )
 )
 process.hltIterL3OITrackCandidatesPPOnAA = cms.EDProducer( "CkfTrackCandidateMaker",
@@ -9842,7 +9846,8 @@ process.hltIterL3MuonTracksPPOnAA = cms.EDProducer( "HLTMuonTrackSelector",
     copyTrajectories = cms.untracked.bool( False )
 )
 process.hltIterL3MuonCandidatesPPOnAA = cms.EDProducer( "L3MuonCandidateProducerFromMuons",
-    InputObjects = cms.InputTag( "hltIterL3MuonsPPOnAA" )
+    InputObjects = cms.InputTag( "hltIterL3MuonsPPOnAA" ),
+    DisplacedReconstruction = cms.bool( False )
 )
 process.hltJetsForCoreTracking = cms.EDFilter( "CandPtrSelector",
     src = cms.InputTag( "hltPuAK4CaloJetsCorrectedIDPassed" ),
@@ -13174,7 +13179,6 @@ process.hltParticleFlowSuperClusterECALPPOnAA = cms.EDProducer( "PFECALSuperClus
     thresh_PFClusterEndcap = cms.double( 0.5 ),
     ESAssociation = cms.InputTag( "hltParticleFlowClusterECALPPOnAA" ),
     PFBasicClusterCollectionPreshower = cms.string( "hltParticleFlowBasicClusterECALPreshower" ),
-    use_preshower = cms.bool( True ),
     verbose = cms.untracked.bool( False ),
     thresh_SCEt = cms.double( 4.0 ),
     etawidth_SuperClusterEndcap = cms.double( 0.04 ),
@@ -30831,10 +30835,10 @@ process.hltHbhereco = SwitchProducerCUDA(
    ),
  )
 
-process.HLTDoFullUnpackingEgammaEcalWithoutPreshowerTask = cms.Task( process.hltEcalDigisLegacy , process.hltEcalDigisGPU , process.hltEcalDigisFromGPU , process.hltEcalDigis , process.hltEcalDetIdToBeRecovered , process.hltEcalUncalibRecHitLegacy , process.hltEcalUncalibRecHitGPU , process.hltEcalUncalibRecHitSoA , process.hltEcalUncalibRecHitFromSoA , process.hltEcalUncalibRecHit , process.hltEcalRecHitWithTPs , process.hltEcalRecHitWithoutTPs , process.hltEcalRecHit )
-process.HLTPreshowerTask = cms.Task( process.hltEcalPreshowerDigis , process.hltEcalPreshowerRecHit )
-process.HLTDoFullUnpackingEgammaEcalTask = cms.Task( process.HLTDoFullUnpackingEgammaEcalWithoutPreshowerTask , process.HLTPreshowerTask )
-process.HLTDoLocalHcalTask = cms.Task( process.hltHcalDigis , process.hltHcalDigisGPU , process.hltHbherecoLegacy , process.hltHbherecoGPU , process.hltHbherecoFromGPU , process.hltHbhereco , process.hltHfprereco , process.hltHfreco , process.hltHoreco )
+process.HLTDoFullUnpackingEgammaEcalWithoutPreshowerTask = cms.ConditionalTask( process.hltEcalDigisLegacy , process.hltEcalDigisGPU , process.hltEcalDigisFromGPU , process.hltEcalDigis , process.hltEcalDetIdToBeRecovered , process.hltEcalUncalibRecHitLegacy , process.hltEcalUncalibRecHitGPU , process.hltEcalUncalibRecHitSoA , process.hltEcalUncalibRecHitFromSoA , process.hltEcalUncalibRecHit , process.hltEcalRecHitWithTPs , process.hltEcalRecHitWithoutTPs , process.hltEcalRecHit )
+process.HLTPreshowerTask = cms.ConditionalTask( process.hltEcalPreshowerDigis , process.hltEcalPreshowerRecHit )
+process.HLTDoFullUnpackingEgammaEcalTask = cms.ConditionalTask( process.HLTDoFullUnpackingEgammaEcalWithoutPreshowerTask , process.HLTPreshowerTask )
+process.HLTDoLocalHcalTask = cms.ConditionalTask( process.hltHcalDigis , process.hltHcalDigisGPU , process.hltHbherecoLegacy , process.hltHbherecoGPU , process.hltHbherecoFromGPU , process.hltHbhereco , process.hltHfprereco , process.hltHfreco , process.hltHoreco )
 
 process.HLTL1UnpackerSequence = cms.Sequence( process.hltGtStage2Digis + process.hltGtStage2ObjectMap )
 process.HLTBeamSpot = cms.Sequence( process.hltScalersRawToDigi + process.hltOnlineMetaDataDigis + process.hltOnlineBeamSpot )
@@ -31378,16 +31382,14 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 # enable TrigReport, TimeReport and MultiThreading
-process.options = cms.untracked.PSet(
-    wantSummary = cms.untracked.bool( True ),
-    numberOfThreads = cms.untracked.uint32( 4 ),
-    numberOfStreams = cms.untracked.uint32( 0 ),
-)
+process.options.wantSummary = True
+process.options.numberOfThreads = 4
+process.options.numberOfStreams = 0
 
 # override the GlobalTag, connection string and pfnPrefix
 if 'GlobalTag' in process.__dict__:
     from Configuration.AlCa.GlobalTag import GlobalTag as customiseGlobalTag
-    process.GlobalTag = customiseGlobalTag(process.GlobalTag, globaltag = 'auto:phase1_2021_realistic_hi')
+    process.GlobalTag = customiseGlobalTag(process.GlobalTag, globaltag = 'auto:phase1_2022_realistic_hi')
 
 # show summaries from trigger analysers used at HLT
 if 'MessageLogger' in process.__dict__:
@@ -31418,7 +31420,7 @@ process.dqmOutput = cms.OutputModule("DQMRootOutputModule",
 #_customInfo['inputFiles'][True]  = "file:RelVal_Raw_GRun_DATA.root"
 #_customInfo['inputFiles'][False] = "file:RelVal_Raw_GRun_MC.root"
 #_customInfo['maxEvents' ]=  20
-#_customInfo['globalTag' ]= "auto:phase1_2021_realistic_hi"
+#_customInfo['globalTag' ]= "auto:phase1_2022_realistic_hi"
 #_customInfo['inputFile' ]=  ['/store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root']
 #_customInfo['realData'  ]=  False
 
@@ -31433,8 +31435,8 @@ from HLTrigger.Configuration.Eras import modifyHLTforEras
 modifyHLTforEras(process)
 
 #User-defined customization functions
-from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParams_2018_v1_4_1
-process = L1TSettingsToCaloParams_2018_v1_4_1(process)
+from L1Trigger.Configuration.customiseSettings import L1TSettingsToCaloParamsHI_2022_v0_4
+process = L1TSettingsToCaloParamsHI_2022_v0_4(process)
 
 process.options.numberOfThreads=cms.untracked.uint32(1)
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-### instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HIRunPreparations2021HLT?rev=83#HLT_trees_CMSSW_12_3_X_Version_w
-### software : CMSSW_12_3_0
+### instructions : https://twiki.cern.ch/twiki/bin/view/CMS/HLT_HIon_Run3?rev=9#CMSSW_12_4_X
+### software : CMSSW_12_4_8
 ## software and environment setup
-#cmsrel CMSSW_12_3_0
-#cd CMSSW_12_3_0/src
+#cmsrel CMSSW_12_4_8
+#cd CMSSW_12_4_8/src
 #cmsenv
 ## For HLT analyzers
 #git cms-addpkg HLTrigger/Configuration
@@ -12,32 +12,41 @@
 #mkdir -p L1Trigger/L1TGlobal/data/Luminosity/startup/ && cd L1Trigger/L1TGlobal/data/Luminosity/startup/
 #wget https://raw.githubusercontent.com/mitaylor/HIMenus/main/Menus/L1Menu_CollisionsHeavyIons2022_v0_0_0.xml
 #cd $CMSSW_BASE/src
-#git cms-merge-topic denerslemos:HLTBitAna_CMSSW_12_3_X
+#git cms-merge-topic denerslemos:HLTBitAna_CMSSW_12_4_X
 ## Build
 #scram b -j 8
 #cd HLTrigger/Configuration/test && mkdir workstation && cd workstation
+
+#### merge setup with the L1T emulation
+### L1T instructions : https://twiki.cern.ch/twiki/bin/view/CMS/L1HITaskForce2022?rev=83#Instructions_to_run_the_L1Emulat
+#git remote add cms-l1t-offline git@github.com:cms-l1t-offline/cmssw.git
+#git fetch cms-l1t-offline l1t-integration-CMSSW_12_4_0
+#git cms-merge-topic -u cms-l1t-offline:l1t-integration-v134
+#git clone https://github.com/cms-l1t-offline/L1Trigger-L1TCalorimeter.git L1Trigger/L1TCalorimeter/data
+#git cms-merge-topic -u kakwok:CLCT_thresholds
 
 runCmd="/afs/cern.ch/user/k/katatar/code/scripts/myRun.sh"
 # This script is based on its ancestor : https://github.com/ttrk/production/blob/master/HIRun2018PbPb/HLT/Pythia8_AllQCDPhoton15_Hydjet_Quenched_Cymbal5Ev8/createConfigs.sh
 ####
 
-MENU="/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V8"
+MENU="/users/katatar/run3/pbpb22/hltTest/dev_HIon/V1" # release cmssw_12_4_0
+#MENU="/users/katatar/run3/pbpb22/hltTest/cmssw_12_3_0_HIon/V8"
 # V1 : copy of /dev/CMSSW_12_3_0/HIon/V84
 # V2 : clean-up of unnecessary/unrelated paths
 # V3 : remove UPC Muon and Castor paths
 ## failure when saving some intermediate versions
 # V8 : GEDPhoton30 and 40 w/o L1 EG seed, seeded by L1 ZeroBias actually
 configFile="hltConfig.py"
-GLOBALTAG="auto:phase1_2021_realistic_hi"
-SETUP="/dev/CMSSW_10_3_0/GRun"
+GLOBALTAG="auto:phase1_2022_realistic_hi"
 PROCESS="MyHLT"
 nEvents="20"
 DATAMC="--mc"
 # pick up customization for L1 Calo as shown in https://twiki.cern.ch/twiki/bin/view/CMS/L1HITaskForce2022?rev=55#Instructions_to_run_the_L1Emulat
 ## this is necessary to run L1 EGs with correct parameters
-CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParams_2018_v1_4_1"
+#CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParamsHI_2022_v0_4_1" # not available in code
+CUSTOMISE="--customise L1Trigger/Configuration/customiseSettings.L1TSettingsToCaloParamsHI_2022_v0_4"
 L1EMU="FullMC"  # "uGT"
-ERA="Run3_pp_on_PbPb"
+ERA="Run3" # "Run3_pp_on_PbPb"
 L1XML="L1Menu_CollisionsHeavyIons2022_v0_0_0.xml"
 inputFile="/store/user/mnguyen/Run3MC/QCDPhoton_pThat15_Run3_HydjetEmbedded/QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI/220301_130050/0001/step2_DIGI_L1_DIGI2RAW_HLT_PU_1293.root"
 #inputFile="file:/eos/cms/store/group/phys_heavyions_ops/katatar/EWJTA-out/event/run3/pbpb22/sp22/edmCPM_QCDPhoton_pThat15_Run3_HydjetEmbedded_DIGI.root"
