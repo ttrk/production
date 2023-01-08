@@ -12,9 +12,9 @@ config.JobType.psetName = "runForestAOD_pp_DATA_94X.py"
 config.JobType.maxMemoryMB = 2500    # request high memory machines.
 config.JobType.maxJobRuntimeMin = 2750    # request longer runtime.
 # forest_CMSSW_9_4_10
-# https://github.com/CmsHI/cmssw/commit/a06e2f34edb4997ec9d7c9363d511d5eecac00ce
-# runForestAOD_pp_DATA_94X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits and doPhoERegression + activate l1object + some event energy info + Z->mu+mu filter
-# https://github.com/CmsHI/cmssw/commit/13ef2e83536987c958abeb141988de347620152e
+# https://github.com/CmsHI/cmssw/commit/b45c68ff0f371dc10e85baf99871134c3eb2732a
+# runForestAOD_pp_DATA_94X.py commit + ggHi.doEffectiveAreas + enable ggHiNtuplizerGED doRecHits, doPhoERegression, and doEleERegression + activate l1object + Z->mu+mu filter
+# https://github.com/CmsHI/cmssw/commit/34ab4584aca8c2e47327311629ad26cd5b31f430
 # relevant DAS query : summary dataset=/SingleMuon/Run2017G-17Nov2017-v1/AOD
 #   output on 2019.05.22 : Number of blocks: 218 Number of events: 803534397 Number of files: 12114 Number of lumis: 26517 sum(file_size): 37808141380608 (37.8TB)
 

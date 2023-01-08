@@ -48,9 +48,6 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '94X_dataRun2_ReReco_EOY17_v6', '')
 process.HiForest.GlobalTagLabel = process.GlobalTag.globaltag
 
-from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_pp5020
-process = overrideJEC_pp5020(process)
-
 #####################################################################################
 # Define tree output
 #####################################################################################
@@ -67,41 +64,20 @@ process.TFileService = cms.Service("TFileService",
 #############################
 process.load('HeavyIonsAnalysis.JetAnalysis.fullJetSequence_pp_data_cff')
 
+# temporary corrections
+for m in vars(process).values():
+    if (isinstance(m, cms.EDProducer)
+            and m._TypedParameterizable__type == 'JetCorrFactorsProducer'):
+        m.payload = "AK4PF"
+
 #####################################################################################
 
 ############################
 # Event Analysis
 ############################
-process.load('RecoHI.HiCentralityAlgos.HiCentrality_cfi')
-process.hiCentrality.produceHFhits = True
-process.hiCentrality.srcHFhits = cms.InputTag("reducedHcalRecHits", "hfreco")
-process.hiCentrality.produceHFtowers = False
-process.hiCentrality.produceEcalhits = True
-process.hiCentrality.srcEBhits = cms.InputTag("reducedEcalRecHitsEB")
-process.hiCentrality.srcEEhits = cms.InputTag("reducedEcalRecHitsEE")
-process.hiCentrality.produceZDChits = False
-process.hiCentrality.produceETmidRapidity = False
-process.hiCentrality.producePixelhits = False
-#process.hiCentrality.srcPixelhits = cms.InputTag("siPixelRecHits")
-process.hiCentrality.srcVertex = cms.InputTag("offlinePrimaryVertices")
-process.hiCentrality.produceTracks = True
-process.hiCentrality.srcTracks = cms.InputTag("generalTracks")
-process.hiCentrality.producePixelTracks = False
-#process.hiCentrality.srcPixelTracks = cms.InputTag("hiConformalPixelTracks")
-process.hiCentrality.reUseCentrality = False
-#process.hiCentrality.srcReUse = cms.InputTag("hiCentrality","","RECO")
-
-process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
-process.centralityBin.Centrality = cms.InputTag("hiCentrality")
-process.centralityBin.centralityVariable = cms.string("HFtowers")
-#process.centralityBin.nonDefaultGlauberModel = cms.string("")
-
 process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
-#process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_mc_cfi')
 process.hiEvtAnalyzer.Vertex = cms.InputTag("offlinePrimaryVertices")
-process.hiEvtAnalyzer.doCentrality = cms.bool(True)
-process.hiEvtAnalyzer.CentralitySrc = cms.InputTag("hiCentrality")
-process.hiEvtAnalyzer.CentralityBinSrc = cms.InputTag("centralityBin","HFtowers")
+process.hiEvtAnalyzer.doCentrality = cms.bool(False)
 process.hiEvtAnalyzer.doEvtPlane = cms.bool(False)
 
 process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
@@ -140,6 +116,7 @@ process.ggHiNtuplizerGED.recHitsEB = cms.untracked.InputTag("reducedEcalRecHitsE
 process.ggHiNtuplizerGED.recHitsEE = cms.untracked.InputTag("reducedEcalRecHitsEE")
 process.ggHiNtuplizer.doPhoERegression = cms.bool(True)
 process.ggHiNtuplizerGED.doPhoERegression = cms.bool(True)
+process.ggHiNtuplizerGED.doEleERegression = cms.bool(True)
 
 ####################################################################################
 
@@ -170,8 +147,6 @@ process.ana_step = cms.Path(
     process.hltanalysis *
     process.hltobject *
     process.l1object +
-    process.hiCentrality *
-    process.centralityBin *
     process.hiEvtAnalyzer *
     process.jetSequence +
     # Should be added in the path for VID module
